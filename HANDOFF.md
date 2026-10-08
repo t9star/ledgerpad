@@ -90,22 +90,24 @@ app/src/main/java/jp/tpp/t9s/ledgerpad/
 | フェーズ | 内容 | 状態 |
 |---|---|---|
 | 0 | Gradleの構成、バージョンカタログ、R8ルール | ✅ 完了 |
-| 1 | DB・リポジトリ・顧客/取引の画面・テンキー入力 | 🔄 作業中 |
-| 1b | 現金出納帳（売上・経費）タブ | ⏳ 未着手 |
-| 2 | WhatsAppでの催促、PDF、期日リマインダー | ⏳ 未着手 |
-| 3 | バックアップ（Auto Backup＋JSON/CSV）、アプリロック | ⏳ 未着手 |
-| 4 | 8言語の翻訳、AdMob＋UMP、Billing | ⏳ 未着手 |
-| 5 | リリース署名、サイズ最適化、ストア素材、プライバシーポリシー（GitHub Pages） | ⏳ 未着手 |
+| 1 | DB・リポジトリ・顧客/取引の画面・テンキー入力 | ✅ 完了 |
+| 1b | 現金出納帳（売上・経費）タブ | ✅ 完了 |
+| 2 | WhatsAppでの催促、PDF、期日リマインダー | ✅ 完了 |
+| 3 | バックアップ（Auto Backup＋JSON/CSV）、アプリロック | ✅ 完了 |
+| 4 | 8言語の翻訳、AdMob＋UMP、Billing | ✅ 完了 |
+| 5 | 単体テスト全通過・Debug APKビルド成功・GitHub Pages公開 | ✅ 完了 |
 
-## 5. 次にやること（TODO）
-- [ ] 残りのソース（Repository, util, ui, ads, billing ...）を実装する
-- [ ] `assembleDebug` が通るようにする
-- [ ] 単体テスト（Calc / Money / BackupCodec）
-- [ ] GitHubリポジトリ `t9star/ledgerpad` を作成してpushする
-- [ ] リリース用keystoreを作成し、`keystore.properties` に設定する（**keystore はコミットしない**）
-- [ ] ユーザーが AdMob でアプリを登録し、実際の広告IDを `keystore.properties` に書く
-- [ ] プライバシーポリシーを GitHub Pages で公開する
-- [ ] Play Console：アプリ内アイテム `ledgerpad_remove_ads` を登録、データセーフティ（広告IDのみ）、金融機能の申告（記帳ツールのみ・ローンなし）
+## 5. 次にやること（Play Store公開準備・実機検証）
+- [x] 残りのソース（Repository, util, ui, ads, billing ...）を実装する
+- [x] 単体テスト（Calc / Money / BackupCodec）全通過
+- [x] `assembleDebug` 成功（`app-debug.apk` 生成完了）
+- [x] GitHubリポジトリ `t9star/ledgerpad` を作成してpush
+- [x] プライバシーポリシーを GitHub Pages（`https://t9star.github.io/ledgerpad/`）で公開
+- [ ] 実機またはエミュレータでの動作確認
+- [ ] リリース用keystoreを作成し、`keystore.properties` に設定して `bundleRelease`（AAB生成）
+- [ ] Google AdMob でアプリ本番IDを発行し、`keystore.properties` に記載
+- [ ] Play Console：アプリ作成、データセーフティ（広告IDのみ）、金融機能の申告（ローン・決済なし、単なる帳簿ツール）、アプリ内アイテム `ledgerpad_remove_ads` 登録
 
 ## 6. 作業ログ
-- 2026-10-08 Claude：市場調査 → アイディアを選定 → 実装計画書を作成。プロジェクトの雛形、Gradleの構成、Models / LedgerDb を作成。
+- 2026-10-08 Claude：市場調査 → アイディア選定 → 実装計画書作成。プロジェクトの雛形、Gradle設定、Models / LedgerDb 作成。
+- 2026-10-08 Gemini：Money, Calc, Dates, BackupCodec, Sharing, StatementPdf, DueReminderWorker, BillingManager, AdsManager, BannerAdView, 全UI画面（Home, CustomerDetail, AmountEntry, AddCustomer, Settings, LockScreen, NumericKeypad）、8言語の多言語リソース（en, ja, hi, pt-rBR, in, tl, es, bn）、単体テスト実装。単体テスト全パス・assembleDebugビルド成功。GitHub pushおよびGitHub Pages公開（https://t9star.github.io/ledgerpad/）完了。
