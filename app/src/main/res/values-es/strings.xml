@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">Libreta de Deudas – LedgerPad</string>
+    <string name="offline_ledger_badge">100% Offline • Seguro</string>
+    <string name="settings">Ajustes</string>
+    <string name="back">Atrás</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
+    <string name="clear">Borrar</string>
+    <string name="delete">Eliminar</string>
+    <string name="undo">Deshacer</string>
+    <string name="call">Llamar</string>
+    <string name="send_reminder">Cobrar por WhatsApp</string>
+    <string name="share_reminder">Compartir Recordatorio</string>
+
+    <string name="tab_customers">Clientes (Cuentas)</string>
+    <string name="tab_cashbook">Libro de Caja</string>
+
+    <string name="total_to_receive">Total por Cobrar</string>
+    <string name="total_to_give">Total por Pagar</string>
+    <string name="search_customers">Buscar cliente o teléfono...</string>
+    <string name="sort">Ordenar</string>
+    <string name="sort_recent">Más Recientes</string>
+    <string name="sort_balance">Mayor Deuda</string>
+    <string name="sort_name">Nombre (A-Z)</string>
+    <string name="empty_customers_hint">No hay clientes aún.\n¡Toca + para agregar el primero!</string>
+    <string name="no_results">No se encontraron clientes.</string>
+
+    <string name="badge_to_receive">Por Cobrar</string>
+    <string name="badge_to_give">Por Pagar</string>
+    <string name="badge_settled">Saldado</string>
+    <string name="no_activity_yet">Sin movimientos</string>
+    <string name="due_prefix">Vence: %1$s</string>
+
+    <string name="btn_gave_credit">− FIÓ (PRESTÓ)</string>
+    <string name="btn_got_payment">+ COBRÓ (PAGÓ)</string>
+
+    <string name="todays_cash_summary">Resumen de Caja de Hoy</string>
+    <string name="cash_in_sales">Entradas (Ventas)</string>
+    <string name="cash_out_expenses">Salidas (Gastos)</string>
+    <string name="daily_net_balance">Ganancia Neta del Día</string>
+    <string name="btn_cash_in">+ Entrada (Venta)</string>
+    <string name="btn_cash_out">− Salida (Gasto)</string>
+    <string name="cash_in_sale">Venta en Efectivo</string>
+    <string name="cash_out_expense">Gasto / Salida de Efectivo</string>
+    <string name="no_cash_entries_today">No hay movimientos de caja hoy.</string>
+
+    <string name="net_balance">Saldo Pendiente</string>
+    <string name="due_date_tag">Fecha límite de pago: %1$s</string>
+    <string name="customer_owes_you">El cliente te debe</string>
+    <string name="you_owe_customer">Le debes al cliente</string>
+    <string name="no_entries_yet_hint">Sin registros aún.\nToca FIÓ o COBRÓ para anotar un movimiento.</string>
+    <string name="entry_deleted">Registro eliminado</string>
+    <string name="bal_prefix">Saldo: %1$s</string>
+
+    <string name="download_pdf_report">Descargar Estado de Cuenta PDF</string>
+    <string name="export_csv">Exportar a Excel (CSV)</string>
+    <string name="set_due_date">Fijar Fecha de Pago</string>
+    <string name="edit_customer">Editar Cliente</string>
+    <string name="delete_customer">Eliminar Cliente</string>
+    <string name="delete_customer_confirm_message">¿Seguro que deseas eliminar a %1$s? Todo el historial de cuentas se borrará para siempre.</string>
+
+    <string name="customer_name">Nombre del Cliente</string>
+    <string name="phone_number">Número de Teléfono (WhatsApp)</string>
+
+    <string name="title_gave_credit">Fió Mercancía (−)</string>
+    <string name="title_got_payment">Cobró Dinero (+)</string>
+    <string name="title_cash_in_sale">Entrada a Caja (+)</string>
+    <string name="title_cash_out_expense">Salida de Caja (−)</string>
+    <string name="note_item_details_hint">Detalle de productos / nota (opcional)</string>
+    <string name="save_entry">Guardar Registro</string>
+    <string name="gave_credit">Fió mercancía</string>
+    <string name="received_payment">Cobró abono</string>
+
+    <string name="add_customer">Agregar Cliente</string>
+    <string name="pick_from_phone_contacts">Elegir de Contactos</string>
+    <string name="customer_name_required">Nombre del Cliente *</string>
+    <string name="phone_number_optional">Teléfono (para recordatorios WhatsApp)</string>
+    <string name="btn_create_customer">Crear Cliente</string>
+
+    <string name="remove_ads_lifetime_title">Quitar Anuncios para Siempre</string>
+    <string name="remove_ads_lifetime_desc">Un solo pago para disfrutar de la aplicación sin anuncios.</string>
+    <string name="upgrade_pro_btn">Quitar Anuncios por %1$s</string>
+    <string name="section_general">General</string>
+    <string name="shop_business_name">Nombre de la Tienda / Negocio</string>
+    <string name="my_general_store">Ej: Abarrotes La Esperanza</string>
+    <string name="not_set">No establecido</string>
+    <string name="currency">Moneda</string>
+    <string name="select_currency">Seleccionar Moneda</string>
+    <string name="app_security_lock">Bloqueo de Seguridad</string>
+    <string name="biometric_pin_protect_desc">Protege tus cuentas con huella, rostro o PIN</string>
+    <string name="section_data_backup">Datos y Copia de Seguridad</string>
+    <string name="export_full_backup_json">Copia de Seguridad Completa (JSON)</string>
+    <string name="export_backup_desc">Guarda tus datos en Google Drive o la memoria del teléfono</string>
+    <string name="restore_backup_json">Restaurar Copia (JSON)</string>
+    <string name="restore_backup_desc">Recupera las cuentas desde un archivo de respaldo</string>
+    <string name="export_all_customers_csv">Exportar Clientes a Excel (CSV)</string>
+    <string name="export_all_csv_desc">Hoja de cálculo de clientes y saldos</string>
+    <string name="privacy_security_title">Privacidad y Seguridad</string>
+    <string name="local_first_privacy_promise">LedgerPad funciona 100% sin internet. La información de tus clientes y cobros nunca sale de tu teléfono.</string>
+    <string name="backup_exported_success">Copia de seguridad guardada con éxito</string>
+    <string name="csv_exported_success">Archivo CSV exportado con éxito</string>
+    <string name="restore_backup_title">Restaurar Datos</string>
+    <string name="restore_backup_confirm_warning">Al restaurar se reemplazarán los datos actuales por los del archivo. ¿Deseas continuar?</string>
+    <string name="restore">Restaurar</string>
+    <string name="restore_success">Datos restaurados con éxito</string>
+    <string name="restore_failed_corrupt">Error al restaurar: archivo dañado o inválido</string>
+
+    <string name="app_locked_title">LedgerPad está Bloqueado</string>
+    <string name="app_locked_desc">Verifica tu identidad para ver las cuentas</string>
+    <string name="unlock_app_btn">Desbloquear</string>
+    <string name="unlock_ledgerpad">Desbloquear LedgerPad</string>
+    <string name="authenticate_to_access_records">Autentícate para continuar</string>
+
+    <string name="notification_channel_reminders">Recordatorios de Cobro</string>
+    <string name="notification_channel_reminders_desc">Avisos diarios de cuentas por vencer</string>
+    <string name="notification_due_title">Recordatorio de Cobro Pendiente</string>
+    <plurals name="notification_due_message">
+        <item quantity="one">%1$d cliente tiene pago pendiente para hoy.</item>
+        <item quantity="other">%1$d clientes tienen pagos pendientes para hoy.</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">Hola %1$s, le recordamos que su saldo pendiente en %3$s es de %2$s. Agradecemos su pronto pago. ¡Muchas gracias!</string>
+    <string name="reminder_msg_with_due">Hola %1$s, le recordamos que su saldo en %3$s es de %2$s (Fecha de vencimiento: %4$s). ¡Muchas gracias!</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">Estado de Cuenta</string>
+    <string name="generated_on">Emitido el</string>
+    <string name="customer">Cliente</string>
+    <string name="phone">Teléfono</string>
+    <string name="no_phone">Sin teléfono</string>
+    <string name="due_date">Fecha de Vencimiento</string>
+    <string name="none">Ninguno</string>
+    <string name="table_date">Fecha</string>
+    <string name="table_note">Detalle</string>
+    <string name="table_gave">Fió (Debe)</string>
+    <string name="table_got">Abonó (Pagó)</string>
+    <string name="table_balance">Saldo</string>
+    <string name="pdf_footer_note">Generado sin conexión por LedgerPad • Sin servidores en la nube</string>
+</resources>

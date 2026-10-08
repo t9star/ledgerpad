@@ -1,0 +1,138 @@
+<resources>
+    <string name="app_name">LedgerPad</string>
+    <string name="offline_ledger_badge">100% オフライン • 安全</string>
+    <string name="settings">設定</string>
+    <string name="back">戻る</string>
+    <string name="cancel">キャンセル</string>
+    <string name="save">保存</string>
+    <string name="clear">クリア</string>
+    <string name="delete">削除</string>
+    <string name="undo">元に戻す</string>
+    <string name="call">電話をかける</string>
+    <string name="send_reminder">催促メッセージを送る</string>
+    <string name="share_reminder">支払いリマインダーを共有</string>
+
+    <string name="tab_customers">取引先（ツケ）</string>
+    <string name="tab_cashbook">現金出納帳</string>
+
+    <string name="total_to_receive">未回収合計（売掛金）</string>
+    <string name="total_to_give">預かり・返金合計</string>
+    <string name="search_customers">名前または電話番号で検索...</string>
+    <string name="sort">並べ替え</string>
+    <string name="sort_recent">最近の取引順</string>
+    <string name="sort_balance">残高が多い順</string>
+    <string name="sort_name">名前順 (A-Z)</string>
+    <string name="empty_customers_hint">顧客が登録されていません。\n右下の + ボタンから顧客を追加しましょう！</string>
+    <string name="no_results">該当する顧客が見つかりません。</string>
+
+    <string name="badge_to_receive">回収待ち</string>
+    <string name="badge_to_give">返金待ち</string>
+    <string name="badge_settled">精算済み</string>
+    <string name="no_activity_yet">取引履歴なし</string>
+    <string name="due_prefix">期日: %1$s</string>
+
+    <string name="btn_gave_credit">− ツケを付けた (販売)</string>
+    <string name="btn_got_payment">+ 回収した (入金)</string>
+
+    <string name="todays_cash_summary">本日の現金まとめ</string>
+    <string name="cash_in_sales">現金売上 (入金)</string>
+    <string name="cash_out_expenses">経費・出金</string>
+    <string name="daily_net_balance">本日の収支</string>
+    <string name="btn_cash_in">+ 現金入金 (売上)</string>
+    <string name="btn_cash_out">− 現金出金 (経費)</string>
+    <string name="cash_in_sale">現金売上</string>
+    <string name="cash_out_expense">経費支払い</string>
+    <string name="no_cash_entries_today">本日記録された現金取引はありません。</string>
+
+    <string name="net_balance">未回収残高</string>
+    <string name="due_date_tag">支払期日: %1$s</string>
+    <string name="customer_owes_you">回収予定</string>
+    <string name="you_owe_customer">預かり金</string>
+    <string name="no_entries_yet_hint">取引履歴がありません。\n下のボタンから取引を記録してください。</string>
+    <string name="entry_deleted">取引を削除しました</string>
+    <string name="bal_prefix">残高: %1$s</string>
+
+    <string name="download_pdf_report">PDF取引明細書を作成</string>
+    <string name="export_csv">CSV形式で書き出し</string>
+    <string name="set_due_date">支払期日を設定</string>
+    <string name="edit_customer">顧客情報を編集</string>
+    <string name="delete_customer">顧客を削除</string>
+    <string name="delete_customer_confirm_message">%1$s を削除してもよろしいですか？この顧客に関するすべての取引履歴が完全に削除されます。</string>
+
+    <string name="customer_name">顧客名</string>
+    <string name="phone_number">電話番号</string>
+
+    <string name="title_gave_credit">ツケを付けた (−)</string>
+    <string name="title_got_payment">代金を回収した (+)</string>
+    <string name="title_cash_in_sale">現金売上 (+)</string>
+    <string name="title_cash_out_expense">現金経費 (−)</string>
+    <string name="note_item_details_hint">メモ・品名 (任意)</string>
+    <string name="save_entry">取引を記録</string>
+    <string name="gave_credit">ツケ販売</string>
+    <string name="received_payment">代金回収</string>
+
+    <string name="add_customer">顧客を追加</string>
+    <string name="pick_from_phone_contacts">連絡先から選択</string>
+    <string name="customer_name_required">顧客名 *</string>
+    <string name="phone_number_optional">電話番号 (リマインダー送信用)</string>
+    <string name="btn_create_customer">顧客を作成</string>
+
+    <string name="remove_ads_lifetime_title">広告を非表示にする</string>
+    <string name="remove_ads_lifetime_desc">買い切りプランでずっと広告なしで快適にご利用いただけます。</string>
+    <string name="upgrade_pro_btn">%1$s で広告を非表示</string>
+    <string name="section_general">一般設定</string>
+    <string name="shop_business_name">店舗名 / 屋号</string>
+    <string name="my_general_store">例: 山田商店</string>
+    <string name="not_set">未設定</string>
+    <string name="currency">通貨単位</string>
+    <string name="select_currency">通貨を選択</string>
+    <string name="app_security_lock">アプリ起動ロック</string>
+    <string name="biometric_pin_protect_desc">生体認証や画面ロックでデータを保護</string>
+    <string name="section_data_backup">データとバックアップ</string>
+    <string name="export_full_backup_json">全データをバックアップ (JSON)</string>
+    <string name="export_backup_desc">Googleドライブや端末ストレージへ完全バックアップを保存</string>
+    <string name="restore_backup_json">バックアップから復元 (JSON)</string>
+    <string name="restore_backup_desc">バックアップファイルからデータを復元</string>
+    <string name="export_all_customers_csv">顧客一覧をCSV出力 (Excel対応)</string>
+    <string name="export_all_csv_desc">全顧客の残高一覧シートを出力</string>
+    <string name="privacy_security_title">プライバシーとセキュリティ</string>
+    <string name="local_first_privacy_promise">LedgerPadは100%ローカル完結型です。お客様の情報や取引データが外部サーバーに送信されることは一切ありません。</string>
+    <string name="backup_exported_success">バックアップを出力しました</string>
+    <string name="csv_exported_success">CSVを出力しました</string>
+    <string name="restore_backup_title">データの復元</string>
+    <string name="restore_backup_confirm_warning">復元を行うと、現在のデータはバックアップファイルの内容で上書きされます。よろしいですか？</string>
+    <string name="restore">復元する</string>
+    <string name="restore_success">データを正常に復元しました</string>
+    <string name="restore_failed_corrupt">復元に失敗しました: 無効なバックアップファイルです</string>
+
+    <string name="app_locked_title">LedgerPad はロックされています</string>
+    <string name="app_locked_desc">取引記録にアクセスするには認証を行ってください</string>
+    <string name="unlock_app_btn">ロック解除</string>
+    <string name="unlock_ledgerpad">LedgerPad のロック解除</string>
+    <string name="authenticate_to_access_records">認証してください</string>
+
+    <string name="notification_channel_reminders">支払期日リマインダー</string>
+    <string name="notification_channel_reminders_desc">顧客の支払期日が近づいたときの日次通知</string>
+    <string name="notification_due_title">支払期日のリマインダー</string>
+    <plurals name="notification_due_message">
+        <item quantity="other">本日が支払期日の顧客が %1$d 件あります。</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">%1$s様、%3$sでのお支払い残高は %2$s です。ご確認よろしくお願いいたします。</string>
+    <string name="reminder_msg_with_due">%1$s様、%3$sでのお支払い残高は %2$s (支払期日: %4$s) です。ご確認よろしくお願いいたします。</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">取引明細書</string>
+    <string name="generated_on">作成日時</string>
+    <string name="customer">お名前</string>
+    <string name="phone">電話番号</string>
+    <string name="no_phone">なし</string>
+    <string name="due_date">支払期日</string>
+    <string name="none">なし</string>
+    <string name="table_date">日付</string>
+    <string name="table_note">内容</string>
+    <string name="table_gave">ツケ(売掛)</string>
+    <string name="table_got">回収(入金)</string>
+    <string name="table_balance">残高</string>
+    <string name="pdf_footer_note">LedgerPad オフライン生成 • サーバー通信なし</string>
+</resources>

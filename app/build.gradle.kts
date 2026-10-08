@@ -32,10 +32,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    androidResources {
-        generateLocaleConfig = true
-        localeFilters += listOf("en", "hi", "pt-rBR", "in", "es", "bn", "ja", "tl")
-    }
 
     signingConfigs {
         if (keystoreProps.getProperty("storeFile") != null) {

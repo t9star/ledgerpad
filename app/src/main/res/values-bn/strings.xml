@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">বাকির খাতা – LedgerPad</string>
+    <string name="offline_ledger_badge">১০০% অফলাইন • নিরাপদ</string>
+    <string name="settings">সেটিংস</string>
+    <string name="back">পেছনে</string>
+    <string name="cancel">বাতিল</string>
+    <string name="save">সংরক্ষণ করুন</string>
+    <string name="clear">মুছুন</string>
+    <string name="delete">ডিলিট</string>
+    <string name="undo">পূর্বাবস্থায় ফেরান</string>
+    <string name="call">কল করুন</string>
+    <string name="send_reminder">তাগাদা পাঠান</string>
+    <string name="share_reminder">পেমেন্ট তাগাদা শেয়ার করুন</string>
+
+    <string name="tab_customers">কাস্টমার (বাকি)</string>
+    <string name="tab_cashbook">দৈনিক ক্যাশবুক</string>
+
+    <string name="total_to_receive">মোট পাবো (বাকি)</string>
+    <string name="total_to_give">মোট দেবো</string>
+    <string name="search_customers">নাম বা নম্বর দিয়ে খুঁজুন...</string>
+    <string name="sort">সাজান</string>
+    <string name="sort_recent">সাম্প্রতিক সক্রিয়</string>
+    <string name="sort_balance">সর্বোচ্চ বাকি</string>
+    <string name="sort_name">নাম অনুসারে</string>
+    <string name="empty_customers_hint">কোনো কাস্টমার যুক্ত নেই।\nনতুন কাস্টমার যোগ করতে + চাপুন!</string>
+    <string name="no_results">কোনো কাস্টমার পাওয়া যায়নি।</string>
+
+    <string name="badge_to_receive">পাবো</string>
+    <string name="badge_to_give">দেবো</string>
+    <string name="badge_settled">হিসাব শেষ</string>
+    <string name="no_activity_yet">লেনদেন নেই</string>
+    <string name="due_prefix">মেয়াদ: %1$s</string>
+
+    <string name="btn_gave_credit">− দিলাম (বাকি)</string>
+    <string name="btn_got_payment">+ পেলাম (জমা)</string>
+
+    <string name="todays_cash_summary">আজকের ক্যাশ হিসাব</string>
+    <string name="cash_in_sales">নগদ বিক্রি (ইন)</string>
+    <string name="cash_out_expenses">খরচ (আউট)</string>
+    <string name="daily_net_balance">আজকের অবশিষ্ট ক্যাশ</string>
+    <string name="btn_cash_in">+ ক্যাশ ইন (বিক্রি)</string>
+    <string name="btn_cash_out">− ক্যাশ আউট (খরচ)</string>
+    <string name="cash_in_sale">নগদ বিক্রি</string>
+    <string name="cash_out_expense">দোকানের খরচ</string>
+    <string name="no_cash_entries_today">আজ কোনো নগদ লেনদেন হয়নি।</string>
+
+    <string name="net_balance">মোট বাকি</string>
+    <string name="due_date_tag">পরিশোধের তারিখ: %1$s</string>
+    <string name="customer_owes_you">কাস্টমার দেবে</string>
+    <string name="you_owe_customer">কাস্টমার পাবে</string>
+    <string name="no_entries_yet_hint">কোনো লেনদেন নথিভুক্ত হয়নি।\nহিসাব রাখতে নিচে \'দিলাম\' বা \'পেলাম\' চাপুন।</string>
+    <string name="entry_deleted">লেনদেন মুছে ফেলা হয়েছে</string>
+    <string name="bal_prefix">বাকি: %1$s</string>
+
+    <string name="download_pdf_report">PDF খতিয়ান রিপোর্ট ডাউনলোড</string>
+    <string name="export_csv">এক্সেল/CSV ডাউনলোড</string>
+    <string name="set_due_date">তারিখ নির্ধারণ করুন</string>
+    <string name="edit_customer">কাস্টমার সম্পাদনা</string>
+    <string name="delete_customer">কাস্টমার মুছুন</string>
+    <string name="delete_customer_confirm_message">আপনি কি নিশ্চিত যে %1$s কে মুছতে চান? সমস্ত হিসাব স্থায়ীভাবে মুছে যাবে।</string>
+
+    <string name="customer_name">কাস্টমারের নাম</string>
+    <string name="phone_number">ফোন নম্বর</string>
+
+    <string name="title_gave_credit">বাকি দিলাম (−)</string>
+    <string name="title_got_payment">টাকা পেলাম (+)</string>
+    <string name="title_cash_in_sale">ক্যাশ বিক্রি (+)</string>
+    <string name="title_cash_out_expense">ক্যাশ খরচ (−)</string>
+    <string name="note_item_details_hint">বিবরণ / পণ্যের নাম (ঐচ্ছিক)</string>
+    <string name="save_entry">হিসাব সংরক্ষণ করুন</string>
+    <string name="gave_credit">বাকি দিলাম</string>
+    <string name="received_payment">টাকা পেলাম</string>
+
+    <string name="add_customer">কাস্টমার যোগ করুন</string>
+    <string name="pick_from_phone_contacts">কন্টাক্ট তালিকা থেকে নির্বাচন</string>
+    <string name="customer_name_required">কাস্টমারের নাম *</string>
+    <string name="phone_number_optional">ফোন নম্বর (হোয়াটসঅ্যাপে তাগাদার জন্য)</string>
+    <string name="btn_create_customer">কাস্টমার তৈরি করুন</string>
+
+    <string name="remove_ads_lifetime_title">বিজ্ঞাপন চিরতরে বন্ধ করুন</string>
+    <string name="remove_ads_lifetime_desc">একবার পেমেন্ট করে আজীবন বিজ্ঞাপনহীন সুবিধা উপভোগ করুন।</string>
+    <string name="upgrade_pro_btn">%1$s দিয়ে বিজ্ঞাপন সরান</string>
+    <string name="section_general">সাধারণ</string>
+    <string name="shop_business_name">দোকান / ব্যবসার নাম</string>
+    <string name="my_general_store">উদা: ভাই ভাই স্টোর</string>
+    <string name="not_set">সেট করা নেই</string>
+    <string name="currency">মুদ্রা</string>
+    <string name="select_currency">মুদ্রা নির্বাচন করুন</string>
+    <string name="app_security_lock">অ্যাপ লক</string>
+    <string name="biometric_pin_protect_desc">ফিঙ্গারপ্রিন্ট বা স্ক্রিন লক দিয়ে সুরক্ষিত রাখুন</string>
+    <string name="section_data_backup">ডাটা ও ব্যাকআপ</string>
+    <string name="export_full_backup_json">সম্পূর্ণ ডাটা ব্যাকআপ নিন (JSON)</string>
+    <string name="export_backup_desc">গুগল ড্রাইভ বা ফোনে ব্যাকআপ ফাইল সংরক্ষণ করুন</string>
+    <string name="restore_backup_json">ব্যাকআপ থেকে রিস্টোর (JSON)</string>
+    <string name="restore_backup_desc">আগের ব্যাকআপ ফাইল থেকে ডাটা ফিরিয়ে আনুন</string>
+    <string name="export_all_customers_csv">সব কাস্টমারের এক্সেল/CSV ফাইল</string>
+    <string name="export_all_csv_desc">কাস্টমার তালিকা ও বকেয়ার শিট</string>
+    <string name="privacy_security_title">গোপনীয়তা ও নিরাপত্তা</string>
+    <string name="local_first_privacy_promise">LedgerPad ১০০% অফলাইনে কাজ করে। আপনার ব্যবসার কোনো তথ্যই ইন্টারনেট সার্ভারে যায় না।</string>
+    <string name="backup_exported_success">ব্যাকআপ সফলভাবে সম্পন্ন হয়েছে</string>
+    <string name="csv_exported_success">CSV ফাইল সফলভাবে তৈরি হয়েছে</string>
+    <string name="restore_backup_title">ডাটা রিস্টোর করুন</string>
+    <string name="restore_backup_confirm_warning">ব্যাকআপ লোড করলে বর্তমান ডাটা পরিবর্তিত হবে। আপনি কি এগিয়ে যেতে চান?</string>
+    <string name="restore">রিস্টোর</string>
+    <string name="restore_success">ডাটা সফলভাবে রিস্টোর হয়েছে</string>
+    <string name="restore_failed_corrupt">ব্যর্থ: অবৈধ ব্যাকআপ ফাইল</string>
+
+    <string name="app_locked_title">LedgerPad লক করা আছে</string>
+    <string name="app_locked_desc">খাতা দেখতে অনুগ্রহ করে আনলক করুন</string>
+    <string name="unlock_app_btn">আনলক</string>
+    <string name="unlock_ledgerpad">LedgerPad আনলক করুন</string>
+    <string name="authenticate_to_access_records">খাতায় প্রবেশ করতে প্রমাণীকরণ করুন</string>
+
+    <string name="notification_channel_reminders">পেমেন্ট তাগাদা রিমাইন্ডার</string>
+    <string name="notification_channel_reminders_desc">বাকি পরিশোধের তারিখের নোটিফিকেশন</string>
+    <string name="notification_due_title">বাকি পরিশোধের তাগাদা</string>
+    <plurals name="notification_due_message">
+        <item quantity="one">%1$d জন কাস্টমারের বকেয়া আজ পরিশোধের তারিখ।</item>
+        <item quantity="other">%1$d জন কাস্টমারের বকেয়া আজ পরিশোধের তারিখ।</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">শ্রদ্ধেয় %1$s, %3$s এ আপনার বাকি হিসাব %2$s। অনুগ্রহ করে দ্রুত পরিশোধের ব্যবস্থা করবেন। ধন্যবাদ!</string>
+    <string name="reminder_msg_with_due">শ্রদ্ধেয় %1$s, %3$s এ আপনার বকেয়া %2$s (তারিখ: %4$s)। ধন্যবাদ!</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">হিসাবের খতিয়ান (স্টেটমেন্ট)</string>
+    <string name="generated_on">তৈরির তারিখ</string>
+    <string name="customer">কাস্টমার</string>
+    <string name="phone">ফোন</string>
+    <string name="no_phone">নেই</string>
+    <string name="due_date">পরিশোধের তারিখ</string>
+    <string name="none">নেই</string>
+    <string name="table_date">তারিখ</string>
+    <string name="table_note">বিবরণ</string>
+    <string name="table_gave">বাকি</string>
+    <string name="table_got">জমা</string>
+    <string name="table_balance">অবশিষ্ট</string>
+    <string name="pdf_footer_note">LedgerPad অফলাইন খাতা • ক্লাউড সার্ভার মুক্ত</string>
+</resources>

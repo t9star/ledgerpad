@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">LedgerPad</string>
+    <string name="offline_ledger_badge">100% Offline • Private</string>
+    <string name="settings">Settings</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
+    <string name="delete">Delete</string>
+    <string name="undo">Undo</string>
+    <string name="call">Call</string>
+    <string name="send_reminder">Send Reminder</string>
+    <string name="share_reminder">Share Payment Reminder</string>
+
+    <string name="tab_customers">Customers</string>
+    <string name="tab_cashbook">Daily Cashbook</string>
+
+    <string name="total_to_receive">Total To Receive</string>
+    <string name="total_to_give">Total To Give</string>
+    <string name="search_customers">Search customers or phone...</string>
+    <string name="sort">Sort</string>
+    <string name="sort_recent">Recently Active</string>
+    <string name="sort_balance">Highest Balance</string>
+    <string name="sort_name">Name (A-Z)</string>
+    <string name="empty_customers_hint">No customers yet.\nTap + to add your first customer!</string>
+    <string name="no_results">No customers match your search.</string>
+
+    <string name="badge_to_receive">To Receive</string>
+    <string name="badge_to_give">To Give</string>
+    <string name="badge_settled">Settled</string>
+    <string name="no_activity_yet">No activity yet</string>
+    <string name="due_prefix">Due: %1$s</string>
+
+    <string name="btn_gave_credit">− GAVE</string>
+    <string name="btn_got_payment">+ GOT</string>
+
+    <string name="todays_cash_summary">Today\'s Cash Summary</string>
+    <string name="cash_in_sales">Cash In (Sales)</string>
+    <string name="cash_out_expenses">Cash Out (Expenses)</string>
+    <string name="daily_net_balance">Daily Net</string>
+    <string name="btn_cash_in">+ Cash In (Sale)</string>
+    <string name="btn_cash_out">− Cash Out (Expense)</string>
+    <string name="cash_in_sale">Sale (Cash In)</string>
+    <string name="cash_out_expense">Expense (Cash Out)</string>
+    <string name="no_cash_entries_today">No cash transactions recorded today.</string>
+
+    <string name="net_balance">Net Balance</string>
+    <string name="due_date_tag">Payment due on %1$s</string>
+    <string name="customer_owes_you">Customer owes you</string>
+    <string name="you_owe_customer">You owe customer</string>
+    <string name="no_entries_yet_hint">No transactions recorded yet.\nTap GAVE or GOT to add a record.</string>
+    <string name="entry_deleted">Transaction deleted</string>
+    <string name="bal_prefix">Bal: %1$s</string>
+
+    <string name="download_pdf_report">Download PDF Statement</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="set_due_date">Set Due Date</string>
+    <string name="edit_customer">Edit Customer</string>
+    <string name="delete_customer">Delete Customer</string>
+    <string name="delete_customer_confirm_message">Are you sure you want to delete %1$s? All transaction history for this customer will be permanently deleted.</string>
+
+    <string name="customer_name">Customer Name</string>
+    <string name="phone_number">Phone Number</string>
+
+    <string name="title_gave_credit">Customer Took Credit (−)</string>
+    <string name="title_got_payment">Customer Paid (+) </string>
+    <string name="title_cash_in_sale">Cash In (Sale)</string>
+    <string name="title_cash_out_expense">Cash Out (Expense)</string>
+    <string name="note_item_details_hint">Note / items (optional)</string>
+    <string name="save_entry">Save Entry</string>
+    <string name="gave_credit">Gave credit</string>
+    <string name="received_payment">Received payment</string>
+
+    <string name="add_customer">Add Customer</string>
+    <string name="pick_from_phone_contacts">Pick from Phone Contacts</string>
+    <string name="customer_name_required">Customer Name *</string>
+    <string name="phone_number_optional">Phone Number (for WhatsApp reminders)</string>
+    <string name="btn_create_customer">Create Customer</string>
+
+    <string name="remove_ads_lifetime_title">Remove Ads Forever</string>
+    <string name="remove_ads_lifetime_desc">Enjoy a completely ad-free experience with a single one-time purchase.</string>
+    <string name="upgrade_pro_btn">Remove Ads for %1$s</string>
+    <string name="section_general">General</string>
+    <string name="shop_business_name">Shop / Business Name</string>
+    <string name="my_general_store">e.g. City Mart</string>
+    <string name="not_set">Not set</string>
+    <string name="currency">Currency</string>
+    <string name="select_currency">Select Currency</string>
+    <string name="app_security_lock">App Security Lock</string>
+    <string name="biometric_pin_protect_desc">Protect records with fingerprint, face or screen lock</string>
+    <string name="section_data_backup">Data &amp; Backup</string>
+    <string name="export_full_backup_json">Backup All Data (JSON)</string>
+    <string name="export_backup_desc">Export a complete backup file to Google Drive or local storage</string>
+    <string name="restore_backup_json">Restore Backup (JSON)</string>
+    <string name="restore_backup_desc">Restore your shop data from a previously exported backup file</string>
+    <string name="export_all_customers_csv">Export Customers to Excel/CSV</string>
+    <string name="export_all_csv_desc">Spreadsheet of all customers and balances</string>
+    <string name="privacy_security_title">Privacy &amp; Security</string>
+    <string name="local_first_privacy_promise">LedgerPad is 100% offline-first. Your customer data, phone numbers, and financial transactions never leave your phone and are never sent to any external server.</string>
+    <string name="backup_exported_success">Backup exported successfully</string>
+    <string name="csv_exported_success">CSV exported successfully</string>
+    <string name="restore_backup_title">Restore Data</string>
+    <string name="restore_backup_confirm_warning">Restoring a backup will replace your current data with the contents of the backup file. Proceed?</string>
+    <string name="restore">Restore</string>
+    <string name="restore_success">Data restored successfully</string>
+    <string name="restore_failed_corrupt">Failed to restore: invalid backup file</string>
+
+    <string name="app_locked_title">LedgerPad is Locked</string>
+    <string name="app_locked_desc">Please authenticate to access your business records</string>
+    <string name="unlock_app_btn">Unlock</string>
+    <string name="unlock_ledgerpad">Unlock LedgerPad</string>
+    <string name="authenticate_to_access_records">Authenticate to access records</string>
+
+    <string name="notification_channel_reminders">Payment Reminders</string>
+    <string name="notification_channel_reminders_desc">Daily alerts when customer credit dues are approaching</string>
+    <string name="notification_due_title">Payment Due Reminder</string>
+    <plurals name="notification_due_message">
+        <item quantity="one">%1$d customer has payment due today.</item>
+        <item quantity="other">%1$d customers have payments due today.</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">Dear %1$s, your pending balance at %3$s is %2$s. Please make payment at your earliest convenience. Thank you!</string>
+    <string name="reminder_msg_with_due">Dear %1$s, your pending balance at %3$s is %2$s (Due on: %4$s). Kindly arrange the payment. Thank you!</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">Account Statement</string>
+    <string name="generated_on">Generated on</string>
+    <string name="customer">Customer</string>
+    <string name="phone">Phone</string>
+    <string name="no_phone">No phone</string>
+    <string name="due_date">Due Date</string>
+    <string name="none">None</string>
+    <string name="table_date">Date</string>
+    <string name="table_note">Description</string>
+    <string name="table_gave">Gave</string>
+    <string name="table_got">Got</string>
+    <string name="table_balance">Balance</string>
+    <string name="pdf_footer_note">Generated offline by LedgerPad • No cloud servers involved</string>
+</resources>

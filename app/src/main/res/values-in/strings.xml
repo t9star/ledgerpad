@@ -1,0 +1,138 @@
+<resources>
+    <string name="app_name">Buku Kasbon – LedgerPad</string>
+    <string name="offline_ledger_badge">100% Offline • Aman</string>
+    <string name="settings">Pengaturan</string>
+    <string name="back">Kembali</string>
+    <string name="cancel">Batal</string>
+    <string name="save">Simpan</string>
+    <string name="clear">Hapus</string>
+    <string name="delete">Hapus</string>
+    <string name="undo">Urungkan</string>
+    <string name="call">Telepon</string>
+    <string name="send_reminder">Kirim Tagihan WA</string>
+    <string name="share_reminder">Bagikan Pengingat</string>
+
+    <string name="tab_customers">Pelanggan (Hutang)</string>
+    <string name="tab_cashbook">Buku Kas Harian</string>
+
+    <string name="total_to_receive">Total Tagihan (Piutang)</string>
+    <string name="total_to_give">Total Hutang Kita</string>
+    <string name="search_customers">Cari nama atau no. telepon...</string>
+    <string name="sort">Urutkan</string>
+    <string name="sort_recent">Transaksi Terbaru</string>
+    <string name="sort_balance">Hutang Terbesar</string>
+    <string name="sort_name">Nama (A-Z)</string>
+    <string name="empty_customers_hint">Belum ada pelanggan.\nTekan + untuk menambah pelanggan pertama!</string>
+    <string name="no_results">Pelanggan tidak ditemukan.</string>
+
+    <string name="badge_to_receive">Akan Diterima</string>
+    <string name="badge_to_give">Harus Dibayar</string>
+    <string name="badge_settled">Lunas</string>
+    <string name="no_activity_yet">Belum ada transaksi</string>
+    <string name="due_prefix">Jatuh Tempo: %1$s</string>
+
+    <string name="btn_gave_credit">− BERI HUTANG</string>
+    <string name="btn_got_payment">+ TERIMA BAYAR</string>
+
+    <string name="todays_cash_summary">Ringkasan Kas Hari Ini</string>
+    <string name="cash_in_sales">Kas Masuk (Penjualan)</string>
+    <string name="cash_out_expenses">Kas Keluar (Pengeluaran)</string>
+    <string name="daily_net_balance">Laba/Sisa Kas Hari Ini</string>
+    <string name="btn_cash_in">+ Kas Masuk (Jual)</string>
+    <string name="btn_cash_out">− Kas Keluar (Beli/Biaya)</string>
+    <string name="cash_in_sale">Penjualan Tunai</string>
+    <string name="cash_out_expense">Pengeluaran / Biaya</string>
+    <string name="no_cash_entries_today">Belum ada transaksi kas hari ini.</string>
+
+    <string name="net_balance">Sisa Tagihan</string>
+    <string name="due_date_tag">Jatuh tempo pada %1$s</string>
+    <string name="customer_owes_you">Pelanggan berhutang ke Anda</string>
+    <string name="you_owe_customer">Anda berhutang ke pelanggan</string>
+    <string name="no_entries_yet_hint">Belum ada catatan transaksi.\nTekan tombol BERI atau TERIMA di bawah.</string>
+    <string name="entry_deleted">Catatan dihapus</string>
+    <string name="bal_prefix">Saldo: %1$s</string>
+
+    <string name="download_pdf_report">Unduh Laporan PDF</string>
+    <string name="export_csv">Ekspor ke Excel (CSV)</string>
+    <string name="set_due_date">Atur Jatuh Tempo</string>
+    <string name="edit_customer">Ubah Pelanggan</string>
+    <string name="delete_customer">Hapus Pelanggan</string>
+    <string name="delete_customer_confirm_message">Yakin ingin menghapus %1$s? Semua riwayat hutang piutang pelanggan ini akan terhapus permanen.</string>
+
+    <string name="customer_name">Nama Pelanggan</string>
+    <string name="phone_number">Nomor Telepon (WhatsApp)</string>
+
+    <string name="title_gave_credit">Beri Hutang / Kasbon (−)</string>
+    <string name="title_got_payment">Terima Pembayaran (+)</string>
+    <string name="title_cash_in_sale">Kas Masuk Penjualan (+)</string>
+    <string name="title_cash_out_expense">Kas Keluar Biaya (−)</string>
+    <string name="note_item_details_hint">Catatan barang / rincian (opsional)</string>
+    <string name="save_entry">Simpan Catatan</string>
+    <string name="gave_credit">Beri hutang</string>
+    <string name="received_payment">Terima bayar</string>
+
+    <string name="add_customer">Tambah Pelanggan</string>
+    <string name="pick_from_phone_contacts">Pilih dari Kontak HP</string>
+    <string name="customer_name_required">Nama Pelanggan *</string>
+    <string name="phone_number_optional">No. WhatsApp (untuk tagihan)</string>
+    <string name="btn_create_customer">Simpan Pelanggan</string>
+
+    <string name="remove_ads_lifetime_title">Hapus Iklan Selamanya</string>
+    <string name="remove_ads_lifetime_desc">Beli sekali untuk pengalaman tanpa gangguan iklan selamanya.</string>
+    <string name="upgrade_pro_btn">Hapus Iklan seharga %1$s</string>
+    <string name="section_general">Umum</string>
+    <string name="shop_business_name">Nama Toko / Warung</string>
+    <string name="my_general_store">Contoh: Warung Berkah</string>
+    <string name="not_set">Belum diatur</string>
+    <string name="currency">Mata Uang</string>
+    <string name="select_currency">Pilih Mata Uang</string>
+    <string name="app_security_lock">Kunci Aplikasi</string>
+    <string name="biometric_pin_protect_desc">Lindungi buku catatan dengan sidik jari atau PIN</string>
+    <string name="section_data_backup">Data &amp; Cadangan</string>
+    <string name="export_full_backup_json">Cadangkan Semua Data (JSON)</string>
+    <string name="export_backup_desc">Simpan salinan data aman ke Google Drive atau memori HP</string>
+    <string name="restore_backup_json">Pulihkan Data (JSON)</string>
+    <string name="restore_backup_desc">Kembalikan data toko dari file cadangan</string>
+    <string name="export_all_customers_csv">Ekspor Pelanggan ke Excel</string>
+    <string name="export_all_csv_desc">Tabel semua pelanggan dan sisa hutang</string>
+    <string name="privacy_security_title">Privasi &amp; Keamanan</string>
+    <string name="local_first_privacy_promise">LedgerPad 100% offline. Data pelanggan dan keuangan toko Anda tidak pernah dikirim ke internet.</string>
+    <string name="backup_exported_success">Cadangan berhasil diekspor</string>
+    <string name="csv_exported_success">File CSV berhasil dibuat</string>
+    <string name="restore_backup_title">Pulihkan Data</string>
+    <string name="restore_backup_confirm_warning">Memulihkan data akan menimpa data yang ada saat ini. Lanjutkan?</string>
+    <string name="restore">Pulihkan</string>
+    <string name="restore_success">Data berhasil dipulihkan</string>
+    <string name="restore_failed_corrupt">Gagal memulihkan: file cadangan rusak</string>
+
+    <string name="app_locked_title">Buku Catatan Terkunci</string>
+    <string name="app_locked_desc">Silakan autentikasi untuk melihat data</string>
+    <string name="unlock_app_btn">Buka Kunci</string>
+    <string name="unlock_ledgerpad">Buka Kunci LedgerPad</string>
+    <string name="authenticate_to_access_records">Buka kunci untuk mengakses</string>
+
+    <string name="notification_channel_reminders">Pengingat Jatuh Tempo</string>
+    <string name="notification_channel_reminders_desc">Pemberitahuan harian pelanggan yang jatuh tempo</string>
+    <string name="notification_due_title">Pengingat Tagihan Hutang</string>
+    <plurals name="notification_due_message">
+        <item quantity="other">%1$d pelanggan jatuh tempo hari ini.</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">Halo %1$s, catatan sisa tagihan di %3$s sebesar %2$s. Mohon untuk diselesaikan saat ada kesempatan. Terima kasih!</string>
+    <string name="reminder_msg_with_due">Halo %1$s, sisa tagihan di %3$s sebesar %2$s (Jatuh tempo: %4$s). Terima kasih banyak!</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">Laporan Rekening Koran</string>
+    <string name="generated_on">Dibuat pada</string>
+    <string name="customer">Pelanggan</string>
+    <string name="phone">Telepon</string>
+    <string name="no_phone">Tidak ada</string>
+    <string name="due_date">Jatuh Tempo</string>
+    <string name="none">Tidak ada</string>
+    <string name="table_date">Tanggal</string>
+    <string name="table_note">Keterangan</string>
+    <string name="table_gave">Hutang</string>
+    <string name="table_got">Bayar</string>
+    <string name="table_balance">Sisa Saldo</string>
+    <string name="pdf_footer_note">Dibuat offline oleh LedgerPad • Tanpa server cloud</string>
+</resources>

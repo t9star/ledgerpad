@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">Listahan ng Utang – LedgerPad</string>
+    <string name="offline_ledger_badge">100% Offline • Ligtas</string>
+    <string name="settings">Mga Setting</string>
+    <string name="back">Bumalik</string>
+    <string name="cancel">Kanselahin</string>
+    <string name="save">I-save</string>
+    <string name="clear">Burahin</string>
+    <string name="delete">Tanggalin</string>
+    <string name="undo">Ibalik</string>
+    <string name="call">Tawagan</string>
+    <string name="send_reminder">Magpadala ng Paalala</string>
+    <string name="share_reminder">Ibahagi ang Paalala sa Pagbabayad</string>
+
+    <string name="tab_customers">Mga Kustomer (Utang)</string>
+    <string name="tab_cashbook">Arawang Cashbook</string>
+
+    <string name="total_to_receive">Kabuuang Sisingilin (Pautang)</string>
+    <string name="total_to_give">Kabuuang Utang Natin</string>
+    <string name="search_customers">Maghanap ng kustomer o numero...</string>
+    <string name="sort">Ayusin</string>
+    <string name="sort_recent">Kamakailang Aktibo</string>
+    <string name="sort_balance">Pinakamataas na Utang</string>
+    <string name="sort_name">Pangalan (A-Z)</string>
+    <string name="empty_customers_hint">Wala pang kustomer.\nPindutin ang + para magdagdag!</string>
+    <string name="no_results">Walang nahanap na kustomer.</string>
+
+    <string name="badge_to_receive">Sisingilin</string>
+    <string name="badge_to_give">Babayaran</string>
+    <string name="badge_settled">Bayad Na</string>
+    <string name="no_activity_yet">Walang rekord</string>
+    <string name="due_prefix">Takdang Araw: %1$s</string>
+
+    <string name="btn_gave_credit">− NAGPAUTANG</string>
+    <string name="btn_got_payment">+ BINAYARAN</string>
+
+    <string name="todays_cash_summary">Buod ng Pera Ngayong Araw</string>
+    <string name="cash_in_sales">Pumasok na Pera (Benta)</string>
+    <string name="cash_out_expenses">Lumabas na Pera (Gastos)</string>
+    <string name="daily_net_balance">Kita Ngayong Araw</string>
+    <string name="btn_cash_in">+ Pumasok (Benta)</string>
+    <string name="btn_cash_out">− Lumabas (Gastos)</string>
+    <string name="cash_in_sale">Benta (Cash)</string>
+    <string name="cash_out_expense">Gastos / Bayarin</string>
+    <string name="no_cash_entries_today">Walang naitalang transaksyon ngayong araw.</string>
+
+    <string name="net_balance">Kasalukuyang Balanse</string>
+    <string name="due_date_tag">Takdang araw sa %1$s</string>
+    <string name="customer_owes_you">May utang ang kustomer</string>
+    <string name="you_owe_customer">May utang ka sa kustomer</string>
+    <string name="no_entries_yet_hint">Wala pang naitala.\nPindutin ang NAGPAUTANG o BINAYARAN para magtala.</string>
+    <string name="entry_deleted">Nabura ang rekord</string>
+    <string name="bal_prefix">Balanse: %1$s</string>
+
+    <string name="download_pdf_report">I-download ang PDF Statement</string>
+    <string name="export_csv">I-export sa Excel/CSV</string>
+    <string name="set_due_date">Itakda ang Araw ng Bayad</string>
+    <string name="edit_customer">I-edit ang Kustomer</string>
+    <string name="delete_customer">Tanggalin ang Kustomer</string>
+    <string name="delete_customer_confirm_message">Sigurado ka bang nais mong tanggalin si %1$s? Ang lahat ng tala ng utang ay permanenteng mabubura.</string>
+
+    <string name="customer_name">Pangalan ng Kustomer</string>
+    <string name="phone_number">Numero ng Telepono</string>
+
+    <string name="title_gave_credit">Nagpautang (−)</string>
+    <string name="title_got_payment">Nakatanggap ng Bayad (+)</string>
+    <string name="title_cash_in_sale">Pumasok na Benta (+)</string>
+    <string name="title_cash_out_expense">Lumabas na Gastos (−)</string>
+    <string name="note_item_details_hint">Detalye ng paninda / tala (opsyonal)</string>
+    <string name="save_entry">I-save ang Rekord</string>
+    <string name="gave_credit">Nagpautang</string>
+    <string name="received_payment">Nakatanggap ng bayad</string>
+
+    <string name="add_customer">Magdagdag ng Kustomer</string>
+    <string name="pick_from_phone_contacts">Pumili mula sa Kontak ng Telepono</string>
+    <string name="customer_name_required">Pangalan ng Kustomer *</string>
+    <string name="phone_number_optional">Numero ng Telepono (para sa mensahe)</string>
+    <string name="btn_create_customer">I-save ang Kustomer</string>
+
+    <string name="remove_ads_lifetime_title">Alisin ang Ads Magpakailanman</string>
+    <string name="remove_ads_lifetime_desc">Isang beses lang na bayad para sa tuloy-tuloy na paggamit nang walang ads.</string>
+    <string name="upgrade_pro_btn">Alisin ang Ads sa halagang %1$s</string>
+    <string name="section_general">Pangkalahatan</string>
+    <string name="shop_business_name">Pangalan ng Tindahan</string>
+    <string name="my_general_store">Hal: Tindahan ni Aling Nena</string>
+    <string name="not_set">Hindi nakatakda</string>
+    <string name="currency">Salapi (Currency)</string>
+    <string name="select_currency">Pumili ng Salapi</string>
+    <string name="app_security_lock">Kandado ng App</string>
+    <string name="biometric_pin_protect_desc">Protektahan ang listahan gamit ang fingerprint o PIN</string>
+    <string name="section_data_backup">Datos at Backup</string>
+    <string name="export_full_backup_json">I-backup ang Lahat ng Datos (JSON)</string>
+    <string name="export_backup_desc">I-save ang kumpletong kopya sa Google Drive o telepono</string>
+    <string name="restore_backup_json">Ibalik ang Backup (JSON)</string>
+    <string name="restore_backup_desc">Ibalik ang mga datos mula sa naunang na-export na file</string>
+    <string name="export_all_customers_csv">I-export ang Kustomer sa Excel/CSV</string>
+    <string name="export_all_csv_desc">Listahan ng lahat ng kustomer at balanse</string>
+    <string name="privacy_security_title">Seguridad at Privacy</string>
+    <string name="local_first_privacy_promise">Ang LedgerPad ay 100% offline. Ang iyong datos ay hindi kailanman ipapadala sa anumang internet server.</string>
+    <string name="backup_exported_success">Matagumpay na nai-export ang backup</string>
+    <string name="csv_exported_success">Matagumpay na nai-export ang CSV</string>
+    <string name="restore_backup_title">Ibalik ang Datos</string>
+    <string name="restore_backup_confirm_warning">Mapapalitan ang kasalukuyang datos ng nilalaman ng backup file. Nais mo bang magpatuloy?</string>
+    <string name="restore">Ibalik</string>
+    <string name="restore_success">Matagumpay na naibalik ang datos</string>
+    <string name="restore_failed_corrupt">Bigo: sira o maling backup file</string>
+
+    <string name="app_locked_title">Naka-lock ang LedgerPad</string>
+    <string name="app_locked_desc">Mag-authenticate upang buksan ang mga tala</string>
+    <string name="unlock_app_btn">Buksan</string>
+    <string name="unlock_ledgerpad">Buksan ang LedgerPad</string>
+    <string name="authenticate_to_access_records">Mag-authenticate para mabuksan</string>
+
+    <string name="notification_channel_reminders">Mga Paalala sa Bayarin</string>
+    <string name="notification_channel_reminders_desc">Araw-araw na abiso para sa mga dapat maningil</string>
+    <string name="notification_due_title">Paalala sa Takdang Araw ng Bayad</string>
+    <plurals name="notification_due_message">
+        <item quantity="one">%1$d kustomer ang may takdang bayad ngayong araw.</item>
+        <item quantity="other">%1$d mga kustomer ang may takdang bayad ngayong araw.</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">Magandang araw %1$s, ang natitirang balanse mo sa %3$s ay %2$s. Maaari po bang maayos ito sa lalong madaling panahon? Salamat po!</string>
+    <string name="reminder_msg_with_due">Magandang araw %1$s, paalala lamang na ang balanse mo sa %3$s ay %2$s (Takdang Araw: %4$s). Maraming salamat po!</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">Kuwento ng Kuwenta (Statement)</string>
+    <string name="generated_on">Nilikha noong</string>
+    <string name="customer">Kustomer</string>
+    <string name="phone">Telepono</string>
+    <string name="no_phone">Wala</string>
+    <string name="due_date">Takdang Araw</string>
+    <string name="none">Wala</string>
+    <string name="table_date">Petsa</string>
+    <string name="table_note">Tala</string>
+    <string name="table_gave">Inutang</string>
+    <string name="table_got">Ibinayad</string>
+    <string name="table_balance">Balanse</string>
+    <string name="pdf_footer_note">Nilikha offline ng LedgerPad • Walang cloud server</string>
+</resources>

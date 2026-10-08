@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">उधार खाता – LedgerPad</string>
+    <string name="offline_ledger_badge">100% ऑफ़लाइन • सुरक्षित</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="back">पीछे</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="save">सेव करें</string>
+    <string name="clear">हटाएं</string>
+    <string name="delete">डिलीट करें</string>
+    <string name="undo">पूर्ववत करें</string>
+    <string name="call">कॉल करें</string>
+    <string name="send_reminder">तगादा भेजें</string>
+    <string name="share_reminder">पेमेंट रिमाइंडर शेयर करें</string>
+
+    <string name="tab_customers">ग्राहक (उधार)</string>
+    <string name="tab_cashbook">रोकड़ बही (कैशबुक)</string>
+
+    <string name="total_to_receive">कुल लेना है (बाकी)</string>
+    <string name="total_to_give">कुल देना है</string>
+    <string name="search_customers">ग्राहक या नंबर खोजें...</string>
+    <string name="sort">क्रमबद्ध करें</string>
+    <string name="sort_recent">हाल की गतिविधि</string>
+    <string name="sort_balance">अधिकतम बकाया</string>
+    <string name="sort_name">नाम (A-Z)</string>
+    <string name="empty_customers_hint">कोई ग्राहक नहीं मिला।\nनया ग्राहक जोड़ने के लिए + दबाएं!</string>
+    <string name="no_results">कोई ग्राहक नहीं मिला।</string>
+
+    <string name="badge_to_receive">लेना है</string>
+    <string name="badge_to_give">देना है</string>
+    <string name="badge_settled">हिसाब बराबर</string>
+    <string name="no_activity_yet">कोई लेन-देन नहीं</string>
+    <string name="due_prefix">तारीख: %1$s</string>
+
+    <string name="btn_gave_credit">− दिया (उधार)</string>
+    <string name="btn_got_payment">+ मिला (जमा)</string>
+
+    <string name="todays_cash_summary">आज का नकद हिसाब</string>
+    <string name="cash_in_sales">नकद बिक्री (आया)</string>
+    <string name="cash_out_expenses">खर्च (गया)</string>
+    <string name="daily_net_balance">आज का कुल मुनाफा</string>
+    <string name="btn_cash_in">+ कैश आया (बिक्री)</string>
+    <string name="btn_cash_out">− कैश गया (खर्च)</string>
+    <string name="cash_in_sale">बिक्री (कैश इन)</string>
+    <string name="cash_out_expense">खर्च (कैश आउट)</string>
+    <string name="no_cash_entries_today">आज कोई नकद लेन-देन दर्ज नहीं है।</string>
+
+    <string name="net_balance">कुल बकाया</string>
+    <string name="due_date_tag">भुगतान की अंतिम तारीख: %1$s</string>
+    <string name="customer_owes_you">ग्राहक से लेना है</string>
+    <string name="you_owe_customer">ग्राहक को देना है</string>
+    <string name="no_entries_yet_hint">कोई लेन-देन दर्ज नहीं है।\nदर्ज करने के लिए \'दिया\' या \'मिला\' दबाएं।</string>
+    <string name="entry_deleted">लेन-देन हटाया गया</string>
+    <string name="bal_prefix">बकाया: %1$s</string>
+
+    <string name="download_pdf_report">PDF खाता रिपोर्ट डाउनलोड करें</string>
+    <string name="export_csv">एक्सेल/CSV में निकालें</string>
+    <string name="set_due_date">तारीख सेट करें</string>
+    <string name="edit_customer">ग्राहक बदलें</string>
+    <string name="delete_customer">ग्राहक हटाएं</string>
+    <string name="delete_customer_confirm_message">क्या आप %1$s को हटाना चाहते हैं? इसका पूरा खाता इतिहास हमेशा के लिए मिट जाएगा।</string>
+
+    <string name="customer_name">ग्राहक का नाम</string>
+    <string name="phone_number">फ़ोन नंबर</string>
+
+    <string name="title_gave_credit">उधार दिया (−)</string>
+    <string name="title_got_payment">पैसा मिला (+)</string>
+    <string name="title_cash_in_sale">नकद बिक्री (+)</string>
+    <string name="title_cash_out_expense">नकद खर्च (−)</string>
+    <string name="note_item_details_hint">सामान का विवरण / नोट (वैकल्पिक)</string>
+    <string name="save_entry">हिसाब दर्ज करें</string>
+    <string name="gave_credit">उधार दिया</string>
+    <string name="received_payment">भुगतान मिला</string>
+
+    <string name="add_customer">ग्राहक जोड़ें</string>
+    <string name="pick_from_phone_contacts">संपर्क सूची से चुनें</string>
+    <string name="customer_name_required">ग्राहक का नाम *</string>
+    <string name="phone_number_optional">फ़ोन नंबर (व्हाट्सएप रिमाइंडर के लिए)</string>
+    <string name="btn_create_customer">ग्राहक बनाएं</string>
+
+    <string name="remove_ads_lifetime_title">विज्ञापन हमेशा के लिए हटाएं</string>
+    <string name="remove_ads_lifetime_desc">एक बार पेमेंट करके हमेशा बिना विज्ञापन के चलाएं।</string>
+    <string name="upgrade_pro_btn">%1$s में विज्ञापन हटाएं</string>
+    <string name="section_general">सामान्य</string>
+    <string name="shop_business_name">दुकान / व्यापार का नाम</string>
+    <string name="my_general_store">उदा. शर्मा किराना स्टोर</string>
+    <string name="not_set">सेट नहीं है</string>
+    <string name="currency">मुद्रा (करेंसी)</string>
+    <string name="select_currency">मुद्रा चुनें</string>
+    <string name="app_security_lock">ऐप लॉक</string>
+    <string name="biometric_pin_protect_desc">फिंगरप्रिंट या स्क्रीन लॉक से सुरक्षा</string>
+    <string name="section_data_backup">डेटा और बैकअप</string>
+    <string name="export_full_backup_json">पूरा डेटा बैकअप लें (JSON)</string>
+    <string name="export_backup_desc">गूगल ड्राइव या फोन में पूरा बैकअप सुरक्षित करें</string>
+    <string name="restore_backup_json">बैकअप से डेटा वापस लाएं (JSON)</string>
+    <string name="restore_backup_desc">पहले से सेव की गई बैकअप फाइल से डेटा लोड करें</string>
+    <string name="export_all_customers_csv">सभी ग्राहकों की एक्सेल/CSV फाइल</string>
+    <string name="export_all_csv_desc">सभी ग्राहकों और बकाया राशि की लिस्ट</string>
+    <string name="privacy_security_title">गोपनीयता और सुरक्षा</string>
+    <string name="local_first_privacy_promise">LedgerPad 100% ऑफ़लाइन है। आपका डेटा और ग्राहकों के नंबर कभी भी आपके फ़ोन से बाहर नहीं जाते।</string>
+    <string name="backup_exported_success">बैकअप सुरक्षित कर लिया गया</string>
+    <string name="csv_exported_success">CSV फाइल तैयार है</string>
+    <string name="restore_backup_title">डेटा रीस्टोर करें</string>
+    <string name="restore_backup_confirm_warning">बैकअप लोड करने से पुराना डेटा बदल जाएगा। क्या आप जारी रखना चाहते हैं?</string>
+    <string name="restore">रीस्टोर करें</string>
+    <string name="restore_success">डेटा सफलतापूर्वक लोड हो गया</string>
+    <string name="restore_failed_corrupt">रीस्टोर असफल: अमान्य बैकअप फाइल</string>
+
+    <string name="app_locked_title">LedgerPad लॉक है</string>
+    <string name="app_locked_desc">खाता खोलने के लिए अनलॉक करें</string>
+    <string name="unlock_app_btn">अनलॉक करें</string>
+    <string name="unlock_ledgerpad">LedgerPad अनलॉक करें</string>
+    <string name="authenticate_to_access_records">खाते देखने के लिए अनलॉक करें</string>
+
+    <string name="notification_channel_reminders">उधार तगादा रिमाइंडर</string>
+    <string name="notification_channel_reminders_desc">दैनिक बकाया भुगतान की सूचना</string>
+    <string name="notification_due_title">उधार चुकाने की तारीख का रिमाइंडर</string>
+    <plurals name="notification_due_message">
+        <item quantity="one">%1$d ग्राहक की उधारी आज देय है।</item>
+        <item quantity="other">%1$d ग्राहकों की उधारी आज देय है।</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">नमस्ते %1$s, %3$s पर आपका बकाया हिसाब %2$s है। कृपया जल्द भुगतान करने की कृपा करें। धन्यवाद!</string>
+    <string name="reminder_msg_with_due">नमस्ते %1$s, %3$s पर आपका बकाया %2$s है (अंतिम तारीख: %4$s)। कृपया भुगतान करें। धन्यवाद!</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">खाता विवरण (स्टेटमेंट)</string>
+    <string name="generated_on">बनाया गया</string>
+    <string name="customer">ग्राहक</string>
+    <string name="phone">फ़ोन</string>
+    <string name="no_phone">नहीं है</string>
+    <string name="due_date">अंतिम तारीख</string>
+    <string name="none">कोई नहीं</string>
+    <string name="table_date">तारीख</string>
+    <string name="table_note">विवरण</string>
+    <string name="table_gave">दिया</string>
+    <string name="table_got">मिला</string>
+    <string name="table_balance">बकाया</string>
+    <string name="pdf_footer_note">LedgerPad ऑफ़लाइन खाता • कोई क्लाउड सर्वर नहीं</string>
+</resources>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - LedgerPad</title>
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --bg-color: #FBFDF8;
+            --card-bg: #FFFFFF;
+            --text-color: #191C19;
+            --text-muted: #5A605A;
+            --border-color: #DDE5DA;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+        }
+        h1 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 12px;
+        }
+        h2 {
+            color: var(--primary);
+            margin-top: 24px;
+        }
+        p, li {
+            color: var(--text-color);
+        }
+        .badge {
+            display: inline-block;
+            background: #E8F5E9;
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.85em;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Privacy Policy for LedgerPad</h1>
+        <div class="badge">100% Offline-First • Local Storage Only</div>
+        <p><strong>Effective Date:</strong> October 8, 2026</p>
+        <p><strong>Application:</strong> LedgerPad (Package: <code>jp.tpp.t9s.ledgerpad</code>)</p>
+
+        <h2>1. Overview and Core Philosophy</h2>
+        <p>LedgerPad is an offline-first mobile utility application designed for small business shop owners to manage credit ledgers and daily cashbooks. We believe that your financial business records and customer personal information should remain strictly private and under your complete control. <strong>LedgerPad operates with zero application servers and does not collect or transmit your ledger data over the internet.</strong></p>
+
+        <h2>2. Data Collection and Processing</h2>
+        <ul>
+            <li><strong>Customer Data & Transactions:</strong> All customer names, phone numbers, transaction notes, credit amounts, and cashbook records entered by you are saved exclusively on your local device (SQLite database). This data is never sent to our servers or any third-party cloud.</li>
+            <li><strong>Contacts Access:</strong> If you use the "Pick from Contacts" feature, the app launches Android's system contact picker intent. We only receive the specific contact details you explicitly select to autofill the name and phone number. We do NOT request continuous read access to your entire address book.</li>
+            <li><strong>Biometric Data:</strong> If enabled, app locking uses the Android BiometricPrompt framework. Authentication is handled entirely by your device hardware and operating system. LedgerPad never accesses or stores your biometric credentials.</li>
+        </ul>
+
+        <h2>3. Third-Party Services and Advertising</h2>
+        <p>To support ongoing maintenance with zero running costs, LedgerPad utilizes Google Mobile Ads (AdMob) and Google Play Billing:</p>
+        <ul>
+            <li><strong>Google AdMob:</strong> Serves banner, native, and interstitial advertisements. Google may collect anonymous device identifiers (such as the Advertising ID) and technical telemetry in compliance with Google's Privacy Policy and your regional consent preferences.</li>
+            <li><strong>Google Play In-App Billing:</strong> Processes one-time purchases for ad removal. Financial payment transactions are handled directly and securely by Google Play. We do not receive or process your payment card numbers.</li>
+        </ul>
+
+        <h2>4. Data Backup and Export</h2>
+        <p>Because LedgerPad stores data locally on your device, backup and export functionality (JSON / CSV / PDF) is executed directly on your smartphone via the Android Storage Access Framework. When exported, your backup files are stored only in the destination you select (e.g. your local storage or your personal Google Drive).</p>
+
+        <h2>5. Children's Privacy</h2>
+        <p>LedgerPad is intended for shop owners and business operators. We do not knowingly collect personal information from children under the age of 13.</p>
+
+        <h2>6. Changes to This Privacy Policy</h2>
+        <p>We may update our Privacy Policy periodically. Any modifications will be posted directly to this web page with an updated revision date.</p>
+
+        <h2>7. Contact Us</h2>
+        <p>If you have any questions or feedback regarding this Privacy Policy, please contact the developer via GitHub Issues at: <a href="https://github.com/t9star/ledgerpad" target="_blank">https://github.com/t9star/ledgerpad</a>.</p>
+
+        <div class="footer">
+            &copy; 2026 LedgerPad. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

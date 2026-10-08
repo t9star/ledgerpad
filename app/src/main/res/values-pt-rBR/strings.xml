@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">Caderneta de Fiado – LedgerPad</string>
+    <string name="offline_ledger_badge">100% Offline • Seguro</string>
+    <string name="settings">Configurações</string>
+    <string name="back">Voltar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salvar</string>
+    <string name="clear">Limpar</string>
+    <string name="delete">Excluir</string>
+    <string name="undo">Desfazer</string>
+    <string name="call">Ligar</string>
+    <string name="send_reminder">Cobrar no WhatsApp</string>
+    <string name="share_reminder">Compartilhar Lembrete</string>
+
+    <string name="tab_customers">Clientes (Fiado)</string>
+    <string name="tab_cashbook">Livro Caixa</string>
+
+    <string name="total_to_receive">Total a Receber</string>
+    <string name="total_to_give">Total a Pagar / Troco</string>
+    <string name="search_customers">Buscar cliente ou telefone...</string>
+    <string name="sort">Ordenar</string>
+    <string name="sort_recent">Mais Recentes</string>
+    <string name="sort_balance">Maior Dívida</string>
+    <string name="sort_name">Nome (A-Z)</string>
+    <string name="empty_customers_hint">Nenhum cliente cadastrado.\nToque no botão + para adicionar!</string>
+    <string name="no_results">Nenhum cliente encontrado.</string>
+
+    <string name="badge_to_receive">A Receber</string>
+    <string name="badge_to_give">A Pagar</string>
+    <string name="badge_settled">Quitado</string>
+    <string name="no_activity_yet">Sem movimentação</string>
+    <string name="due_prefix">Vence: %1$s</string>
+
+    <string name="btn_gave_credit">− VENDEU FIADO</string>
+    <string name="btn_got_payment">+ RECEBEU PAGTO</string>
+
+    <string name="todays_cash_summary">Resumo do Caixa de Hoje</string>
+    <string name="cash_in_sales">Entradas (Vendas)</string>
+    <string name="cash_out_expenses">Saídas (Despesas)</string>
+    <string name="daily_net_balance">Saldo do Dia</string>
+    <string name="btn_cash_in">+ Entrada (Venda)</string>
+    <string name="btn_cash_out">− Saída (Despesa)</string>
+    <string name="cash_in_sale">Venda à Vista</string>
+    <string name="cash_out_expense">Despesa / Pagamento</string>
+    <string name="no_cash_entries_today">Nenhuma movimentação registrada hoje.</string>
+
+    <string name="net_balance">Saldo Devedor</string>
+    <string name="due_date_tag">Vencimento em %1$s</string>
+    <string name="customer_owes_you">Cliente está devendo</string>
+    <string name="you_owe_customer">Você deve ao cliente</string>
+    <string name="no_entries_yet_hint">Nenhum registro ainda.\nToque em VENDEU ou RECEBEU para anotar.</string>
+    <string name="entry_deleted">Registro excluído</string>
+    <string name="bal_prefix">Saldo: %1$s</string>
+
+    <string name="download_pdf_report">Gerar Extrato em PDF</string>
+    <string name="export_csv">Exportar para Excel (CSV)</string>
+    <string name="set_due_date">Definir Vencimento</string>
+    <string name="edit_customer">Editar Cliente</string>
+    <string name="delete_customer">Excluir Cliente</string>
+    <string name="delete_customer_confirm_message">Tem certeza que deseja excluir %1$s? Todo o histórico de compras e pagamentos será apagado.</string>
+
+    <string name="customer_name">Nome do Cliente</string>
+    <string name="phone_number">Telefone (WhatsApp)</string>
+
+    <string name="title_gave_credit">Vendeu Fiado (−)</string>
+    <string name="title_got_payment">Recebeu Pagamento (+)</string>
+    <string name="title_cash_in_sale">Entrada no Caixa (+)</string>
+    <string name="title_cash_out_expense">Saída do Caixa (−)</string>
+    <string name="note_item_details_hint">Descrição dos itens (opcional)</string>
+    <string name="save_entry">Salvar Registro</string>
+    <string name="gave_credit">Vendeu fiado</string>
+    <string name="received_payment">Recebeu valor</string>
+
+    <string name="add_customer">Adicionar Cliente</string>
+    <string name="pick_from_phone_contacts">Importar da Agenda</string>
+    <string name="customer_name_required">Nome do Cliente *</string>
+    <string name="phone_number_optional">Telefone (para cobrança no WhatsApp)</string>
+    <string name="btn_create_customer">Cadastrar Cliente</string>
+
+    <string name="remove_ads_lifetime_title">Remover Anúncios para Sempre</string>
+    <string name="remove_ads_lifetime_desc">Compre uma única vez e use o aplicativo totalmente sem anúncios.</string>
+    <string name="upgrade_pro_btn">Remover Anúncios por %1$s</string>
+    <string name="section_general">Geral</string>
+    <string name="shop_business_name">Nome do Comércio / Loja</string>
+    <string name="my_general_store">Ex: Mercearia do Zé</string>
+    <string name="not_set">Não definido</string>
+    <string name="currency">Moeda</string>
+    <string name="select_currency">Selecionar Moeda</string>
+    <string name="app_security_lock">Bloqueio do Aplicativo</string>
+    <string name="biometric_pin_protect_desc">Proteja sua caderneta com biometria ou senha do celular</string>
+    <string name="section_data_backup">Dados e Backup</string>
+    <string name="export_full_backup_json">Fazer Backup Completo (JSON)</string>
+    <string name="export_backup_desc">Salve uma cópia segura no Google Drive ou memória interna</string>
+    <string name="restore_backup_json">Restaurar Backup (JSON)</string>
+    <string name="restore_backup_desc">Recupere todos os clientes e dívidas de um arquivo salvo</string>
+    <string name="export_all_customers_csv">Exportar Clientes para Excel</string>
+    <string name="export_all_csv_desc">Planilha completa de clientes e saldos</string>
+    <string name="privacy_security_title">Privacidade e Segurança</string>
+    <string name="local_first_privacy_promise">O LedgerPad funciona 100% offline. Seus clientes e registros financeiros nunca saem do seu celular.</string>
+    <string name="backup_exported_success">Backup exportado com sucesso</string>
+    <string name="csv_exported_success">Planilha CSV exportada com sucesso</string>
+    <string name="restore_backup_title">Restaurar Dados</string>
+    <string name="restore_backup_confirm_warning">A restauração irá substituir todos os dados atuais pelo arquivo selecionado. Continuar?</string>
+    <string name="restore">Restaurar</string>
+    <string name="restore_success">Dados restaurados com sucesso!</string>
+    <string name="restore_failed_corrupt">Falha ao restaurar: arquivo de backup inválido</string>
+
+    <string name="app_locked_title">Caderneta Bloqueada</string>
+    <string name="app_locked_desc">Confirme sua identidade para acessar as contas</string>
+    <string name="unlock_app_btn">Desbloquear</string>
+    <string name="unlock_ledgerpad">Desbloquear LedgerPad</string>
+    <string name="authenticate_to_access_records">Autentique-se para abrir</string>
+
+    <string name="notification_channel_reminders">Cobranças e Vencimentos</string>
+    <string name="notification_channel_reminders_desc">Avisos diários de clientes com fiado vencendo</string>
+    <string name="notification_due_title">Lembrete de Vencimento de Fiado</string>
+    <plurals name="notification_due_message">
+        <item quantity="one">%1$d cliente tem fiado vencendo hoje.</item>
+        <item quantity="other">%1$d clientes têm fiado vencendo hoje.</item>
+    </plurals>
+
+    <string name="reminder_msg_simple">Olá %1$s, tudo bem? Seu saldo pendente na %3$s é de %2$s. Quando puder passar para acertar, agradeço!</string>
+    <string name="reminder_msg_with_due">Olá %1$s, tudo bem? Lembrando que seu saldo na %3$s é de %2$s (Vencimento: %4$s). Qualquer dúvida estou à disposição!</string>
+
+    <!-- PDF Strings -->
+    <string name="account_statement">Extrato de Conta Corrente</string>
+    <string name="generated_on">Emitido em</string>
+    <string name="customer">Cliente</string>
+    <string name="phone">Telefone</string>
+    <string name="no_phone">Não informado</string>
+    <string name="due_date">Data de Vencimento</string>
+    <string name="none">Nenhum</string>
+    <string name="table_date">Data</string>
+    <string name="table_note">Descrição</string>
+    <string name="table_gave">Comprou (Fiado)</string>
+    <string name="table_got">Pagou</string>
+    <string name="table_balance">Saldo</string>
+    <string name="pdf_footer_note">Gerado offline pelo LedgerPad • Sem servidores externos</string>
+</resources>
