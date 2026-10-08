@@ -150,4 +150,10 @@
     <string name="qr_code_deleted">Tinanggal ang QR code para sa bayad</string>
     <string name="delete_qr_code">Tanggalin ang QR Code</string>
     <string name="close">Isara</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">I-edit ang Mabilisang Halaga</string>
+    <string name="edit_quick_amounts_desc">I-customize ang karaniwang presyo ng paninda sa itaas ng keypad</string>
+    <string name="quick_amounts_hint">Ilagay ang mga halaga na pinaghihiwalay ng kuwit (hal. 20, 50, 100, 200)</string>
+    <string name="reset_default">Ibalik sa Default</string>
 </resources>

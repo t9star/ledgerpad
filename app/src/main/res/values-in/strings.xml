@@ -149,4 +149,10 @@
     <string name="qr_code_deleted">QRIS telah dihapus</string>
     <string name="delete_qr_code">Hapus QRIS</string>
     <string name="close">Tutup</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">Edit Nominal Cepat</string>
+    <string name="edit_quick_amounts_desc">Atur nominal atau harga produk di atas kalkulator</string>
+    <string name="quick_amounts_hint">Masukkan nominal dipisah koma (contoh: 5000, 10000, 20000, 50000)</string>
+    <string name="reset_default">Kembalikan ke Default</string>
 </resources>

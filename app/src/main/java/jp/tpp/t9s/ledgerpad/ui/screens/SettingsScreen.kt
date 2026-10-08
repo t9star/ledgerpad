@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Store
@@ -91,6 +92,7 @@ fun SettingsScreen(
     var showShopDialog by remember { mutableStateOf(false) }
     var showCurrencyDropdown by remember { mutableStateOf(false) }
     var showRestoreConfirm by remember { mutableStateOf<String?>(null) }
+    var showEditChipsDialog by remember { mutableStateOf(false) }
 
     // Backup JSON Export launcher
     val exportJsonLauncher = rememberLauncherForActivityResult(
@@ -288,6 +290,15 @@ fun SettingsScreen(
                         pickQrLauncher.launch("image/*")
                     }
                 }
+            )
+
+            // Custom Quick Amounts Row
+            val customQuickAmountsStr by container.prefs.customQuickAmounts.collectAsState()
+            SettingsRow(
+                icon = Icons.Default.Edit,
+                title = stringResource(R.string.edit_quick_amounts),
+                subtitle = container.prefs.getQuickAmounts(currency).joinToString(", "),
+                onClick = { showEditChipsDialog = true }
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
@@ -501,6 +512,60 @@ fun SettingsScreen(
                     }
                     TextButton(onClick = { showQrPreviewDialog = false }) {
                         Text(stringResource(R.string.close))
+                    }
+                }
+            }
+        )
+    }
+
+    // Edit Quick Amounts Dialog
+    if (showEditChipsDialog) {
+        val currentList = container.prefs.getQuickAmounts(currency)
+        var textInput by remember { mutableStateOf(currentList.joinToString(", ")) }
+
+        AlertDialog(
+            onDismissRequest = { showEditChipsDialog = false },
+            title = { Text(stringResource(R.string.edit_quick_amounts)) },
+            text = {
+                Column {
+                    Text(
+                        text = stringResource(R.string.edit_quick_amounts_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = textInput,
+                        onValueChange = { textInput = it },
+                        placeholder = { Text(stringResource(R.string.quick_amounts_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    val parsed = textInput.split(",")
+                        .mapNotNull { it.trim().toLongOrNull() }
+                        .filter { it > 0 }
+                    if (parsed.isNotEmpty()) {
+                        container.prefs.setQuickAmounts(parsed)
+                    }
+                    showEditChipsDialog = false
+                }) {
+                    Text(stringResource(R.string.save))
+                }
+            },
+            dismissButton = {
+                Row {
+                    TextButton(onClick = {
+                        container.prefs.resetQuickAmounts()
+                        showEditChipsDialog = false
+                    }) {
+                        Text(stringResource(R.string.reset_default))
+                    }
+                    TextButton(onClick = { showEditChipsDialog = false }) {
+                        Text(stringResource(R.string.cancel))
                     }
                 }
             }

@@ -11,10 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
@@ -79,6 +82,7 @@ fun AmountEntryScreen(
     var note by remember { mutableStateOf("") }
     var selectedDateMillis by remember { mutableLongStateOf(System.currentTimeMillis()) }
     var showDatePicker by remember { mutableStateOf(false) }
+    var showEditChipsDialog by remember { mutableStateOf(false) }
 
     val isExpenseOrGave = when (mode) {
         is EntryMode.CustomerTxn -> mode.type == TxnType.GAVE
@@ -174,12 +178,17 @@ fun AmountEntryScreen(
             Spacer(Modifier.weight(1f))
 
             // Quick Amount Chips
-            val quickChips = remember(currency) { Money.quickAmounts(currency) }
+            val customQuickAmountsStr by container.prefs.customQuickAmounts.collectAsState()
+            val quickChips = remember(currency, customQuickAmountsStr) {
+                container.prefs.getQuickAmounts(currency)
+            }
+
             androidx.compose.foundation.lazy.LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 6.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 items(quickChips.size) { index ->
                     val chipVal = quickChips[index]
@@ -206,6 +215,18 @@ fun AmountEntryScreen(
                             )
                         }
                     )
+                }
+                item {
+                    IconButton(
+                        onClick = { showEditChipsDialog = true },
+                        modifier = Modifier.size(32.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(R.string.edit_quick_amounts),
+                            tint = MaterialTheme.colorScheme.outline
+                        )
+                    }
                 }
             }
 
@@ -291,5 +312,59 @@ fun AmountEntryScreen(
         ) {
             DatePicker(state = datePickerState)
         }
+    }
+
+    // Edit Quick Amounts Dialog
+    if (showEditChipsDialog) {
+        val currentList = container.prefs.getQuickAmounts(currency)
+        var textInput by remember { mutableStateOf(currentList.joinToString(", ")) }
+
+        AlertDialog(
+            onDismissRequest = { showEditChipsDialog = false },
+            title = { Text(stringResource(R.string.edit_quick_amounts)) },
+            text = {
+                Column {
+                    Text(
+                        text = stringResource(R.string.edit_quick_amounts_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = textInput,
+                        onValueChange = { textInput = it },
+                        placeholder = { Text(stringResource(R.string.quick_amounts_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    val parsed = textInput.split(",")
+                        .mapNotNull { it.trim().toLongOrNull() }
+                        .filter { it > 0 }
+                    if (parsed.isNotEmpty()) {
+                        container.prefs.setQuickAmounts(parsed)
+                    }
+                    showEditChipsDialog = false
+                }) {
+                    Text(stringResource(R.string.save))
+                }
+            },
+            dismissButton = {
+                Row {
+                    TextButton(onClick = {
+                        container.prefs.resetQuickAmounts()
+                        showEditChipsDialog = false
+                    }) {
+                        Text(stringResource(R.string.reset_default))
+                    }
+                    TextButton(onClick = { showEditChipsDialog = false }) {
+                        Text(stringResource(R.string.cancel))
+                    }
+                }
+            }
+        )
     }
 }

@@ -150,4 +150,10 @@
     <string name="qr_code_deleted">Código QR de pago eliminado</string>
     <string name="delete_qr_code">Eliminar Código QR</string>
     <string name="close">Cerrar</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">Editar Importes Rápidos</string>
+    <string name="edit_quick_amounts_desc">Personalice los precios de sus productos más comunes sobre el teclado</string>
+    <string name="quick_amounts_hint">Ingrese importes separados por comas (ej. 10, 20, 50, 100)</string>
+    <string name="reset_default">Restablecer valores predeterminados</string>
 </resources>

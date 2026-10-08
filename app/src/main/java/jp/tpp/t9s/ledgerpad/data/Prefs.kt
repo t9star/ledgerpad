@@ -33,6 +33,35 @@ class Prefs(context: Context) {
     private val _hasQrCode = MutableStateFlow(qrCodeFile.exists())
     val hasQrCode: StateFlow<Boolean> = _hasQrCode.asStateFlow()
 
+    private val _customQuickAmounts = MutableStateFlow(sp.getString(K_QUICK_AMOUNTS, null))
+    val customQuickAmounts: StateFlow<String?> = _customQuickAmounts.asStateFlow()
+
+    fun getQuickAmounts(currencyCode: String): List<Long> {
+        val customStr = _customQuickAmounts.value
+        if (!customStr.isNullOrBlank()) {
+            val parsed = customStr.split(",")
+                .mapNotNull { it.trim().toLongOrNull() }
+                .filter { it > 0 }
+            if (parsed.isNotEmpty()) return parsed
+        }
+        return Money.quickAmounts(currencyCode)
+    }
+
+    fun setQuickAmounts(amounts: List<Long>) {
+        val s = amounts.filter { it > 0 }.joinToString(",")
+        _customQuickAmounts.value = s.ifBlank { null }
+        if (s.isBlank()) {
+            sp.edit().remove(K_QUICK_AMOUNTS).apply()
+        } else {
+            sp.edit().putString(K_QUICK_AMOUNTS, s).apply()
+        }
+    }
+
+    fun resetQuickAmounts() {
+        _customQuickAmounts.value = null
+        sp.edit().remove(K_QUICK_AMOUNTS).apply()
+    }
+
     fun setShopName(v: String) { _shopName.value = v; sp.edit().putString(K_SHOP, v).apply() }
     fun setCurrency(v: String) { _currency.value = v; sp.edit().putString(K_CURRENCY, v).apply() }
     fun setLockEnabled(v: Boolean) { _lockEnabled.value = v; sp.edit().putBoolean(K_LOCK, v).apply() }
@@ -56,5 +85,6 @@ class Prefs(context: Context) {
         const val K_LOCK = "lock_enabled"
         const val K_AD_FREE = "ad_free"
         const val K_SORT = "sort_mode"
+        const val K_QUICK_AMOUNTS = "custom_quick_amounts"
     }
 }

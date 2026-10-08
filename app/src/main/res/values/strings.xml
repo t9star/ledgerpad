@@ -150,4 +150,10 @@
     <string name="qr_code_deleted">Payment QR code removed</string>
     <string name="delete_qr_code">Delete QR Code</string>
     <string name="close">Close</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">Edit Quick Amounts</string>
+    <string name="edit_quick_amounts_desc">Customize common prices/denominations shown above keypad</string>
+    <string name="quick_amounts_hint">Enter amounts separated by commas (e.g. 10, 20, 50, 100)</string>
+    <string name="reset_default">Reset to Default</string>
 </resources>

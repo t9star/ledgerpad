@@ -149,4 +149,10 @@
     <string name="qr_code_deleted">受取用QRコードを削除しました</string>
     <string name="delete_qr_code">QRコードを削除</string>
     <string name="close">閉じる</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">クイック金額の編集</string>
+    <string name="edit_quick_amounts_desc">テンキー上に表示する定番商品の金額を設定</string>
+    <string name="quick_amounts_hint">カンマ区切りで金額を入力（例: 100, 300, 500, 1000）</string>
+    <string name="reset_default">初期値に戻す</string>
 </resources>

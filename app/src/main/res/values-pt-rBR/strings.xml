@@ -150,4 +150,10 @@
     <string name="qr_code_deleted">QR Code Pix removido</string>
     <string name="delete_qr_code">Excluir QR Code</string>
     <string name="close">Fechar</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">Editar Valores Rápidos</string>
+    <string name="edit_quick_amounts_desc">Personalize preços ou valores frequentes exibidos sobre o teclado</string>
+    <string name="quick_amounts_hint">Digite os valores separados por vírgula (ex: 5, 10, 20, 50)</string>
+    <string name="reset_default">Restaurar Padrão</string>
 </resources>

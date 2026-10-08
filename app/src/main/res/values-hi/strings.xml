@@ -150,4 +150,10 @@
     <string name="qr_code_deleted">पेमेंट QR कोड हटा दिया गया</string>
     <string name="delete_qr_code">QR कोड हटाएं</string>
     <string name="close">बंद करें</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">त्वरित राशि (Quick Amounts) संपादित करें</string>
+    <string name="edit_quick_amounts_desc">कीपैड के ऊपर सामान्य उत्पाद मूल्य अनुकूलित करें</string>
+    <string name="quick_amounts_hint">अल्पविराम से अलग करके राशि दर्ज करें (उदा. 10, 20, 50, 100)</string>
+    <string name="reset_default">डिफ़ॉल्ट पर रीसेट करें</string>
 </resources>

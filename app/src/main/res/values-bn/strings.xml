@@ -150,4 +150,10 @@
     <string name="qr_code_deleted">পেমেন্ট QR কোড মুছে ফেলা হয়েছে</string>
     <string name="delete_qr_code">QR কোড মুছুন</string>
     <string name="close">বন্ধ করুন</string>
+
+    <!-- Custom Quick Amounts -->
+    <string name="edit_quick_amounts">কুইক অ্যামাউন্ট পরিবর্তন করুন</string>
+    <string name="edit_quick_amounts_desc">ক্যালকুলেটরের ওপরে ঘনঘন বিক্রিত পণ্যের দাম সেট করুন</string>
+    <string name="quick_amounts_hint">কমা দিয়ে আলাদা করে দাম লিখুন (যেমন: ২০, ৫০, ১০০, ২০০)</string>
+    <string name="reset_default">ডিফল্ট অবস্থায় ফেরান</string>
 </resources>
