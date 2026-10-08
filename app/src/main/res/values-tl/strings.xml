@@ -136,4 +136,18 @@
     <string name="table_got">Ibinayad</string>
     <string name="table_balance">Balanse</string>
     <string name="pdf_footer_note">Nilikha offline ng LedgerPad • Walang cloud server</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">Magandang araw %1$s, natanggap na po namin ang inyong bayad na %2$s sa %3$s. Ang inyong natitirang balanse ay %4$s. Maraming salamat po!</string>
+    <string name="share_receipt_title">Ibahagi ang Resibo ng Bayad</string>
+    <string name="send_receipt">Magpadala ng Resibo / Pasasalamat</string>
+    <string name="payment_qr_code">QR Code para sa Bayad</string>
+    <string name="show_payment_qr">Ipakita ang QR Code</string>
+    <string name="set_payment_qr">QR Code ng Tindahan (GCash / Maya / QR)</string>
+    <string name="payment_qr_not_set_hint">Walang nakatakdang QR code. Mangyaring mag-upload ng larawan ng QR code sa Mga Setting.</string>
+    <string name="upload_qr_image">Mag-upload ng Larawan ng QR Code</string>
+    <string name="qr_code_saved">Nai-save ang QR code para sa bayad</string>
+    <string name="qr_code_deleted">Tinanggal ang QR code para sa bayad</string>
+    <string name="delete_qr_code">Tanggalin ang QR Code</string>
+    <string name="close">Isara</string>
 </resources>

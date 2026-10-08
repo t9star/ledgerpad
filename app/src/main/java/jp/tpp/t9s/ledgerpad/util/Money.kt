@@ -82,4 +82,19 @@ object Money {
             (d * 100).toLong()
         }
     }
+
+    /**
+     * Returns suggested quick chip amounts (in whole major units) according to typical denominations.
+     */
+    fun quickAmounts(code: String): List<Long> {
+        return when (code) {
+            "INR" -> listOf(10L, 20L, 50L, 100L, 500L)
+            "BRL" -> listOf(5L, 10L, 20L, 50L, 100L)
+            "IDR" -> listOf(5000L, 10000L, 20000L, 50000L, 100000L)
+            "PHP" -> listOf(20L, 50L, 100L, 200L, 500L)
+            "JPY" -> listOf(100L, 500L, 1000L, 5000L)
+            "BDT" -> listOf(20L, 50L, 100L, 200L, 500L)
+            else -> listOf(5L, 10L, 20L, 50L, 100L)
+        }
+    }
 }

@@ -54,6 +54,50 @@ object Sharing {
     }
 
     /**
+     * Sends a friendly payment receipt / acknowledgment via WhatsApp or fallback to generic share sheet.
+     */
+    fun sendPaymentReceipt(
+        context: Context,
+        phoneNumber: String,
+        customerName: String,
+        shopName: String,
+        paidAmountFormatted: String,
+        remainingBalanceFormatted: String
+    ) {
+        val storeLabel = if (shopName.isNotBlank()) shopName else context.getString(R.string.app_name)
+        val text = context.getString(
+            R.string.receipt_msg,
+            customerName,
+            paidAmountFormatted,
+            storeLabel,
+            remainingBalanceFormatted
+        )
+
+        val cleanPhone = phoneNumber.replace(Regex("[^0-9+]"), "")
+        if (cleanPhone.isNotEmpty()) {
+            try {
+                val encodedText = URLEncoder.encode(text, "UTF-8")
+                val waUri = Uri.parse("https://wa.me/$cleanPhone?text=$encodedText")
+                val waIntent = Intent(Intent.ACTION_VIEW, waUri)
+                waIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(waIntent)
+                return
+            } catch (_: Exception) {
+                // Fallback to share chooser
+            }
+        }
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_receipt_title)).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+    }
+
+    /**
      * Shares a file (PDF, CSV, JSON) via FileProvider and Android Sharesheet.
      */
     fun shareFile(context: Context, file: File, mimeType: String, title: String) {

@@ -136,4 +136,18 @@
     <string name="table_got">मिला</string>
     <string name="table_balance">बकाया</string>
     <string name="pdf_footer_note">LedgerPad ऑफ़लाइन खाता • कोई क्लाउड सर्वर नहीं</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">नमस्ते %1$s, %3$s पर आपका %2$s का भुगतान प्राप्त हुआ। आपका शेष बकाया %4$s है। धन्यवाद!</string>
+    <string name="share_receipt_title">रसीद शेयर करें</string>
+    <string name="send_receipt">रसीद / धन्यवाद भेजें</string>
+    <string name="payment_qr_code">पेमेंट QR कोड</string>
+    <string name="show_payment_qr">QR कोड दिखाएं</string>
+    <string name="set_payment_qr">दुकान का पेमेंट QR कोड सेट करें (UPI / QR)</string>
+    <string name="payment_qr_not_set_hint">QR कोड सेट नहीं है। कृपया सेटिंग्स में जाकर QR कोड फोटो अपलोड करें।</string>
+    <string name="upload_qr_image">QR कोड फोटो अपलोड करें</string>
+    <string name="qr_code_saved">पेमेंट QR कोड सेव हो गया</string>
+    <string name="qr_code_deleted">पेमेंट QR कोड हटा दिया गया</string>
+    <string name="delete_qr_code">QR कोड हटाएं</string>
+    <string name="close">बंद करें</string>
 </resources>

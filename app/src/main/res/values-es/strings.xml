@@ -136,4 +136,18 @@
     <string name="table_got">Abonó (Pagó)</string>
     <string name="table_balance">Saldo</string>
     <string name="pdf_footer_note">Generado sin conexión por LedgerPad • Sin servidores en la nube</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">Estimado/a %1$s, hemos recibido su pago de %2$s en %3$s. Su saldo pendiente actual es de %4$s. ¡Muchas gracias por su preferencia!</string>
+    <string name="share_receipt_title">Compartir Comprobante de Pago</string>
+    <string name="send_receipt">Enviar Recibo / Agradecimiento</string>
+    <string name="payment_qr_code">Código QR de Pago</string>
+    <string name="show_payment_qr">Mostrar Código QR</string>
+    <string name="set_payment_qr">Código QR de Pago del Negocio</string>
+    <string name="payment_qr_not_set_hint">No hay un código QR configurado. Por favor suba la imagen del QR de su negocio en Ajustes.</string>
+    <string name="upload_qr_image">Subir Imagen de Código QR</string>
+    <string name="qr_code_saved">Código QR de pago guardado</string>
+    <string name="qr_code_deleted">Código QR de pago eliminado</string>
+    <string name="delete_qr_code">Eliminar Código QR</string>
+    <string name="close">Cerrar</string>
 </resources>

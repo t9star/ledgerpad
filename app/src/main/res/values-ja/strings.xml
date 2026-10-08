@@ -135,4 +135,18 @@
     <string name="table_got">回収(入金)</string>
     <string name="table_balance">残高</string>
     <string name="pdf_footer_note">LedgerPad オフライン生成 • サーバー通信なし</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">%1$s様、本日 %3$s にて %2$s のお支払いを受領いたしました。残高は %4$s です。いつもご利用ありがとうございます！</string>
+    <string name="share_receipt_title">入金受領書・お礼を共有</string>
+    <string name="send_receipt">受領書・お礼を送る</string>
+    <string name="payment_qr_code">受取用QRコード</string>
+    <string name="show_payment_qr">受取QRを表示</string>
+    <string name="set_payment_qr">受取用QRコード画像の設定 (PayPay等)</string>
+    <string name="payment_qr_not_set_hint">受取用QRコードが設定されていません。設定画面からQRコード画像を登録してください。</string>
+    <string name="upload_qr_image">QRコード画像を登録</string>
+    <string name="qr_code_saved">受取用QRコードを保存しました</string>
+    <string name="qr_code_deleted">受取用QRコードを削除しました</string>
+    <string name="delete_qr_code">QRコードを削除</string>
+    <string name="close">閉じる</string>
 </resources>

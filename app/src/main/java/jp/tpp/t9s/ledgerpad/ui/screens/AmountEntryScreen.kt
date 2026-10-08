@@ -173,6 +173,42 @@ fun AmountEntryScreen(
 
             Spacer(Modifier.weight(1f))
 
+            // Quick Amount Chips
+            val quickChips = remember(currency) { Money.quickAmounts(currency) }
+            androidx.compose.foundation.lazy.LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(quickChips.size) { index ->
+                    val chipVal = quickChips[index]
+                    androidx.compose.material3.AssistChip(
+                        onClick = {
+                            if (expression.isBlank() || expression == "0") {
+                                expression = chipVal.toString()
+                            } else {
+                                // Add as + amount or replace
+                                expression = if (expression.endsWith("+") || expression.endsWith("-") ||
+                                    expression.endsWith("×") || expression.endsWith("÷")
+                                ) {
+                                    expression + chipVal
+                                } else {
+                                    "$expression+$chipVal"
+                                }
+                            }
+                        },
+                        label = {
+                            Text(
+                                text = "+$chipVal",
+                                fontWeight = FontWeight.SemiBold,
+                                color = actionColor
+                            )
+                        }
+                    )
+                }
+            }
+
             // Calculator Keypad
             NumericKeypad(
                 onDigitOrOp = { key ->

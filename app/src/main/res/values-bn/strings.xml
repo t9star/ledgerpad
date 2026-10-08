@@ -136,4 +136,18 @@
     <string name="table_got">জমা</string>
     <string name="table_balance">অবশিষ্ট</string>
     <string name="pdf_footer_note">LedgerPad অফলাইন খাতা • ক্লাউড সার্ভার মুক্ত</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">শ্রদ্ধেয় %1$s, %3$s এ আপনার পরিশোধকৃত %2$s জমা হয়েছে। আপনার বর্তমান অবশিষ্ট বকেয়া %4$s। ধন্যবাদ!</string>
+    <string name="share_receipt_title">পরিশোধের রসিদ শেয়ার করুন</string>
+    <string name="send_receipt">রসিদ / ধন্যবাদ বার্তা পাঠান</string>
+    <string name="payment_qr_code">পেমেন্ট কিউআর কোড (QR Code)</string>
+    <string name="show_payment_qr">QR কোড দেখান</string>
+    <string name="set_payment_qr">দোকানের পেমেন্ট QR কোড সেট করুন</string>
+    <string name="payment_qr_not_set_hint">কোনো QR কোড সেট করা নেই। দয়া করে সেটিংসে গিয়ে আপনার দোকানের QR ছবি আপলোড করুন।</string>
+    <string name="upload_qr_image">QR কোড ছবি আপলোড করুন</string>
+    <string name="qr_code_saved">পেমেন্ট QR কোড সংরক্ষণ করা হয়েছে</string>
+    <string name="qr_code_deleted">পেমেন্ট QR কোড মুছে ফেলা হয়েছে</string>
+    <string name="delete_qr_code">QR কোড মুছুন</string>
+    <string name="close">বন্ধ করুন</string>
 </resources>

@@ -1,6 +1,7 @@
 package jp.tpp.t9s.ledgerpad.ui.screens
 
 import android.app.Activity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -26,6 +28,8 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PictureAsPdf
+import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -103,6 +107,8 @@ fun CustomerDetailScreen(
     var showEditDialog by remember { mutableStateOf(false) }
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
+    var showQrDialog by remember { mutableStateOf(false) }
+    val hasQrCode by container.prefs.hasQrCode.collectAsState()
 
     val currentCustomer = customer ?: return
 
@@ -138,6 +144,14 @@ fun CustomerDetailScreen(
                     }
                 },
                 actions = {
+                    // Shop QR code button
+                    IconButton(onClick = { showQrDialog = true }) {
+                        Icon(
+                            imageVector = Icons.Default.QrCode,
+                            contentDescription = stringResource(R.string.payment_qr_code),
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                     if (currentCustomer.phone.isNotBlank()) {
                         IconButton(onClick = { Sharing.dialNumber(context, currentCustomer.phone) }) {
                             Icon(
@@ -372,6 +386,16 @@ fun CustomerDetailScreen(
                                         container.repository.restoreTxn(row.txn)
                                     }
                                 }
+                            },
+                            onShareReceipt = {
+                                Sharing.sendPaymentReceipt(
+                                    context = context,
+                                    phoneNumber = currentCustomer.phone,
+                                    customerName = currentCustomer.name,
+                                    shopName = shopName,
+                                    paidAmountFormatted = Money.format(row.txn.amountMinor, currency),
+                                    remainingBalanceFormatted = Money.format(row.runningBalanceMinor, currency)
+                                )
                             }
                         )
                     }
@@ -483,6 +507,46 @@ fun CustomerDetailScreen(
             }
         )
     }
+
+    // Payment QR Code Dialog
+    if (showQrDialog) {
+        val qrFile = container.prefs.qrCodeFile
+        val bitmap = remember(hasQrCode) {
+            if (qrFile.exists()) {
+                android.graphics.BitmapFactory.decodeFile(qrFile.absolutePath)?.asImageBitmap()
+            } else null
+        }
+        AlertDialog(
+            onDismissRequest = { showQrDialog = false },
+            title = { Text(stringResource(R.string.payment_qr_code)) },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    if (bitmap != null) {
+                        Image(
+                            bitmap = bitmap,
+                            contentDescription = stringResource(R.string.payment_qr_code),
+                            modifier = Modifier
+                                .size(240.dp)
+                                .padding(8.dp)
+                        )
+                    } else {
+                        Text(
+                            text = stringResource(R.string.payment_qr_not_set_hint),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showQrDialog = false }) {
+                    Text(stringResource(R.string.close))
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -490,7 +554,8 @@ private fun TxnTimelineItem(
     row: TxnRow,
     currency: String,
     onClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onShareReceipt: (() -> Unit)? = null
 ) {
     val txn = row.txn
     val isGave = txn.type == TxnType.GAVE
@@ -528,7 +593,7 @@ private fun TxnTimelineItem(
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = Dates.formatDateTime(txn.occurredAt),
+                Dates.formatDateTime(txn.occurredAt),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -546,6 +611,16 @@ private fun TxnTimelineItem(
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        }
+
+        if (!isGave && onShareReceipt != null) {
+            IconButton(onClick = onShareReceipt) {
+                Icon(
+                    imageVector = Icons.Default.Receipt,
+                    contentDescription = stringResource(R.string.send_receipt),
+                    tint = GreenCredit
+                )
+            }
         }
 
         IconButton(onClick = onDelete) {

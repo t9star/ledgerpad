@@ -29,11 +29,26 @@ class Prefs(context: Context) {
     )
     val sortMode: StateFlow<SortMode> = _sortMode.asStateFlow()
 
+    val qrCodeFile = java.io.File(context.filesDir, "payment_qr.png")
+    private val _hasQrCode = MutableStateFlow(qrCodeFile.exists())
+    val hasQrCode: StateFlow<Boolean> = _hasQrCode.asStateFlow()
+
     fun setShopName(v: String) { _shopName.value = v; sp.edit().putString(K_SHOP, v).apply() }
     fun setCurrency(v: String) { _currency.value = v; sp.edit().putString(K_CURRENCY, v).apply() }
     fun setLockEnabled(v: Boolean) { _lockEnabled.value = v; sp.edit().putBoolean(K_LOCK, v).apply() }
     fun setAdFree(v: Boolean) { _adFree.value = v; sp.edit().putBoolean(K_AD_FREE, v).apply() }
     fun setSortMode(v: SortMode) { _sortMode.value = v; sp.edit().putString(K_SORT, v.name).apply() }
+
+    fun notifyQrCodeUpdated() {
+        _hasQrCode.value = qrCodeFile.exists()
+    }
+
+    fun deleteQrCode() {
+        if (qrCodeFile.exists()) {
+            qrCodeFile.delete()
+        }
+        _hasQrCode.value = false
+    }
 
     private companion object {
         const val K_SHOP = "shop_name"

@@ -135,4 +135,18 @@
     <string name="table_got">Bayar</string>
     <string name="table_balance">Sisa Saldo</string>
     <string name="pdf_footer_note">Dibuat offline oleh LedgerPad • Tanpa server cloud</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">Halo %1$s, pembayaran Anda sebesar %2$s telah diterima di %3$s. Sisa tagihan Anda adalah %4$s. Terima kasih banyak!</string>
+    <string name="share_receipt_title">Bagikan Bukti Pembayaran / Ucapan Terima Kasih</string>
+    <string name="send_receipt">Kirim Bukti Pembayaran (WA)</string>
+    <string name="payment_qr_code">QRIS Pembayaran Toko</string>
+    <string name="show_payment_qr">Tampilkan QRIS</string>
+    <string name="set_payment_qr">Atur QRIS Toko</string>
+    <string name="payment_qr_not_set_hint">Belum ada QRIS yang diatur. Silakan unggah foto QRIS toko Anda di menu Pengaturan.</string>
+    <string name="upload_qr_image">Unggah Foto QRIS</string>
+    <string name="qr_code_saved">QRIS berhasil disimpan</string>
+    <string name="qr_code_deleted">QRIS telah dihapus</string>
+    <string name="delete_qr_code">Hapus QRIS</string>
+    <string name="close">Tutup</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,15 +14,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.TableChart
 import androidx.compose.material3.AlertDialog
@@ -137,6 +142,29 @@ fun SettingsScreen(
         }
     }
 
+    // QR Code management launcher
+    val hasQrCode by container.prefs.hasQrCode.collectAsState()
+    var showQrPreviewDialog by remember { mutableStateOf(false) }
+    val pickQrLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            scope.launch {
+                try {
+                    context.contentResolver.openInputStream(uri)?.use { input ->
+                        container.prefs.qrCodeFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                    container.prefs.notifyQrCodeUpdated()
+                    snackbarHostState.showSnackbar(context.getString(R.string.qr_code_saved))
+                } catch (e: Exception) {
+                    snackbarHostState.showSnackbar("Failed to save QR code: ${e.message}")
+                }
+            }
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
@@ -247,6 +275,20 @@ fun SettingsScreen(
                     onCheckedChange = { container.prefs.setLockEnabled(it) }
                 )
             }
+
+            // Shop Payment QR Row
+            SettingsRow(
+                icon = Icons.Default.QrCode,
+                title = stringResource(R.string.payment_qr_code),
+                subtitle = if (hasQrCode) stringResource(R.string.show_payment_qr) else stringResource(R.string.not_set),
+                onClick = {
+                    if (hasQrCode) {
+                        showQrPreviewDialog = true
+                    } else {
+                        pickQrLauncher.launch("image/*")
+                    }
+                }
+            )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
@@ -398,6 +440,68 @@ fun SettingsScreen(
             dismissButton = {
                 TextButton(onClick = { showRestoreConfirm = null }) {
                     Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
+    // QR Code Preview & Management Dialog
+    if (showQrPreviewDialog) {
+        val qrFile = container.prefs.qrCodeFile
+        val bitmap = remember(hasQrCode) {
+            if (qrFile.exists()) {
+                android.graphics.BitmapFactory.decodeFile(qrFile.absolutePath)?.asImageBitmap()
+            } else null
+        }
+        AlertDialog(
+            onDismissRequest = { showQrPreviewDialog = false },
+            title = { Text(stringResource(R.string.payment_qr_code)) },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    if (bitmap != null) {
+                        Image(
+                            bitmap = bitmap,
+                            contentDescription = stringResource(R.string.payment_qr_code),
+                            modifier = Modifier
+                                .size(220.dp)
+                                .padding(8.dp)
+                        )
+                    } else {
+                        Text(stringResource(R.string.payment_qr_not_set_hint))
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        pickQrLauncher.launch("image/*")
+                        showQrPreviewDialog = false
+                    }
+                ) {
+                    Text(stringResource(R.string.upload_qr_image))
+                }
+            },
+            dismissButton = {
+                Row {
+                    if (hasQrCode) {
+                        TextButton(
+                            onClick = {
+                                container.prefs.deleteQrCode()
+                                showQrPreviewDialog = false
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(context.getString(R.string.qr_code_deleted))
+                                }
+                            }
+                        ) {
+                            Text(stringResource(R.string.delete_qr_code), color = MaterialTheme.colorScheme.error)
+                        }
+                    }
+                    TextButton(onClick = { showQrPreviewDialog = false }) {
+                        Text(stringResource(R.string.close))
+                    }
                 }
             }
         )

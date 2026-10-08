@@ -136,4 +136,18 @@
     <string name="table_got">Got</string>
     <string name="table_balance">Balance</string>
     <string name="pdf_footer_note">Generated offline by LedgerPad • No cloud servers involved</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">Dear %1$s, we have received your payment of %2$s at %3$s. Your remaining balance is %4$s. Thank you for your business!</string>
+    <string name="share_receipt_title">Share Payment Receipt</string>
+    <string name="send_receipt">Send Receipt / Thank You</string>
+    <string name="payment_qr_code">Payment QR Code</string>
+    <string name="show_payment_qr">Show QR Code</string>
+    <string name="set_payment_qr">Set Shop Payment QR (UPI / Pix / PayPay)</string>
+    <string name="payment_qr_not_set_hint">No payment QR code configured. Please upload your shop\'s QR code image in Settings.</string>
+    <string name="upload_qr_image">Upload QR Code Image</string>
+    <string name="qr_code_saved">Payment QR code saved</string>
+    <string name="qr_code_deleted">Payment QR code removed</string>
+    <string name="delete_qr_code">Delete QR Code</string>
+    <string name="close">Close</string>
 </resources>

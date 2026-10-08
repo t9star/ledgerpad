@@ -136,4 +136,18 @@
     <string name="table_got">Pagou</string>
     <string name="table_balance">Saldo</string>
     <string name="pdf_footer_note">Gerado offline pelo LedgerPad • Sem servidores externos</string>
+
+    <!-- Payment Receipt & QR Code & Quick Amounts -->
+    <string name="receipt_msg">Olá %1$s, confirmamos o recebimento de %2$s em %3$s. Seu saldo restante é de %4$s. Muito obrigado pela preferência!</string>
+    <string name="share_receipt_title">Compartilhar Comprovante / Agradecimento</string>
+    <string name="send_receipt">Enviar Comprovante (WhatsApp)</string>
+    <string name="payment_qr_code">QR Code de Pagamento (Pix)</string>
+    <string name="show_payment_qr">Mostrar QR Code Pix</string>
+    <string name="set_payment_qr">Cadastrar QR Code Pix da Loja</string>
+    <string name="payment_qr_not_set_hint">Nenhum QR Code configurado. Acesse as Configurações para cadastrar a imagem do seu Pix.</string>
+    <string name="upload_qr_image">Enviar Imagem do QR Code</string>
+    <string name="qr_code_saved">QR Code Pix salvo com sucesso</string>
+    <string name="qr_code_deleted">QR Code Pix removido</string>
+    <string name="delete_qr_code">Excluir QR Code</string>
+    <string name="close">Fechar</string>
 </resources>
