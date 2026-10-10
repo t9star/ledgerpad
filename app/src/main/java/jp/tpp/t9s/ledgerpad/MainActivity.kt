@@ -1,5 +1,10 @@
 package jp.tpp.t9s.ledgerpad
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.biometric.BiometricManager
@@ -27,6 +32,7 @@ import jp.tpp.t9s.ledgerpad.ui.screens.HomeScreen
 import jp.tpp.t9s.ledgerpad.ui.screens.LockScreen
 import jp.tpp.t9s.ledgerpad.ui.screens.SettingsScreen
 import jp.tpp.t9s.ledgerpad.ui.theme.LedgerPadTheme
+import java.util.Locale
 
 sealed class Screen {
     data object Home : Screen()
@@ -40,8 +46,60 @@ class MainActivity : FragmentActivity() {
 
     private val container by lazy { (application as LedgerApp).container }
 
+    private val demoReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "jp.tpp.t9s.ledgerpad.RELOAD_DEMO") {
+                val locale = intent.getStringExtra("EXTRA_LOCALE") ?: ""
+                val screen = intent.getStringExtra("EXTRA_SCREEN") ?: ""
+                val currency = intent.getStringExtra("EXTRA_CURRENCY") ?: ""
+
+                val sp = getSharedPreferences("demo_prefs", Context.MODE_PRIVATE)
+                sp.edit()
+                    .putString("demo_locale", locale)
+                    .putString("demo_screen", screen)
+                    .putString("demo_currency", currency)
+                    .apply()
+
+                if (currency.isNotBlank()) {
+                    container.prefs.setCurrency(currency)
+                }
+
+                recreate()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Register broadcast receiver for screenshot automation (debug only)
+        if (BuildConfig.DEBUG) {
+            val filter = IntentFilter("jp.tpp.t9s.ledgerpad.RELOAD_DEMO")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(demoReceiver, filter, Context.RECEIVER_EXPORTED)
+            } else {
+                @Suppress("UnspecifiedRegisterReceiverFlag")
+                registerReceiver(demoReceiver, filter)
+            }
+        }
+
+        // Apply demo locale if set
+        val sp = getSharedPreferences("demo_prefs", Context.MODE_PRIVATE)
+        val targetLocale = sp.getString("demo_locale", "") ?: ""
+        if (targetLocale.isNotEmpty()) {
+            val loc = if (targetLocale.contains("-")) {
+                val parts = targetLocale.split("-")
+                Locale(parts[0], parts[1])
+            } else {
+                Locale(targetLocale)
+            }
+            Locale.setDefault(loc)
+            val config = resources.configuration
+            config.setLocale(loc)
+            resources.updateConfiguration(config, resources.displayMetrics)
+        }
+
+        val initialScreenStr = sp.getString("demo_screen", "") ?: ""
 
         // Initialize Ads and UMP consent
         container.adsManager.initializeConsentAndAds(this)
@@ -51,6 +109,7 @@ class MainActivity : FragmentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     LedgerAppNavigation(
                         container = container,
+                        initialScreenStr = initialScreenStr,
                         onAuthenticate = { onAuthenticated ->
                             showBiometricPrompt(onAuthenticated)
                         }
@@ -83,6 +142,11 @@ class MainActivity : FragmentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        if (BuildConfig.DEBUG) {
+            try {
+                unregisterReceiver(demoReceiver)
+            } catch (_: Exception) {}
+        }
         container.billingManager.destroy()
     }
 }
@@ -90,6 +154,7 @@ class MainActivity : FragmentActivity() {
 @Composable
 fun LedgerAppNavigation(
     container: AppContainer,
+    initialScreenStr: String = "",
     onAuthenticate: (onAuthenticated: () -> Unit) -> Unit
 ) {
     val lockEnabled by container.prefs.lockEnabled.collectAsState()
@@ -108,7 +173,23 @@ fun LedgerAppNavigation(
         return
     }
 
-    var currentScreen by remember { mutableStateOf<Screen>(Screen.Home) }
+    val firstCustId by container.repository.observeCustomers().collectAsState(initial = emptyList())
+    val resolvedInitialScreen = remember(initialScreenStr, firstCustId) {
+        when (initialScreenStr) {
+            "customer" -> {
+                val targetId = firstCustId.firstOrNull()?.customer?.id ?: 1L
+                Screen.CustomerDetail(targetId)
+            }
+            "amount" -> {
+                val targetId = firstCustId.firstOrNull()?.customer?.id ?: 1L
+                Screen.AmountEntry(EntryMode.CustomerTxn(targetId, TxnType.GAVE))
+            }
+            "settings" -> Screen.Settings
+            else -> Screen.Home
+        }
+    }
+
+    var currentScreen by remember(resolvedInitialScreen) { mutableStateOf<Screen>(resolvedInitialScreen) }
 
     Crossfade(targetState = currentScreen, label = "screen_navigation") { screen ->
         when (screen) {
