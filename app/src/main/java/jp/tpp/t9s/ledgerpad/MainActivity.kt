@@ -36,6 +36,7 @@ import java.util.Locale
 
 sealed class Screen {
     data object Home : Screen()
+    data object Cashbook : Screen()
     data class CustomerDetail(val customerId: Long) : Screen()
     data object AddCustomer : Screen()
     data class AmountEntry(val mode: EntryMode) : Screen()
@@ -184,6 +185,7 @@ fun LedgerAppNavigation(
                 val targetId = firstCustId.firstOrNull()?.customer?.id ?: 1L
                 Screen.AmountEntry(EntryMode.CustomerTxn(targetId, TxnType.GAVE))
             }
+            "cashbook" -> Screen.Cashbook
             "settings" -> Screen.Settings
             else -> Screen.Home
         }
@@ -201,7 +203,20 @@ fun LedgerAppNavigation(
                     onAddCash = { cashType ->
                         currentScreen = Screen.AmountEntry(EntryMode.Cashbook(cashType))
                     },
-                    onOpenSettings = { currentScreen = Screen.Settings }
+                    onOpenSettings = { currentScreen = Screen.Settings },
+                    initialTab = 0
+                )
+            }
+            is Screen.Cashbook -> {
+                HomeScreen(
+                    container = container,
+                    onOpenCustomer = { id -> currentScreen = Screen.CustomerDetail(id) },
+                    onAddCustomer = { currentScreen = Screen.AddCustomer },
+                    onAddCash = { cashType ->
+                        currentScreen = Screen.AmountEntry(EntryMode.Cashbook(cashType))
+                    },
+                    onOpenSettings = { currentScreen = Screen.Settings },
+                    initialTab = 1
                 )
             }
             is Screen.CustomerDetail -> {

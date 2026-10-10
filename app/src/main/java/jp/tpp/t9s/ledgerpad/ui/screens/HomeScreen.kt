@@ -79,9 +79,10 @@ fun HomeScreen(
     onAddCustomer: () -> Unit,
     onAddCash: (CashType) -> Unit,
     onOpenSettings: () -> Unit,
+    initialTab: Int = 0,
     modifier: Modifier = Modifier
 ) {
-    var selectedTab by remember { mutableIntStateOf(0) } // 0: Customers, 1: Cashbook
+    var selectedTab by remember(initialTab) { mutableIntStateOf(initialTab) } // 0: Customers, 1: Cashbook
     val shopName by container.prefs.shopName.collectAsState()
     val currency by container.prefs.currency.collectAsState()
 
