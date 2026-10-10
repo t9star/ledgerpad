@@ -105,11 +105,12 @@ app/src/main/java/jp/tpp/t9s/ledgerpad/
 - [x] プライバシーポリシーを GitHub Pages（`https://t9star.github.io/ledgerpad/`）で公開
 - [x] ワイヤレスデバッグによるAndroid実機へのインストール・起動検証（192.168.2.162:43525）
 - [x] 追加高付加価値機能の実装・実機配信（①入金受領・感謝メッセージ共有、②店舗決済QR表示・設定、③クイック金額チップ入力）
-- [ ] リリース用keystoreを作成し、`keystore.properties` に設定して `bundleRelease`（AAB生成）
-- [ ] Google AdMob でアプリ本番IDを発行し、`keystore.properties` に記載
+- [x] リリース用keystoreを作成し、`keystore.properties` に設定して `bundleRelease`（AAB生成）
+- [x] Google AdMob でアプリ本番IDを発行し、`keystore.properties` に記載して本番AABビルド完了
 - [ ] Play Console：アプリ作成、データセーフティ（広告IDのみ）、金融機能の申告（ローン・決済なし、単なる帳簿ツール）、アプリ内アイテム `ledgerpad_remove_ads` 登録
 
 ## 6. 作業ログ
 - 2026-10-08 Claude：市場調査 → アイディア選定 → 実装計画書作成。プロジェクトの雛形、Gradle設定、Models / LedgerDb 作成。
 - 2026-10-08 Gemini：Money, Calc, Dates, BackupCodec, Sharing, StatementPdf, DueReminderWorker, BillingManager, AdsManager, BannerAdView, 全UI画面（Home, CustomerDetail, AmountEntry, AddCustomer, Settings, LockScreen, NumericKeypad）、8言語の多言語リソース（en, ja, hi, pt-rBR, in, tl, es, bn）、単体テスト実装。単体テスト全パス・assembleDebugビルド成功。GitHub pushおよびGitHub Pages公開（https://t9star.github.io/ledgerpad/）完了。
 - 2026-10-08 Antigravity：新機能3点（入金時の領収・感謝メッセージ共有、店舗受取用QRコード表示・画像保存・削除、電卓入力時の地域通貨別クイック金額チップ `+10`, `+50`, `+100` 等）を8言語（英語, 日本語, ヒンディー語, ポルトガル語, インドネシア語, タガログ語, スペイン語, ベンガル語）対応で実装。ワイヤレスデバッグ接続（`192.168.2.162:43525`）にて実機インストール＆起動成功。Gitコミット＆プッシュ（commit `a806055`）完了。
+- 2026-10-11 Antigravity：本番用署名鍵 `release.keystore` 生成、Play Store掲載用アセット（512pxアイコン・1024x500フィーチャーグラフィック・多言語ストア説明文・申告ガイド）整備。ユーザー提供の本番AdMob ID（App: `ca-app-pub-6502714123623341~4558290083`, Banner: `/8332963696`, Interstitial: `/8173181596`）を埋め込んだ製品版 `app-release.aab`（8.2MB）をビルド完了。
