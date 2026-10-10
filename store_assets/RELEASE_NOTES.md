@@ -83,7 +83,7 @@ Contabilidade 100% offline e privada para pequenos negócios e uso pessoal.
 • Backup local de dados e exportação em CSV
 </pt-BR>
 
-<id-ID>
+<id>
 Selamat datang di LedgerPad v1.0.0!
 Buku kas & buku utang piutang 100% offline untuk usaha kecil dan pribadi.
 
@@ -92,9 +92,9 @@ Buku kas & buku utang piutang 100% offline untuk usaha kecil dan pribadi.
 • Kalkulator bawaan & pintasan nominal cepat
 • Kunci aplikasi biometrik (sidik jari) untuk privasi maksimal
 • Cadangan data lokal & ekspor CSV
-</id-ID>
+</id>
 
-<fil-PH>
+<fil>
 Maligayang pagdating sa LedgerPad v1.0.0!
 100% offline at pribadong listahan ng pautang at cashbook.
 
@@ -103,7 +103,7 @@ Maligayang pagdating sa LedgerPad v1.0.0!
 • May built-in calculator para sa mabilisang kwenta
 • Biometric lock (fingerprint) para sa seguridad
 • Local backup ng data at pag-export sa CSV
-</fil-PH>
+</fil>
 
 <es-419>
 ¡Bienvenido a LedgerPad v1.0.0!

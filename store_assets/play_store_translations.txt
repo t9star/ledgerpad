@@ -101,7 +101,7 @@ Baixe o LedgerPad e modernize o controle de fiado da sua loja!
 
 
 ==================================================
-Language: Indonesian (id-ID)
+Language: Indonesian (id)
 ==================================================
 App Name:
 LedgerPad - Buku Kasbon & Utang
