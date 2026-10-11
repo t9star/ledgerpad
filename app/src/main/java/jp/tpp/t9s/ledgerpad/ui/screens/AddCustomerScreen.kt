@@ -55,6 +55,7 @@ fun AddCustomerScreen(
 
     var name by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
+    var isSaving by remember { mutableStateOf(false) }
 
     // Contact Picker intent (Privacy-friendly: requires NO READ_CONTACTS runtime permission)
     val contactPickerLauncher = rememberLauncherForActivityResult(
@@ -141,14 +142,15 @@ fun AddCustomerScreen(
 
             Button(
                 onClick = {
-                    if (name.isNotBlank()) {
+                    if (name.isNotBlank() && !isSaving) {
+                        isSaving = true
                         scope.launch {
                             val id = container.repository.addCustomer(name, phone)
                             onCustomerCreated(id)
                         }
                     }
                 },
-                enabled = name.isNotBlank(),
+                enabled = name.isNotBlank() && !isSaving,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),

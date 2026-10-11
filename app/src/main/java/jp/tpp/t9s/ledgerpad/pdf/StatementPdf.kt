@@ -34,11 +34,36 @@ object StatementPdf {
 
         val pageWidth = 595 // A4 standard pt width at 72dpi
         val pageHeight = 842 // A4 standard pt height
-        val pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
-        val page = pdfDocument.startPage(pageInfo)
-        val canvas: Canvas = page.canvas
+        var currentPageNumber = 1
+        val pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, currentPageNumber).create()
+        var page = pdfDocument.startPage(pageInfo)
+        var canvas: Canvas = page.canvas
 
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun drawTableHeader(c: Canvas, topY: Float) {
+            paint.color = Color.parseColor("#EEEEEE")
+            c.drawRect(30f, topY, (pageWidth - 30).toFloat(), topY + 25f, paint)
+
+            paint.color = Color.parseColor("#424242")
+            paint.textSize = 10f
+            paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            c.drawText(context.getString(R.string.table_date), 40f, topY + 17f, paint)
+            c.drawText(context.getString(R.string.table_note), 150f, topY + 17f, paint)
+            c.drawText(context.getString(R.string.table_gave), 330f, topY + 17f, paint)
+            c.drawText(context.getString(R.string.table_got), 410f, topY + 17f, paint)
+            c.drawText(context.getString(R.string.table_balance), 490f, topY + 17f, paint)
+        }
+
+        fun drawPageFooter(c: Canvas, pageNum: Int) {
+            paint.color = Color.parseColor("#9E9E9E")
+            paint.textSize = 9f
+            paint.typeface = Typeface.DEFAULT
+            c.drawText(context.getString(R.string.pdf_footer_note), 30f, (pageHeight - 20).toFloat(), paint)
+            val pageStr = "Page $pageNum"
+            val textWidth = paint.measureText(pageStr)
+            c.drawText(pageStr, pageWidth - 30f - textWidth, (pageHeight - 20).toFloat(), paint)
+        }
 
         // Header Background
         paint.color = Color.parseColor("#1B5E20") // Deep Forest Green
@@ -98,19 +123,9 @@ object StatementPdf {
         paint.color = if (balanceMinor > 0) Color.parseColor("#C62828") else Color.parseColor("#2E7D32")
         canvas.drawText(balFormatted, 400f, 185f, paint)
 
-        // Table Header
+        // First Page Table Header
         var y = 240f
-        paint.color = Color.parseColor("#EEEEEE")
-        canvas.drawRect(30f, y, (pageWidth - 30).toFloat(), y + 25f, paint)
-
-        paint.color = Color.parseColor("#424242")
-        paint.textSize = 10f
-        paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-        canvas.drawText(context.getString(R.string.table_date), 40f, y + 17f, paint)
-        canvas.drawText(context.getString(R.string.table_note), 150f, y + 17f, paint)
-        canvas.drawText(context.getString(R.string.table_gave), 330f, y + 17f, paint)
-        canvas.drawText(context.getString(R.string.table_got), 410f, y + 17f, paint)
-        canvas.drawText(context.getString(R.string.table_balance), 490f, y + 17f, paint)
+        drawTableHeader(canvas, y)
 
         // Table Rows (chronological: oldest to newest)
         y += 30f
@@ -118,7 +133,32 @@ object StatementPdf {
         val orderedRows = rows.asReversed()
 
         for (row in orderedRows) {
-            if (y > pageHeight - 50) break // Fit to 1 page for brevity in MVP
+            // Check if we need to advance to a new page
+            if (y + 24f > pageHeight - 45f) {
+                drawPageFooter(canvas, currentPageNumber)
+                pdfDocument.finishPage(page)
+
+                currentPageNumber++
+                val nextInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, currentPageNumber).create()
+                page = pdfDocument.startPage(nextInfo)
+                canvas = page.canvas
+
+                // Continuation mini-header
+                paint.color = Color.parseColor("#1B5E20")
+                canvas.drawRect(0f, 0f, pageWidth.toFloat(), 35f, paint)
+
+                paint.color = Color.WHITE
+                paint.textSize = 11f
+                paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+                val contTitle = "${customer.name} – ${context.getString(R.string.account_statement)} ($currentPageNumber)"
+                canvas.drawText(contTitle, 30f, 22f, paint)
+
+                // Table Header on continuation page
+                y = 45f
+                drawTableHeader(canvas, y)
+                y += 30f
+                paint.typeface = Typeface.DEFAULT
+            }
 
             paint.color = Color.parseColor("#424242")
             paint.textSize = 9f
@@ -149,11 +189,8 @@ object StatementPdf {
             y += 22f
         }
 
-        // Footer
-        paint.color = Color.parseColor("#9E9E9E")
-        paint.textSize = 9f
-        canvas.drawText(context.getString(R.string.pdf_footer_note), 30f, (pageHeight - 20).toFloat(), paint)
-
+        // Draw footer on final page
+        drawPageFooter(canvas, currentPageNumber)
         pdfDocument.finishPage(page)
 
         val outDir = File(context.cacheDir, "statements").apply { mkdirs() }

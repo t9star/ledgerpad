@@ -182,4 +182,6 @@
     <string name="auto_backup_desc">記帳時に自動で最大7世代のバックアップを端末内に保存します（ギガ消費なし）</string>
     <string name="auto_backup_history">自動バックアップ履歴から復元・共有</string>
     <string name="auto_backup_empty">自動バックアップ履歴はまだありません（記帳時に自動作成されます）</string>
+    <string name="app_lock_not_enrolled_title">端末のセキュリティ設定が必要です</string>
+    <string name="app_lock_not_enrolled">端末に画面ロック（PIN・パターン・指紋認証）が設定されていません。Androidの「設定」アプリから画面ロックを設定してください。</string>
 </resources>

@@ -48,4 +48,44 @@ object Dates {
         cal.set(Calendar.MILLISECOND, 999)
         return cal.timeInMillis
     }
+
+    /**
+     * Converts local timestamp to UTC midnight for Material 3 DatePicker initial state.
+     */
+    fun localDateToUtcMidnight(localMillis: Long): Long {
+        val localCal = Calendar.getInstance().apply { timeInMillis = localMillis }
+        val utcCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply {
+            set(Calendar.YEAR, localCal.get(Calendar.YEAR))
+            set(Calendar.MONTH, localCal.get(Calendar.MONTH))
+            set(Calendar.DAY_OF_MONTH, localCal.get(Calendar.DAY_OF_MONTH))
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return utcCal.timeInMillis
+    }
+
+    /**
+     * Converts Material 3 DatePicker's selected UTC midnight timestamp to local timestamp,
+     * preserving local hour/minute/second so entries don't all look like 00:00 or shift a day.
+     */
+    fun utcMidnightToLocalMillis(utcMidnightMillis: Long, preserveLocalTimeFrom: Long = System.currentTimeMillis()): Long {
+        val utcCal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply {
+            timeInMillis = utcMidnightMillis
+        }
+        val localTimeCal = Calendar.getInstance().apply {
+            timeInMillis = preserveLocalTimeFrom
+        }
+        val resultCal = Calendar.getInstance().apply {
+            set(Calendar.YEAR, utcCal.get(Calendar.YEAR))
+            set(Calendar.MONTH, utcCal.get(Calendar.MONTH))
+            set(Calendar.DAY_OF_MONTH, utcCal.get(Calendar.DAY_OF_MONTH))
+            set(Calendar.HOUR_OF_DAY, localTimeCal.get(Calendar.HOUR_OF_DAY))
+            set(Calendar.MINUTE, localTimeCal.get(Calendar.MINUTE))
+            set(Calendar.SECOND, localTimeCal.get(Calendar.SECOND))
+            set(Calendar.MILLISECOND, localTimeCal.get(Calendar.MILLISECOND))
+        }
+        return resultCal.timeInMillis
+    }
 }

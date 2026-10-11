@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -38,11 +39,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -79,15 +85,18 @@ fun HomeScreen(
     onOpenCustomer: (Long) -> Unit,
     onAddCustomer: () -> Unit,
     onAddCash: (CashType) -> Unit,
+    onEditCash: (CashEntry) -> Unit = {},
     onOpenSettings: () -> Unit,
     initialTab: Int = 0,
     modifier: Modifier = Modifier
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
     var selectedTab by remember(initialTab) { mutableIntStateOf(initialTab) } // 0: Customers, 1: Cashbook, 2: Reports
     val shopName by container.prefs.shopName.collectAsState()
     val currency by container.prefs.currency.collectAsState()
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = {
@@ -177,7 +186,9 @@ fun HomeScreen(
                 1 -> CashbookTabContent(
                     container = container,
                     currency = currency,
-                    onAddCash = onAddCash
+                    onAddCash = onAddCash,
+                    onEditCash = onEditCash,
+                    snackbarHostState = snackbarHostState
                 )
                 else -> ReportsTabContent(
                     container = container,
@@ -428,8 +439,14 @@ private fun CustomerListItem(
 private fun CashbookTabContent(
     container: AppContainer,
     currency: String,
-    onAddCash: (CashType) -> Unit
+    onAddCash: (CashType) -> Unit,
+    onEditCash: (CashEntry) -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var selectedEntryForDialog by remember { mutableStateOf<CashEntry?>(null) }
+
     val todayStart = remember { Dates.startOfToday() }
     val todayEnd = remember { Dates.endOfDay(todayStart) }
     val entries by container.repository.observeCash(todayStart, todayEnd).collectAsState(initial = emptyList())
@@ -577,18 +594,96 @@ private fun CashbookTabContent(
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 32.dp)
             ) {
                 items(entries, key = { it.id }) { item ->
-                    CashEntryListItem(entry = item, currency = currency)
+                    CashEntryListItem(
+                        entry = item,
+                        currency = currency,
+                        onClick = { selectedEntryForDialog = item }
+                    )
                 }
             }
         }
     }
+
+    // Cash Entry Detail / Action Dialog
+    selectedEntryForDialog?.let { entry ->
+        AlertDialog(
+            onDismissRequest = { selectedEntryForDialog = null },
+            title = {
+                Text(
+                    text = if (entry.type == CashType.IN) {
+                        stringResource(R.string.cash_in_sale)
+                    } else {
+                        stringResource(R.string.cash_out_expense)
+                    }
+                )
+            },
+            text = {
+                Column {
+                    Text(
+                        text = (if (entry.type == CashType.IN) "+ " else "- ") + Money.format(entry.amountMinor, currency),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = if (entry.type == CashType.IN) GreenCredit else RedDebit
+                    )
+                    if (entry.note.isNotBlank()) {
+                        Spacer(Modifier.height(8.dp))
+                        Text(text = entry.note, style = MaterialTheme.typography.bodyMedium)
+                    }
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = Dates.formatDateTime(entry.occurredAt),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    val target = entry
+                    selectedEntryForDialog = null
+                    onEditCash(target)
+                }) {
+                    Text(stringResource(R.string.save_entry))
+                }
+            },
+            dismissButton = {
+                Row {
+                    TextButton(onClick = {
+                        val target = entry
+                        selectedEntryForDialog = null
+                        scope.launch {
+                            container.repository.deleteCash(target.id)
+                            val res = snackbarHostState.showSnackbar(
+                                message = context.getString(R.string.entry_deleted),
+                                actionLabel = context.getString(R.string.undo)
+                            )
+                            if (res == SnackbarResult.ActionPerformed) {
+                                container.repository.restoreCash(target)
+                            }
+                        }
+                    }) {
+                        Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.error)
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    TextButton(onClick = { selectedEntryForDialog = null }) {
+                        Text(stringResource(R.string.cancel))
+                    }
+                }
+            }
+        )
+    }
 }
 
 @Composable
-private fun CashEntryListItem(entry: CashEntry, currency: String) {
+private fun CashEntryListItem(
+    entry: CashEntry,
+    currency: String,
+    onClick: () -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

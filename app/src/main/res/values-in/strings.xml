@@ -35,11 +35,11 @@
     <string name="btn_got_payment">+ TERIMA BAYAR</string>
 
     <string name="todays_cash_summary">Ringkasan Kas Hari Ini</string>
-    <string name="cash_in_sales">Kas Masuk (Penjualan)</string>
-    <string name="cash_out_expenses">Kas Keluar (Pengeluaran)</string>
-    <string name="daily_net_balance">Laba/Sisa Kas Hari Ini</string>
-    <string name="btn_cash_in">+ Kas Masuk (Jual)</string>
-    <string name="btn_cash_out">− Kas Keluar (Beli/Biaya)</string>
+    <string name="cash_in_sales">Kas Masuk</string>
+    <string name="cash_out_expenses">Kas Keluar</string>
+    <string name="daily_net_balance">Sisa Kas</string>
+    <string name="btn_cash_in">+ Kas Masuk</string>
+    <string name="btn_cash_out">− Kas Keluar</string>
     <string name="cash_in_sale">Penjualan Tunai</string>
     <string name="cash_out_expense">Pengeluaran / Biaya</string>
     <string name="no_cash_entries_today">Belum ada transaksi kas hari ini.</string>
@@ -182,4 +182,6 @@
     <string name="auto_backup_desc">Otomatis simpan 7 riwayat cadangan di HP tanpa kuota internet</string>
     <string name="auto_backup_history">Pulihkan dari Riwayat Cadangan Otomatis</string>
     <string name="auto_backup_empty">Belum ada cadangan otomatis. Dibuat otomatis saat Anda menyimpan catatan.</string>
+    <string name="app_lock_not_enrolled_title">Keamanan Perangkat Diperlukan</string>
+    <string name="app_lock_not_enrolled">Belum ada kunci layar atau sidik jari di perangkat ini. Silakan atur PIN, pola, atau sidik jari di Pengaturan HP Anda terlebih dahulu.</string>
 </resources>

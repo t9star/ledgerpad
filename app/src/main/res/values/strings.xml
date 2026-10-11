@@ -183,4 +183,6 @@
     <string name="auto_backup_desc">Automatically saves 7 daily snapshots on device (0 data usage)</string>
     <string name="auto_backup_history">Restore from Auto-Backup Snapshots</string>
     <string name="auto_backup_empty">No auto-backups yet. Snapshots are created automatically when you save entries.</string>
+    <string name="app_lock_not_enrolled_title">Device Security Required</string>
+    <string name="app_lock_not_enrolled">No screen lock or biometric enrolled on device. Please configure a PIN, pattern, or fingerprint in Android Settings first.</string>
 </resources>

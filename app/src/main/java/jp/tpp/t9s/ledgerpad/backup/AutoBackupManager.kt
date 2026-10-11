@@ -34,24 +34,26 @@ object AutoBackupManager {
         prefs: Prefs
     ) {
         if (!prefs.autoBackupEnabled.value) return
-        runCatching {
-            val dir = getBackupDir(context)
-            val dateKey = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
-            val targetFile = File(dir, "ledgerpad_auto_$dateKey.json")
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            runCatching {
+                val dir = getBackupDir(context)
+                val dateKey = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+                val targetFile = File(dir, "ledgerpad_auto_$dateKey.json")
 
-            val snapshot = repository.snapshot(
-                shopName = prefs.shopName.value,
-                currency = prefs.currency.value
-            )
-            val json = BackupCodec.encodeJson(snapshot)
-            targetFile.writeText(json)
+                val snapshot = repository.snapshot(
+                    shopName = prefs.shopName.value,
+                    currency = prefs.currency.value
+                )
+                val json = BackupCodec.encodeJson(snapshot)
+                targetFile.writeText(json)
 
-            // Prune older snapshots beyond MAX_SNAPSHOTS
-            val allFiles = dir.listFiles { f -> f.name.endsWith(".json") }
-                ?.sortedByDescending { it.lastModified() }
-                ?: emptyList()
-            if (allFiles.size > MAX_SNAPSHOTS) {
-                allFiles.drop(MAX_SNAPSHOTS).forEach { it.delete() }
+                // Prune older snapshots beyond MAX_SNAPSHOTS
+                val allFiles = dir.listFiles { f -> f.name.endsWith(".json") }
+                    ?.sortedByDescending { it.lastModified() }
+                    ?: emptyList()
+                if (allFiles.size > MAX_SNAPSHOTS) {
+                    allFiles.drop(MAX_SNAPSHOTS).forEach { it.delete() }
+                }
             }
         }
     }

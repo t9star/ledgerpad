@@ -70,7 +70,10 @@ class BillingManager(
             }
 
             override fun onBillingServiceDisconnected() {
-                // Retry if requested
+                scope.launch {
+                    kotlinx.coroutines.delay(2500)
+                    startConnection()
+                }
             }
         })
     }
@@ -124,11 +127,11 @@ class BillingManager(
         }
     }
 
-    fun launchPurchaseFlow(activity: Activity) {
-        val client = billingClient ?: return
+    fun launchPurchaseFlow(activity: Activity, onUnavailable: () -> Unit = {}) {
+        val client = billingClient
         val details = _productDetails.value
 
-        if (details != null) {
+        if (client != null && details != null) {
             val productDetailsParamsList = listOf(
                 BillingFlowParams.ProductDetailsParams.newBuilder()
                     .setProductDetails(details)
@@ -141,8 +144,13 @@ class BillingManager(
 
             client.launchBillingFlow(activity, flowParams)
         } else {
-            // Debug/Test toggle when no Play Console account connected
-            prefs.setAdFree(true)
+            startConnection()
+            if (jp.tpp.t9s.ledgerpad.BuildConfig.DEBUG) {
+                android.widget.Toast.makeText(activity, "DEBUG: Simulated Pro Purchase", android.widget.Toast.LENGTH_SHORT).show()
+                prefs.setAdFree(true)
+            } else {
+                onUnavailable()
+            }
         }
     }
 

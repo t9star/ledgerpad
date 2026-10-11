@@ -2,4 +2,6 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <cache-path name="cache_statements" path="statements/" />
     <cache-path name="cache_root" path="." />
+    <files-path name="auto_backups" path="auto_backups/" />
+    <files-path name="files_root" path="." />
 </paths>

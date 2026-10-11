@@ -11,6 +11,42 @@ import java.net.URLEncoder
 object Sharing {
 
     /**
+     * Normalizes phone number with country code for WhatsApp (wa.me) links.
+     */
+    fun normalizeWhatsAppNumber(phoneNumber: String, currencyCode: String = ""): String {
+        var clean = phoneNumber.replace(Regex("[^0-9+]"), "")
+        if (clean.startsWith("+")) {
+            return clean.removePrefix("+")
+        }
+        if (clean.startsWith("0")) {
+            val prefix = when (currencyCode) {
+                "IDR" -> "62"
+                "PHP" -> "63"
+                "BDT" -> "880"
+                "JPY" -> "81"
+                "BRL" -> "55"
+                "MXN" -> "52"
+                else -> {
+                    when (java.util.Locale.getDefault().country) {
+                        "ID" -> "62"
+                        "PH" -> "63"
+                        "BD" -> "880"
+                        "BR" -> "55"
+                        "MX" -> "52"
+                        "JP" -> "81"
+                        else -> "91"
+                    }
+                }
+            }
+            return prefix + clean.removePrefix("0")
+        }
+        if (clean.length == 10 && (currencyCode == "INR" || java.util.Locale.getDefault().country == "IN")) {
+            return "91$clean"
+        }
+        return clean
+    }
+
+    /**
      * Sends a friendly payment reminder via WhatsApp or fallback to generic share sheet.
      */
     fun sendReminder(
@@ -19,7 +55,8 @@ object Sharing {
         customerName: String,
         shopName: String,
         balanceFormatted: String,
-        dueFormatted: String?
+        dueFormatted: String?,
+        currencyCode: String = ""
     ) {
         val storeLabel = if (shopName.isNotBlank()) shopName else context.getString(R.string.app_name)
         val text = if (dueFormatted != null) {
@@ -28,13 +65,14 @@ object Sharing {
             context.getString(R.string.reminder_msg_simple, customerName, balanceFormatted, storeLabel)
         }
 
-        val cleanPhone = phoneNumber.replace(Regex("[^0-9+]"), "")
+        val cleanPhone = normalizeWhatsAppNumber(phoneNumber, currencyCode)
         if (cleanPhone.isNotEmpty()) {
             try {
                 val encodedText = URLEncoder.encode(text, "UTF-8")
                 val waUri = Uri.parse("https://wa.me/$cleanPhone?text=$encodedText")
-                val waIntent = Intent(Intent.ACTION_VIEW, waUri)
-                waIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                val waIntent = Intent(Intent.ACTION_VIEW, waUri).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
                 context.startActivity(waIntent)
                 return
             } catch (_: Exception) {
@@ -62,7 +100,8 @@ object Sharing {
         customerName: String,
         shopName: String,
         paidAmountFormatted: String,
-        remainingBalanceFormatted: String
+        remainingBalanceFormatted: String,
+        currencyCode: String = ""
     ) {
         val storeLabel = if (shopName.isNotBlank()) shopName else context.getString(R.string.app_name)
         val text = context.getString(
@@ -73,13 +112,14 @@ object Sharing {
             remainingBalanceFormatted
         )
 
-        val cleanPhone = phoneNumber.replace(Regex("[^0-9+]"), "")
+        val cleanPhone = normalizeWhatsAppNumber(phoneNumber, currencyCode)
         if (cleanPhone.isNotEmpty()) {
             try {
                 val encodedText = URLEncoder.encode(text, "UTF-8")
                 val waUri = Uri.parse("https://wa.me/$cleanPhone?text=$encodedText")
-                val waIntent = Intent(Intent.ACTION_VIEW, waUri)
-                waIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                val waIntent = Intent(Intent.ACTION_VIEW, waUri).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
                 context.startActivity(waIntent)
                 return
             } catch (_: Exception) {
@@ -109,8 +149,7 @@ object Sharing {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = mimeType
             putExtra(Intent.EXTRA_STREAM, uri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         val chooser = Intent.createChooser(intent, title).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -124,9 +163,13 @@ object Sharing {
     fun dialNumber(context: Context, phoneNumber: String) {
         val clean = phoneNumber.trim()
         if (clean.isEmpty()) return
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$clean")).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        try {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$clean")).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(intent)
+        } catch (_: Exception) {
+            // Tablet or device without dialer app
         }
-        context.startActivity(intent)
     }
 }

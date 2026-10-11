@@ -114,6 +114,7 @@ fun SettingsScreen(
     var showEditChipsDialog by remember { mutableStateOf(false) }
     var showEditTaxDialog by remember { mutableStateOf(false) }
     var showAutoBackupDialog by remember { mutableStateOf(false) }
+    var showNoLockAlert by remember { mutableStateOf(false) }
 
     // Backup JSON Export launcher
     val exportJsonLauncher = rememberLauncherForActivityResult(
@@ -302,7 +303,27 @@ fun SettingsScreen(
                 }
                 Switch(
                     checked = lockEnabled,
-                    onCheckedChange = { container.prefs.setLockEnabled(it) }
+                    onCheckedChange = { enabled ->
+                        if (!enabled) {
+                            container.prefs.setLockEnabled(false)
+                        } else {
+                            val bm = androidx.biometric.BiometricManager.from(context)
+                            val authenticators = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                                        androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                            } else {
+                                @Suppress("DEPRECATION")
+                                androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK or
+                                        androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                            }
+                            val canAuth = bm.canAuthenticate(authenticators)
+                            if (canAuth == androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS) {
+                                container.prefs.setLockEnabled(true)
+                            } else {
+                                showNoLockAlert = true
+                            }
+                        }
+                    }
                 )
             }
 
@@ -832,6 +853,19 @@ fun SettingsScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showAutoBackupDialog = false }) {
+                    Text(stringResource(R.string.close))
+                }
+            }
+        )
+    }
+
+    if (showNoLockAlert) {
+        AlertDialog(
+            onDismissRequest = { showNoLockAlert = false },
+            title = { Text(stringResource(R.string.app_lock_not_enrolled_title)) },
+            text = { Text(stringResource(R.string.app_lock_not_enrolled)) },
+            confirmButton = {
+                TextButton(onClick = { showNoLockAlert = false }) {
                     Text(stringResource(R.string.close))
                 }
             }

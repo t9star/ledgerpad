@@ -183,4 +183,6 @@
     <string name="auto_backup_desc">Awtomatikong nagse-save ng 7 arawang backup sa cellphone (0 data usage)</string>
     <string name="auto_backup_history">I-restore mula sa Auto-Backup</string>
     <string name="auto_backup_empty">Wala pang auto-backup. Awtomatiko itong gagawin kapag nag-save ka ng listahan.</string>
+    <string name="app_lock_not_enrolled_title">Kailangan ng Screen Lock sa Telepono</string>
+    <string name="app_lock_not_enrolled">Walang screen lock o fingerprint na naka-set sa teleponong ito. Paki-set up muna ang PIN, pattern, o fingerprint sa Settings ng iyong telepono.</string>
 </resources>

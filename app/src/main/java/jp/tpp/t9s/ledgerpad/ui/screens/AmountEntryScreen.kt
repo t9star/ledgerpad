@@ -69,6 +69,21 @@ import java.util.Locale
 sealed class EntryMode {
     data class CustomerTxn(val customerId: Long, val type: TxnType) : EntryMode()
     data class Cashbook(val type: CashType) : EntryMode()
+    data class EditCustomerTxn(
+        val txnId: Long,
+        val customerId: Long,
+        val type: TxnType,
+        val initialAmountMinor: Long,
+        val initialNote: String,
+        val initialDateMillis: Long
+    ) : EntryMode()
+    data class EditCash(
+        val cashId: Long,
+        val type: CashType,
+        val initialAmountMinor: Long,
+        val initialNote: String,
+        val initialDateMillis: Long
+    ) : EntryMode()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,10 +98,50 @@ fun AmountEntryScreen(
     val context = LocalContext.current
     val currency by container.prefs.currency.collectAsState()
     val scope = rememberCoroutineScope()
+    val currencyInfo = remember(currency) { Money.getInfo(currency) }
 
-    var expression by remember { mutableStateOf("") }
-    var note by remember { mutableStateOf("") }
-    var selectedDateMillis by remember { mutableLongStateOf(System.currentTimeMillis()) }
+    val initialAmountFormatted = remember(mode, currency) {
+        when (mode) {
+            is EntryMode.EditCustomerTxn -> {
+                val absVal = kotlin.math.abs(mode.initialAmountMinor) / 100.0
+                if (!currencyInfo.hasDecimals || absVal % 1.0 == 0.0) {
+                    absVal.toLong().toString()
+                } else {
+                    String.format(Locale.US, "%.2f", absVal)
+                }
+            }
+            is EntryMode.EditCash -> {
+                val absVal = kotlin.math.abs(mode.initialAmountMinor) / 100.0
+                if (!currencyInfo.hasDecimals || absVal % 1.0 == 0.0) {
+                    absVal.toLong().toString()
+                } else {
+                    String.format(Locale.US, "%.2f", absVal)
+                }
+            }
+            else -> ""
+        }
+    }
+
+    var expression by remember { mutableStateOf(initialAmountFormatted) }
+    var note by remember {
+        mutableStateOf(
+            when (mode) {
+                is EntryMode.EditCustomerTxn -> mode.initialNote
+                is EntryMode.EditCash -> mode.initialNote
+                else -> ""
+            }
+        )
+    }
+    var selectedDateMillis by remember {
+        mutableLongStateOf(
+            when (mode) {
+                is EntryMode.EditCustomerTxn -> mode.initialDateMillis
+                is EntryMode.EditCash -> mode.initialDateMillis
+                else -> System.currentTimeMillis()
+            }
+        )
+    }
+    var isSaving by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
     var showEditChipsDialog by remember { mutableStateOf(false) }
     var showEditTaxDialog by remember { mutableStateOf(false) }
@@ -94,15 +149,17 @@ fun AmountEntryScreen(
     val isExpenseOrGave = when (mode) {
         is EntryMode.CustomerTxn -> mode.type == TxnType.GAVE
         is EntryMode.Cashbook -> mode.type == CashType.OUT
+        is EntryMode.EditCustomerTxn -> mode.type == TxnType.GAVE
+        is EntryMode.EditCash -> mode.type == CashType.OUT
     }
 
     val actionColor = if (isExpenseOrGave) RedDebit else GreenCredit
     val titleText = when (mode) {
         is EntryMode.CustomerTxn -> if (mode.type == TxnType.GAVE) stringResource(R.string.title_gave_credit) else stringResource(R.string.title_got_payment)
         is EntryMode.Cashbook -> if (mode.type == CashType.IN) stringResource(R.string.title_cash_in_sale) else stringResource(R.string.title_cash_out_expense)
+        is EntryMode.EditCustomerTxn -> if (mode.type == TxnType.GAVE) stringResource(R.string.title_gave_credit) else stringResource(R.string.title_got_payment)
+        is EntryMode.EditCash -> if (mode.type == CashType.IN) stringResource(R.string.title_cash_in_sale) else stringResource(R.string.title_cash_out_expense)
     }
-
-    val currencyInfo = remember(currency) { Money.getInfo(currency) }
 
     // Evaluated amount
     val evaluatedAmount = remember(expression) {
@@ -118,13 +175,13 @@ fun AmountEntryScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back),
-                            tint = MaterialTheme.colorScheme.onPrimary
+                            tint = androidx.compose.ui.graphics.Color.White
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = actionColor,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                    titleContentColor = androidx.compose.ui.graphics.Color.White
                 )
             )
         }
@@ -317,15 +374,18 @@ fun AmountEntryScreen(
                     if (expression.isNotEmpty()) {
                         expression = expression.dropLast(1)
                     }
-                }
+                },
+                allowDecimal = currencyInfo.hasDecimals
             )
 
             // Submit Button
             Button(
                 onClick = {
+                    if (isSaving) return@Button
                     val finalAmount = evaluatedAmount
                     if (finalAmount > 0.0) {
-                        val minor = (finalAmount * 100).toLong()
+                        val minor = kotlin.math.round(finalAmount * 100.0).toLong()
+                        isSaving = true
                         scope.launch {
                             when (mode) {
                                 is EntryMode.CustomerTxn -> {
@@ -345,6 +405,24 @@ fun AmountEntryScreen(
                                         occurredAt = selectedDateMillis
                                     )
                                 }
+                                is EntryMode.EditCustomerTxn -> {
+                                    container.repository.updateTxn(
+                                        id = mode.txnId,
+                                        type = mode.type,
+                                        amountMinor = minor,
+                                        note = note,
+                                        occurredAt = selectedDateMillis
+                                    )
+                                }
+                                is EntryMode.EditCash -> {
+                                    container.repository.updateCash(
+                                        id = mode.cashId,
+                                        type = mode.type,
+                                        amountMinor = minor,
+                                        note = note,
+                                        occurredAt = selectedDateMillis
+                                    )
+                                }
                             }
                             AutoBackupManager.triggerAutoBackupIfEnabled(context, container.repository, container.prefs)
                             ReviewHelper.recordPositiveAction(context, container.prefs)
@@ -352,7 +430,7 @@ fun AmountEntryScreen(
                         }
                     }
                 },
-                enabled = evaluatedAmount > 0.0,
+                enabled = evaluatedAmount > 0.0 && !isSaving,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 12.dp)
@@ -370,12 +448,17 @@ fun AmountEntryScreen(
     }
 
     if (showDatePicker) {
-        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = selectedDateMillis)
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = Dates.localDateToUtcMidnight(selectedDateMillis)
+        )
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
                 TextButton(onClick = {
-                    selectedDateMillis = datePickerState.selectedDateMillis ?: selectedDateMillis
+                    val utcPicked = datePickerState.selectedDateMillis
+                    if (utcPicked != null) {
+                        selectedDateMillis = Dates.utcMidnightToLocalMillis(utcPicked, selectedDateMillis)
+                    }
                     showDatePicker = false
                 }) {
                     Text(stringResource(R.string.save))

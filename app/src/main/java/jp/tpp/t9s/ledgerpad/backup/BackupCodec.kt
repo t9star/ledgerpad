@@ -30,13 +30,14 @@ object BackupCodec {
         rows: List<TxnRow>
     ): String {
         val sb = StringBuilder()
+        sb.append("\uFEFF") // UTF-8 BOM for Microsoft Excel compatibility
         sb.append("Date,Type,Amount,Running Balance,Note\n")
         // rows are newest first, order oldest first for clear accounting statement
         rows.asReversed().forEach { row ->
-            val date = Dates.formatDateTime(row.txn.occurredAt)
-            val typeStr = if (row.txn.type == TxnType.GAVE) "Gave (Debit)" else "Got (Credit)"
-            val amt = Money.format(row.txn.amountMinor, currencyCode)
-            val bal = Money.format(row.runningBalanceMinor, currencyCode)
+            val date = "\"${Dates.formatDateTime(row.txn.occurredAt)}\""
+            val typeStr = if (row.txn.type == TxnType.GAVE) "\"Gave (Debit)\"" else "\"Got (Credit)\""
+            val amt = "\"${Money.format(row.txn.amountMinor, currencyCode)}\""
+            val bal = "\"${Money.format(row.runningBalanceMinor, currencyCode)}\""
             val escapedNote = "\"${row.txn.note.replace("\"", "\"\"")}\""
             sb.append("$date,$typeStr,$amt,$bal,$escapedNote\n")
         }
@@ -51,13 +52,14 @@ object BackupCodec {
         summaries: List<CustomerSummary>
     ): String {
         val sb = StringBuilder()
+        sb.append("\uFEFF") // UTF-8 BOM for Microsoft Excel compatibility
         sb.append("Customer Name,Phone,Balance,Status,Due Date\n")
         summaries.forEach { s ->
             val name = "\"${s.customer.name.replace("\"", "\"\"")}\""
-            val phone = s.customer.phone
-            val bal = Money.format(s.balanceMinor, currencyCode)
-            val status = if (s.balanceMinor > 0) "To Receive" else if (s.balanceMinor < 0) "To Give" else "Settled"
-            val due = s.customer.dueAt?.let { Dates.formatDate(it) } ?: "-"
+            val phone = "\"${s.customer.phone}\""
+            val bal = "\"${Money.format(s.balanceMinor, currencyCode)}\""
+            val status = if (s.balanceMinor > 0) "\"To Receive\"" else if (s.balanceMinor < 0) "\"To Give\"" else "\"Settled\""
+            val due = s.customer.dueAt?.let { "\"${Dates.formatDate(it)}\"" } ?: "\"-\""
             sb.append("$name,$phone,$bal,$status,$due\n")
         }
         return sb.toString()

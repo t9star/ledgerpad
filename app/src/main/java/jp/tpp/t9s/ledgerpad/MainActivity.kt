@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -13,6 +14,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,6 +24,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import jp.tpp.t9s.ledgerpad.data.CashType
 import jp.tpp.t9s.ledgerpad.data.TxnType
 import jp.tpp.t9s.ledgerpad.ui.screens.AddCustomerScreen
@@ -134,18 +139,30 @@ class MainActivity : FragmentActivity() {
                 super.onAuthenticationSucceeded(result)
                 onSuccess()
             }
+
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                // Authentication dismissed/failed gracefully
+            }
         })
 
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+        val promptInfoBuilder = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.unlock_ledgerpad))
             .setSubtitle(getString(R.string.authenticate_to_access_records))
-            .setAllowedAuthenticators(
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            promptInfoBuilder.setAllowedAuthenticators(
                 BiometricManager.Authenticators.BIOMETRIC_STRONG or
                         BiometricManager.Authenticators.DEVICE_CREDENTIAL
             )
-            .build()
+        } else {
+            @Suppress("DEPRECATION")
+            promptInfoBuilder.setDeviceCredentialAllowed(true)
+        }
 
-        prompt.authenticate(promptInfo)
+        try {
+            prompt.authenticate(promptInfoBuilder.build())
+        } catch (_: Exception) {}
     }
 
     override fun onDestroy() {
@@ -155,7 +172,6 @@ class MainActivity : FragmentActivity() {
                 unregisterReceiver(demoReceiver)
             } catch (_: Exception) {}
         }
-        container.billingManager.destroy()
     }
 }
 
@@ -170,6 +186,19 @@ fun LedgerAppNavigation(
 
     LaunchedEffect(lockEnabled) {
         if (!lockEnabled) isUnlocked = true
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner, lockEnabled) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP && lockEnabled) {
+                isUnlocked = false
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
     }
 
     if (lockEnabled && !isUnlocked) {
@@ -200,6 +229,24 @@ fun LedgerAppNavigation(
 
     var currentScreen by remember(resolvedInitialScreen) { mutableStateOf<Screen>(resolvedInitialScreen) }
 
+    BackHandler(enabled = currentScreen != Screen.Home) {
+        when (val s = currentScreen) {
+            is Screen.Home -> {}
+            is Screen.Cashbook -> currentScreen = Screen.Home
+            is Screen.CustomerDetail -> currentScreen = Screen.Home
+            is Screen.AddCustomer -> currentScreen = Screen.Home
+            is Screen.Settings -> currentScreen = Screen.Home
+            is Screen.AmountEntry -> {
+                when (val m = s.mode) {
+                    is EntryMode.CustomerTxn -> currentScreen = Screen.CustomerDetail(m.customerId)
+                    is EntryMode.EditCustomerTxn -> currentScreen = Screen.CustomerDetail(m.customerId)
+                    is EntryMode.Cashbook -> currentScreen = Screen.Cashbook
+                    is EntryMode.EditCash -> currentScreen = Screen.Cashbook
+                }
+            }
+        }
+    }
+
     Crossfade(targetState = currentScreen, label = "screen_navigation") { screen ->
         when (screen) {
             is Screen.Home -> {
@@ -209,6 +256,17 @@ fun LedgerAppNavigation(
                     onAddCustomer = { currentScreen = Screen.AddCustomer },
                     onAddCash = { cashType ->
                         currentScreen = Screen.AmountEntry(EntryMode.Cashbook(cashType))
+                    },
+                    onEditCash = { entry ->
+                        currentScreen = Screen.AmountEntry(
+                            EntryMode.EditCash(
+                                cashId = entry.id,
+                                type = entry.type,
+                                initialAmountMinor = entry.amountMinor,
+                                initialNote = entry.note,
+                                initialDateMillis = entry.occurredAt
+                            )
+                        )
                     },
                     onOpenSettings = { currentScreen = Screen.Settings },
                     initialTab = 0
@@ -222,6 +280,17 @@ fun LedgerAppNavigation(
                     onAddCash = { cashType ->
                         currentScreen = Screen.AmountEntry(EntryMode.Cashbook(cashType))
                     },
+                    onEditCash = { entry ->
+                        currentScreen = Screen.AmountEntry(
+                            EntryMode.EditCash(
+                                cashId = entry.id,
+                                type = entry.type,
+                                initialAmountMinor = entry.amountMinor,
+                                initialNote = entry.note,
+                                initialDateMillis = entry.occurredAt
+                            )
+                        )
+                    },
                     onOpenSettings = { currentScreen = Screen.Settings },
                     initialTab = 1
                 )
@@ -234,7 +303,18 @@ fun LedgerAppNavigation(
                     onAddTxn = { txnType ->
                         currentScreen = Screen.AmountEntry(EntryMode.CustomerTxn(screen.customerId, txnType))
                     },
-                    onEditTxn = { /* Edit can be added */ }
+                    onEditTxn = { txn ->
+                        currentScreen = Screen.AmountEntry(
+                            EntryMode.EditCustomerTxn(
+                                txnId = txn.id,
+                                customerId = txn.customerId,
+                                type = txn.type,
+                                initialAmountMinor = txn.amountMinor,
+                                initialNote = txn.note,
+                                initialDateMillis = txn.occurredAt
+                            )
+                        )
+                    }
                 )
             }
             is Screen.AddCustomer -> {
@@ -251,15 +331,19 @@ fun LedgerAppNavigation(
                     mode = screen.mode,
                     container = container,
                     onDone = {
-                        when (screen.mode) {
-                            is EntryMode.CustomerTxn -> currentScreen = Screen.CustomerDetail(screen.mode.customerId)
-                            is EntryMode.Cashbook -> currentScreen = Screen.Home
+                        when (val m = screen.mode) {
+                            is EntryMode.CustomerTxn -> currentScreen = Screen.CustomerDetail(m.customerId)
+                            is EntryMode.EditCustomerTxn -> currentScreen = Screen.CustomerDetail(m.customerId)
+                            is EntryMode.Cashbook -> currentScreen = Screen.Cashbook
+                            is EntryMode.EditCash -> currentScreen = Screen.Cashbook
                         }
                     },
                     onBack = {
-                        when (screen.mode) {
-                            is EntryMode.CustomerTxn -> currentScreen = Screen.CustomerDetail(screen.mode.customerId)
-                            is EntryMode.Cashbook -> currentScreen = Screen.Home
+                        when (val m = screen.mode) {
+                            is EntryMode.CustomerTxn -> currentScreen = Screen.CustomerDetail(m.customerId)
+                            is EntryMode.EditCustomerTxn -> currentScreen = Screen.CustomerDetail(m.customerId)
+                            is EntryMode.Cashbook -> currentScreen = Screen.Cashbook
+                            is EntryMode.EditCash -> currentScreen = Screen.Cashbook
                         }
                     }
                 )

@@ -74,13 +74,7 @@ object Money {
         val clean = amountText.trim().replace(",", "")
         if (clean.isBlank()) return 0L
         val d = clean.toDoubleOrNull() ?: return 0L
-        val info = getInfo(code)
-        return if (info.hasDecimals) {
-            (d * 100).toLong()
-        } else {
-            // For non-decimal currencies like IDR, entering 500 means 500. Stored internally as 50000 (cents)
-            (d * 100).toLong()
-        }
+        return kotlin.math.round(d * 100.0).toLong()
     }
 
     /**

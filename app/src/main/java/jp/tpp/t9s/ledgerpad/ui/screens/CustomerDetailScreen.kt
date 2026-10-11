@@ -100,7 +100,7 @@ fun CustomerDetailScreen(
     container: AppContainer,
     onBack: () -> Unit,
     onAddTxn: (TxnType) -> Unit,
-    onEditTxn: (Long) -> Unit,
+    onEditTxn: (jp.tpp.t9s.ledgerpad.data.Txn) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -185,7 +185,8 @@ fun CustomerDetailScreen(
                             customerName = currentCustomer.name,
                             shopName = shopName,
                             balanceFormatted = Money.format(balance, currency),
-                            dueFormatted = dueStr
+                            dueFormatted = dueStr,
+                            currencyCode = currency
                         )
                     }) {
                         Icon(
@@ -317,7 +318,7 @@ fun CustomerDetailScreen(
                         Text(
                             text = stringResource(R.string.btn_gave_credit),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
+                            fontSize = 14.sp,
                             maxLines = 1,
                             overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
@@ -333,7 +334,7 @@ fun CustomerDetailScreen(
                         Text(
                             text = stringResource(R.string.btn_got_payment),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
+                            fontSize = 14.sp,
                             maxLines = 1,
                             overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
@@ -420,7 +421,7 @@ fun CustomerDetailScreen(
                         TxnTimelineItem(
                             row = row,
                             currency = currency,
-                            onClick = { onEditTxn(row.txn.id) },
+                            onClick = { onEditTxn(row.txn) },
                             onDelete = {
                                 scope.launch {
                                     container.repository.deleteTxn(row.txn.id)
@@ -440,7 +441,8 @@ fun CustomerDetailScreen(
                                     customerName = currentCustomer.name,
                                     shopName = shopName,
                                     paidAmountFormatted = Money.format(row.txn.amountMinor, currency),
-                                    remainingBalanceFormatted = Money.format(row.runningBalanceMinor, currency)
+                                    remainingBalanceFormatted = Money.format(row.runningBalanceMinor, currency),
+                                    currencyCode = currency
                                 )
                             }
                         )
@@ -452,15 +454,19 @@ fun CustomerDetailScreen(
 
     // Due Date Picker Dialog
     if (showDatePicker) {
+        val initialUtc = remember(currentCustomer.dueAt) {
+            Dates.localDateToUtcMidnight(currentCustomer.dueAt ?: System.currentTimeMillis())
+        }
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = currentCustomer.dueAt ?: System.currentTimeMillis()
+            initialSelectedDateMillis = initialUtc
         )
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
                 TextButton(onClick = {
+                    val localMillis = datePickerState.selectedDateMillis?.let { Dates.utcMidnightToLocalMillis(it) }
                     scope.launch {
-                        container.repository.setDueDate(currentCustomer.id, datePickerState.selectedDateMillis)
+                        container.repository.setDueDate(currentCustomer.id, localMillis)
                     }
                     showDatePicker = false
                 }) {
