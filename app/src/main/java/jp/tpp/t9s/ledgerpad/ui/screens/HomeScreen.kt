@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -82,7 +83,7 @@ fun HomeScreen(
     initialTab: Int = 0,
     modifier: Modifier = Modifier
 ) {
-    var selectedTab by remember(initialTab) { mutableIntStateOf(initialTab) } // 0: Customers, 1: Cashbook
+    var selectedTab by remember(initialTab) { mutableIntStateOf(initialTab) } // 0: Customers, 1: Cashbook, 2: Reports
     val shopName by container.prefs.shopName.collectAsState()
     val currency by container.prefs.currency.collectAsState()
 
@@ -150,28 +151,38 @@ fun HomeScreen(
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
-                    text = { Text(stringResource(R.string.tab_customers), fontWeight = FontWeight.Bold) },
+                    text = { Text(stringResource(R.string.tab_customers), fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                     icon = { Icon(Icons.Default.People, contentDescription = null) }
                 )
                 Tab(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
-                    text = { Text(stringResource(R.string.tab_cashbook), fontWeight = FontWeight.Bold) },
+                    text = { Text(stringResource(R.string.tab_cashbook), fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                     icon = { Icon(Icons.Default.AttachMoney, contentDescription = null) }
+                )
+                Tab(
+                    selected = selectedTab == 2,
+                    onClick = { selectedTab = 2 },
+                    text = { Text(stringResource(R.string.tab_reports), fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                    icon = { Icon(Icons.Default.BarChart, contentDescription = null) }
                 )
             }
 
-            if (selectedTab == 0) {
-                CustomersTabContent(
+            when (selectedTab) {
+                0 -> CustomersTabContent(
                     container = container,
                     currency = currency,
                     onOpenCustomer = onOpenCustomer
                 )
-            } else {
-                CashbookTabContent(
+                1 -> CashbookTabContent(
                     container = container,
                     currency = currency,
                     onAddCash = onAddCash
+                )
+                else -> ReportsTabContent(
+                    container = container,
+                    currency = currency,
+                    onOpenCustomer = onOpenCustomer
                 )
             }
         }

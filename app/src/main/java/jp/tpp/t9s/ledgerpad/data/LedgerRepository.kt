@@ -158,6 +158,15 @@ class LedgerRepository(private val db: LedgerDb) {
         ).use { c -> if (c.moveToFirst()) c.getLong(0) else 0L }
     }
 
+    fun observeAllTxns(fromMillis: Long, toMillis: Long): Flow<List<Txn>> = observe {
+        val out = ArrayList<Txn>()
+        db.readableDatabase.rawQuery(
+            "SELECT * FROM txns WHERE occurred_at >= ? AND occurred_at < ? ORDER BY occurred_at DESC, id DESC",
+            arrayOf(fromMillis.toString(), toMillis.toString())
+        ).use { c -> while (c.moveToNext()) out += c.toTxn() }
+        out
+    }
+
     // ---------------- Cashbook ----------------
 
     fun observeCash(fromMillis: Long, toMillis: Long): Flow<List<CashEntry>> = observe {

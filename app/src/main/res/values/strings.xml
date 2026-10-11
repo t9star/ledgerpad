@@ -156,4 +156,24 @@
     <string name="edit_quick_amounts_desc">Customize common prices/denominations shown above keypad</string>
     <string name="quick_amounts_hint">Enter amounts separated by commas (e.g. 10, 20, 50, 100)</string>
     <string name="reset_default">Reset to Default</string>
+
+    <!-- v1.1.0 Reports, PNG Statement, Reminders, Tax/Discount, Review -->
+    <string name="tab_reports">Reports</string>
+    <string name="period_7_days">Last 7 Days</string>
+    <string name="period_this_month">This Month</string>
+    <string name="period_6_months">6 Months</string>
+    <string name="report_cashflow_title">Cashbook Summary</string>
+    <string name="report_credit_recovery_title">Credit &amp; Collection Rate</string>
+    <string name="report_chart_title">Inflow vs Outflow Trend</string>
+    <string name="chart_inflow">Inflow</string>
+    <string name="chart_outflow">Outflow</string>
+    <string name="report_top_debtors_title">Top Pending Balances</string>
+    <string name="overdue_count_badge">%1$d Overdue</string>
+    <string name="no_pending_dues">All customer accounts are settled!</string>
+    <string name="share_image_report">Share Statement Card (Image)</string>
+    <string name="due_reminders_toggle">Payment Due Notifications</string>
+    <string name="due_reminders_desc">Morning alert at 9:00 AM when customer payments are due</string>
+    <string name="rate_app_title">Rate LedgerPad on Google Play</string>
+    <string name="rate_app_desc">Enjoying the app? Leave a quick 5-star review to support us!</string>
+    <string name="tax_discount_label">Tax / Discount</string>
 </resources>

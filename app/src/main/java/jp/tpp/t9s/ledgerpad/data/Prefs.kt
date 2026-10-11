@@ -62,11 +62,27 @@ class Prefs(context: Context) {
         sp.edit().remove(K_QUICK_AMOUNTS).apply()
     }
 
+    private val _remindersEnabled = MutableStateFlow(sp.getBoolean(K_REMINDERS, true))
+    val remindersEnabled: StateFlow<Boolean> = _remindersEnabled.asStateFlow()
+
     fun setShopName(v: String) { _shopName.value = v; sp.edit().putString(K_SHOP, v).apply() }
     fun setCurrency(v: String) { _currency.value = v; sp.edit().putString(K_CURRENCY, v).apply() }
     fun setLockEnabled(v: Boolean) { _lockEnabled.value = v; sp.edit().putBoolean(K_LOCK, v).apply() }
     fun setAdFree(v: Boolean) { _adFree.value = v; sp.edit().putBoolean(K_AD_FREE, v).apply() }
     fun setSortMode(v: SortMode) { _sortMode.value = v; sp.edit().putString(K_SORT, v.name).apply() }
+    fun setRemindersEnabled(v: Boolean) { _remindersEnabled.value = v; sp.edit().putBoolean(K_REMINDERS, v).apply() }
+
+    fun incrementAndGetActionCount(): Int {
+        val next = sp.getInt(K_ACTION_COUNT, 0) + 1
+        sp.edit().putInt(K_ACTION_COUNT, next).apply()
+        return next
+    }
+
+    fun getLastReviewPromptAt(): Long = sp.getLong(K_LAST_REVIEW_AT, 0L)
+
+    fun markReviewPrompted() {
+        sp.edit().putLong(K_LAST_REVIEW_AT, System.currentTimeMillis()).apply()
+    }
 
     fun notifyQrCodeUpdated() {
         _hasQrCode.value = qrCodeFile.exists()
@@ -86,5 +102,8 @@ class Prefs(context: Context) {
         const val K_AD_FREE = "ad_free"
         const val K_SORT = "sort_mode"
         const val K_QUICK_AMOUNTS = "custom_quick_amounts"
+        const val K_REMINDERS = "reminders_enabled"
+        const val K_ACTION_COUNT = "user_action_count"
+        const val K_LAST_REVIEW_AT = "last_review_prompt_at"
     }
 }

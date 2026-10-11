@@ -156,4 +156,24 @@
     <string name="edit_quick_amounts_desc">Personalize preços ou valores frequentes exibidos sobre o teclado</string>
     <string name="quick_amounts_hint">Digite os valores separados por vírgula (ex: 5, 10, 20, 50)</string>
     <string name="reset_default">Restaurar Padrão</string>
+
+    <!-- v1.1.0 Reports, PNG Statement, Reminders, Tax/Discount, Review -->
+    <string name="tab_reports">Relatórios</string>
+    <string name="period_7_days">7 Dias</string>
+    <string name="period_this_month">Este Mês</string>
+    <string name="period_6_months">6 Meses</string>
+    <string name="report_cashflow_title">Resumo do Caixa</string>
+    <string name="report_credit_recovery_title">Fiado &amp; Taxa de Recebimento</string>
+    <string name="report_chart_title">Gráfico de Entradas vs Saídas</string>
+    <string name="chart_inflow">Entradas</string>
+    <string name="chart_outflow">Saídas</string>
+    <string name="report_top_debtors_title">Maiores Saldos a Receber</string>
+    <string name="overdue_count_badge">%1$d Vencido(s)</string>
+    <string name="no_pending_dues">Todas as contas estão quitadas!</string>
+    <string name="share_image_report">Compartilhar Extrato em Imagem</string>
+    <string name="due_reminders_toggle">Notificações de Vencimento</string>
+    <string name="due_reminders_desc">Alerta às 9:00 da manhã quando houver pagamentos vencendo</string>
+    <string name="rate_app_title">Avaliar na Google Play</string>
+    <string name="rate_app_desc">Gostando do app? Deixe 5 estrelas para nos apoiar!</string>
+    <string name="tax_discount_label">Taxa / Desconto</string>
 </resources>

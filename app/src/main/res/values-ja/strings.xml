@@ -155,4 +155,24 @@
     <string name="edit_quick_amounts_desc">テンキー上に表示する定番商品の金額を設定</string>
     <string name="quick_amounts_hint">カンマ区切りで金額を入力（例: 100, 300, 500, 1000）</string>
     <string name="reset_default">初期値に戻す</string>
+
+    <!-- v1.1.0 Reports, PNG Statement, Reminders, Tax/Discount, Review -->
+    <string name="tab_reports">レポート</string>
+    <string name="period_7_days">過去7日間</string>
+    <string name="period_this_month">今月</string>
+    <string name="period_6_months">過去6ヶ月</string>
+    <string name="report_cashflow_title">現金出納サマリー</string>
+    <string name="report_credit_recovery_title">売掛・回収率</string>
+    <string name="report_chart_title">収入・支出の推移グラフ</string>
+    <string name="chart_inflow">入金・売上</string>
+    <string name="chart_outflow">出金・ツケ</string>
+    <string name="report_top_debtors_title">未回収残高トップ顧客</string>
+    <string name="overdue_count_badge">期限超過 %1$d件</string>
+    <string name="no_pending_dues">未回収の残高はありません</string>
+    <string name="share_image_report">明細カード画像を共有 (LINE等)</string>
+    <string name="due_reminders_toggle">支払期日のリマインダー通知</string>
+    <string name="due_reminders_desc">期日当日の朝9時に未回収の顧客をお知らせ</string>
+    <string name="rate_app_title">Google Play でアプリを評価する</string>
+    <string name="rate_app_desc">気に入っていただけたら、ぜひレビューで応援してください！</string>
+    <string name="tax_discount_label">税率・割引</string>
 </resources>

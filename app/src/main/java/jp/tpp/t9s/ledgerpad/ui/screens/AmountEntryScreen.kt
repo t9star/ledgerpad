@@ -44,6 +44,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -59,7 +60,9 @@ import jp.tpp.t9s.ledgerpad.ui.theme.RedDebit
 import jp.tpp.t9s.ledgerpad.util.Calc
 import jp.tpp.t9s.ledgerpad.util.Dates
 import jp.tpp.t9s.ledgerpad.util.Money
+import jp.tpp.t9s.ledgerpad.util.ReviewHelper
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 sealed class EntryMode {
     data class CustomerTxn(val customerId: Long, val type: TxnType) : EntryMode()
@@ -75,6 +78,7 @@ fun AmountEntryScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val currency by container.prefs.currency.collectAsState()
     val scope = rememberCoroutineScope()
 
@@ -177,6 +181,51 @@ fun AmountEntryScreen(
 
             Spacer(Modifier.weight(1f))
 
+            // Tax & Discount Modifiers (+5%, +8%, +10%, -5%, -10%)
+            val pctModifiers = remember { listOf(5, 8, 10, -5, -10) }
+            androidx.compose.foundation.lazy.LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 2.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                item {
+                    Text(
+                        text = stringResource(R.string.tax_discount_label) + ":",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(end = 4.dp)
+                    )
+                }
+                items(pctModifiers.size) { idx ->
+                    val pct = pctModifiers[idx]
+                    val label = if (pct > 0) "+$pct%" else "$pct%"
+                    androidx.compose.material3.SuggestionChip(
+                        onClick = {
+                            val base = evaluatedAmount
+                            if (base > 0.0) {
+                                val updated = base * (1.0 + pct / 100.0)
+                                val formatted = if (!currencyInfo.hasDecimals || updated % 1.0 == 0.0) {
+                                    kotlin.math.round(updated).toLong().toString()
+                                } else {
+                                    String.format(Locale.US, "%.2f", updated)
+                                }
+                                expression = formatted
+                            }
+                        },
+                        label = {
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = if (pct > 0) MaterialTheme.colorScheme.primary else GreenCredit
+                            )
+                        }
+                    )
+                }
+            }
+
             // Quick Amount Chips
             val customQuickAmountsStr by container.prefs.customQuickAmounts.collectAsState()
             val quickChips = remember(currency, customQuickAmountsStr) {
@@ -186,7 +235,7 @@ fun AmountEntryScreen(
             androidx.compose.foundation.lazy.LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 6.dp),
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -271,6 +320,7 @@ fun AmountEntryScreen(
                                     )
                                 }
                             }
+                            ReviewHelper.recordPositiveAction(context, container.prefs)
                             onDone()
                         }
                     }

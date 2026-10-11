@@ -25,3 +25,7 @@
 
 # --- Google Mobile Ads ---
 -keep public class com.google.android.gms.ads.** { public *; }
+
+# --- Google Play In-App Review ---
+-keep class com.google.android.play.core.review.** { *; }
+-dontwarn com.google.android.play.core.review.**

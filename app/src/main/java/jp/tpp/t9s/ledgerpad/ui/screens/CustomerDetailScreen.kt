@@ -1,6 +1,11 @@
 package jp.tpp.t9s.ledgerpad.ui.screens
 
+import android.Manifest
 import android.app.Activity
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +30,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PictureAsPdf
@@ -69,18 +75,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import jp.tpp.t9s.ledgerpad.AppContainer
 import jp.tpp.t9s.ledgerpad.R
 import jp.tpp.t9s.ledgerpad.ads.BannerAdView
 import jp.tpp.t9s.ledgerpad.backup.BackupCodec
 import jp.tpp.t9s.ledgerpad.data.TxnRow
 import jp.tpp.t9s.ledgerpad.data.TxnType
+import jp.tpp.t9s.ledgerpad.pdf.StatementImage
 import jp.tpp.t9s.ledgerpad.pdf.StatementPdf
 import jp.tpp.t9s.ledgerpad.share.Sharing
 import jp.tpp.t9s.ledgerpad.ui.theme.GreenCredit
 import jp.tpp.t9s.ledgerpad.ui.theme.RedDebit
 import jp.tpp.t9s.ledgerpad.util.Dates
 import jp.tpp.t9s.ledgerpad.util.Money
+import jp.tpp.t9s.ledgerpad.util.ReviewHelper
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -109,6 +118,12 @@ fun CustomerDetailScreen(
     var showDatePicker by remember { mutableStateOf(false) }
     var showQrDialog by remember { mutableStateOf(false) }
     val hasQrCode by container.prefs.hasQrCode.collectAsState()
+
+    val notifPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { _ ->
+        showDatePicker = true
+    }
 
     val currentCustomer = customer ?: return
 
@@ -190,6 +205,23 @@ fun CustomerDetailScreen(
                         onDismissRequest = { showMenu = false }
                     ) {
                         DropdownMenuItem(
+                            text = { Text(stringResource(R.string.share_image_report)) },
+                            leadingIcon = { Icon(Icons.Default.Image, contentDescription = null) },
+                            onClick = {
+                                showMenu = false
+                                val imgFile = StatementImage.createCustomerStatementImage(
+                                    context = context,
+                                    shopName = shopName,
+                                    customer = currentCustomer,
+                                    currencyCode = currency,
+                                    balanceMinor = balance,
+                                    rows = rows
+                                )
+                                ReviewHelper.recordPositiveAction(context, container.prefs)
+                                Sharing.shareFile(context, imgFile, "image/png", context.getString(R.string.share_image_report))
+                            }
+                        )
+                        DropdownMenuItem(
                             text = { Text(stringResource(R.string.download_pdf_report)) },
                             leadingIcon = { Icon(Icons.Default.PictureAsPdf, contentDescription = null) },
                             onClick = {
@@ -202,6 +234,7 @@ fun CustomerDetailScreen(
                                     balanceMinor = balance,
                                     rows = rows
                                 )
+                                ReviewHelper.recordPositiveAction(context, container.prefs)
                                 // Show interstitial gracefully after generation
                                 if (context is Activity) {
                                     container.adsManager.showInterstitialIfAllowed(context) {
@@ -228,7 +261,13 @@ fun CustomerDetailScreen(
                             leadingIcon = { Icon(Icons.Default.CalendarMonth, contentDescription = null) },
                             onClick = {
                                 showMenu = false
-                                showDatePicker = true
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                                    ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    notifPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                } else {
+                                    showDatePicker = true
+                                }
                             }
                         )
                         DropdownMenuItem(

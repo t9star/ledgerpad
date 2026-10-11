@@ -1,10 +1,80 @@
-# LedgerPad リリースノート (v1.0.0)
+# LedgerPad リリースノート (v1.1.0 / v1.0.0)
 
 Google Play Console のリリーストラック（製品版、内部テスト、クローズドテスト等）の「リリースノート」欄にコピー＆ペーストして使用できます。
 
 ---
 
-## 1. 簡潔な日本語リリースノート（コピペ用）
+## 新着: v1.1.0 リリースノート（Play Console 一括コピペ用）
+
+```xml
+<en-US>
+What's New in LedgerPad v1.1.0:
+• New Reports & Charts Tab: Visualize 7-day, monthly, and 6-month cashflow, credit recovery rate, and top pending balances.
+• Share Receipt Image Cards: Send clean PNG statement cards directly to WhatsApp or LINE.
+• Tax & Discount Shortcuts: One-tap +5%, +8%, +10%, -5%, -10% calculator buttons.
+• Enhanced Due Reminders: Morning alerts at 9:00 AM with customer names and due amounts.
+</en-US>
+
+<ja-JP>
+LedgerPad v1.1.0 アップデート内容：
+・新機能「レポート＆グラフ」タブ：7日間・今月・6ヶ月の収支推移グラフ、売掛回収率、未回収トップ顧客をひと目で確認
+・明細カード画像（PNG）共有：LINEやチャットへ綺麗に送れるレシート風明細画像出力を追加
+・電卓に税率・割引ワンタップボタン（+5%, +8%, +10%, -5%, -10%）を追加
+・支払期日リマインダー通知の強化（朝9時に該当顧客名と金額をお知らせ）
+</ja-JP>
+
+<hi-IN>
+LedgerPad v1.1.0 में नया क्या है:
+• नया रिपोर्ट और चार्ट टैब: 7-दिन, मासिक और 6-महीने का कैशफ़्लो, वसूली दर और शीर्ष बकाया ग्राहक देखें।
+• स्टेटमेंट कार्ड (PNG फोटो) शेयर करें: WhatsApp पर सीधे साफ-सुथरा स्टेटमेंट कार्ड भेजें।
+• टैक्स और छूट शॉर्टकट: कैलकुलेटर में +5%, +8%, +10%, -5%, -10% बटन जोड़े गए।
+• बेहतर भुगतान रिमाइंडर: सुबह 9:00 बजे ग्राहक के नाम और बकाया राशि के साथ अलर्ट।
+</hi-IN>
+
+<pt-BR>
+Novidades no LedgerPad v1.1.0:
+• Nova aba Relatórios e Gráficos: Visualize entradas, saídas, taxa de recebimento e maiores saldos devedores.
+• Extrato em Imagem (PNG): Compartilhe cartões de extrato diretamente no WhatsApp.
+• Atalhos de Taxa e Desconto: Botões rápidos de +5%, +8%, +10%, -5% e -10% na calculadora.
+• Lembretes de Vencimento: Alertas às 9:00 da manhã com os nomes e valores vencendo no dia.
+</pt-BR>
+
+<id>
+Yang Baru di LedgerPad v1.1.0:
+• Tab Laporan & Grafik Baru: Pantau arus kas 7 hari, bulanan, 6 bulan, tingkat pelunasan, dan piutang terbesar.
+• Bagikan Kartu Tagihan (Gambar PNG): Kirim kartu tagihan rapi langsung ke WhatsApp.
+• Pintasan Pajak & Diskon: Tombol cepat +5%, +8%, +10%, -5%, -10% di kalkulator.
+• Pengingat Jatuh Tempo: Notifikasi pukul 09:00 pagi dengan nama pelanggan dan total tagihan.
+</id>
+
+<fil>
+Ano ang Bago sa LedgerPad v1.1.0:
+• Bagong Tab ng Ulat at Tsart: Tingnan ang 7-araw, buwanan, at 6-buwan na daloy ng pera at listahan ng malalaking balanse.
+• Ibahagi ang Statement Card (Larawan): Magpadala ng malinaw na PNG receipt card sa Messenger o Viber.
+• Shortcut sa Buwis at Diskwento: Mabilisang +5%, +8%, +10%, -5%, -10% sa calculator.
+• Paalala sa Takdang Araw: Abiso tuwing 9:00 AM kasama ang pangalan ng suki at halaga ng singilin.
+</fil>
+
+<es-419>
+Novedades en LedgerPad v1.1.0:
+• Nueva pestaña de Informes y Gráficos: Visualiza ingresos, egresos, tasa de cobro y mayores saldos pendientes.
+• Tarjeta de Estado en Imagen (PNG): Comparte tarjetas de cobro directamente por WhatsApp.
+• Atajos de Impuesto y Descuento: Botones rápidos de +5%, +8%, +10%, -5% y -10% en la calculadora.
+• Recordatorios Mejorados: Alertas a las 9:00 AM con nombres de clientes y montos vencidos.
+</es-419>
+
+<bn-BD>
+LedgerPad v1.1.0-এ নতুন যা থাকছে:
+• নতুন রিপোর্ট ও চার্ট ট্যাব: ৭ দিন, মাসিক ও ৬ মাসের আয়-ব্যয় চার্ট, আদায় হার এবং সর্বোচ্চ বকেয়া তালিকা।
+• স্টেটমেন্ট কার্ড (ছবি) শেয়ার: WhatsApp-এ সরাসরি সুন্দর PNG রসিদ কার্ড পাঠান।
+• ট্যাক্স ও ছাড় শর্টকাট: ক্যালকুলেটরে +5%, +8%, +10%, -5%, -10% কুইক বাটন।
+• উন্নত বকেয়া রিমাইন্ডার: সকাল ৯:০০ টায় গ্রাহকের নাম ও বকেয়া টাকার পরিমাণসহ নোটিফিকেশন।
+</bn-BD>
+```
+
+---
+
+## 1. 簡潔な日本語リリースノート（v1.0.0 初回コピペ用）
 
 ```text
 LedgerPad（初回リリース）

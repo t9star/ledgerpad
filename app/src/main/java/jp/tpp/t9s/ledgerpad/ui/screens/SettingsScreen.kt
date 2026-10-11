@@ -1,7 +1,10 @@
 package jp.tpp.t9s.ledgerpad.ui.screens
 
+import android.Manifest
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -27,7 +30,9 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.TableChart
 import androidx.compose.material3.AlertDialog
@@ -63,11 +68,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import jp.tpp.t9s.ledgerpad.AppContainer
 import jp.tpp.t9s.ledgerpad.R
 import jp.tpp.t9s.ledgerpad.backup.BackupCodec
 import jp.tpp.t9s.ledgerpad.share.Sharing
 import jp.tpp.t9s.ledgerpad.util.Money
+import jp.tpp.t9s.ledgerpad.util.ReviewHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.io.File
@@ -86,8 +93,15 @@ fun SettingsScreen(
     val shopName by container.prefs.shopName.collectAsState()
     val currency by container.prefs.currency.collectAsState()
     val lockEnabled by container.prefs.lockEnabled.collectAsState()
+    val remindersEnabled by container.prefs.remindersEnabled.collectAsState()
     val isAdFree by container.prefs.adFree.collectAsState()
     val proPrice by container.billingManager.formattedPrice.collectAsState()
+
+    val notifPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        container.prefs.setRemindersEnabled(granted)
+    }
 
     var showShopDialog by remember { mutableStateOf(false) }
     var showCurrencyDropdown by remember { mutableStateOf(false) }
@@ -278,6 +292,37 @@ fun SettingsScreen(
                 )
             }
 
+            // Due Date Reminders Toggle Row
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(Icons.Default.Notifications, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(16.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(stringResource(R.string.due_reminders_toggle), fontWeight = FontWeight.SemiBold)
+                    Text(
+                        stringResource(R.string.due_reminders_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                Switch(
+                    checked = remindersEnabled,
+                    onCheckedChange = { enabled ->
+                        if (enabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            notifPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        } else {
+                            container.prefs.setRemindersEnabled(enabled)
+                        }
+                    }
+                )
+            }
+
             // Shop Payment QR Row
             SettingsRow(
                 icon = Icons.Default.QrCode,
@@ -337,6 +382,18 @@ fun SettingsScreen(
                 subtitle = stringResource(R.string.export_all_csv_desc),
                 onClick = {
                     exportCsvLauncher.launch("ledgerpad_all_customers_${System.currentTimeMillis()}.csv")
+                }
+            )
+
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+            // Rate App Row
+            SettingsRow(
+                icon = Icons.Default.Star,
+                title = stringResource(R.string.rate_app_title),
+                subtitle = stringResource(R.string.rate_app_desc),
+                onClick = {
+                    ReviewHelper.openPlayStoreListing(context)
                 }
             )
 
