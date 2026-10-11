@@ -48,10 +48,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jp.tpp.t9s.ledgerpad.AppContainer
 import jp.tpp.t9s.ledgerpad.R
+import jp.tpp.t9s.ledgerpad.backup.AutoBackupManager
 import jp.tpp.t9s.ledgerpad.data.CashType
 import jp.tpp.t9s.ledgerpad.data.TxnType
 import jp.tpp.t9s.ledgerpad.ui.components.NumericKeypad
@@ -87,6 +89,7 @@ fun AmountEntryScreen(
     var selectedDateMillis by remember { mutableLongStateOf(System.currentTimeMillis()) }
     var showDatePicker by remember { mutableStateOf(false) }
     var showEditChipsDialog by remember { mutableStateOf(false) }
+    var showEditTaxDialog by remember { mutableStateOf(false) }
 
     val isExpenseOrGave = when (mode) {
         is EntryMode.CustomerTxn -> mode.type == TxnType.GAVE
@@ -109,7 +112,7 @@ fun AmountEntryScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(titleText, fontWeight = FontWeight.Bold) },
+                title = { Text(titleText, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -167,7 +170,13 @@ fun AmountEntryScreen(
                 OutlinedTextField(
                     value = note,
                     onValueChange = { note = it },
-                    placeholder = { Text(stringResource(R.string.note_item_details_hint)) },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.note_item_details_hint),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
                     modifier = Modifier.weight(1f),
                     singleLine = true
                 )
@@ -175,14 +184,17 @@ fun AmountEntryScreen(
                 OutlinedButton(onClick = { showDatePicker = true }) {
                     Icon(Icons.Default.CalendarMonth, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
-                    Text(Dates.formatShortDate(selectedDateMillis))
+                    Text(Dates.formatShortDate(selectedDateMillis), maxLines = 1)
                 }
             }
 
             Spacer(Modifier.weight(1f))
 
-            // Tax & Discount Modifiers (+5%, +8%, +10%, -5%, -10%)
-            val pctModifiers = remember { listOf(5, 8, 10, -5, -10) }
+            // Customizable Tax & Discount Modifiers (with country-smart defaults)
+            val customTaxRatesStr by container.prefs.customTaxRates.collectAsState()
+            val pctModifiers = remember(currency, customTaxRatesStr) {
+                container.prefs.getTaxDiscountRates(currency)
+            }
             androidx.compose.foundation.lazy.LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -200,7 +212,8 @@ fun AmountEntryScreen(
                 }
                 items(pctModifiers.size) { idx ->
                     val pct = pctModifiers[idx]
-                    val label = if (pct > 0) "+$pct%" else "$pct%"
+                    val pctStr = if (pct % 1.0 == 0.0) pct.toInt().toString() else pct.toString()
+                    val label = if (pct > 0) "+$pctStr%" else "$pctStr%"
                     androidx.compose.material3.SuggestionChip(
                         onClick = {
                             val base = evaluatedAmount
@@ -223,6 +236,19 @@ fun AmountEntryScreen(
                             )
                         }
                     )
+                }
+                item {
+                    IconButton(
+                        onClick = { showEditTaxDialog = true },
+                        modifier = Modifier.size(30.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(R.string.tax_discount_label),
+                            tint = MaterialTheme.colorScheme.outline,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
                 }
             }
 
@@ -320,6 +346,7 @@ fun AmountEntryScreen(
                                     )
                                 }
                             }
+                            AutoBackupManager.triggerAutoBackupIfEnabled(context, container.repository, container.prefs)
                             ReviewHelper.recordPositiveAction(context, container.prefs)
                             onDone()
                         }
@@ -411,6 +438,67 @@ fun AmountEntryScreen(
                         Text(stringResource(R.string.reset_default))
                     }
                     TextButton(onClick = { showEditChipsDialog = false }) {
+                        Text(stringResource(R.string.cancel))
+                    }
+                }
+            }
+        )
+    }
+
+    // Edit Tax & Discount Rates Dialog
+    if (showEditTaxDialog) {
+        val currentRates = container.prefs.getTaxDiscountRates(currency)
+        var textInput by remember {
+            mutableStateOf(
+                currentRates.joinToString(", ") { r ->
+                    val s = if (r % 1.0 == 0.0) r.toInt().toString() else r.toString()
+                    if (r > 0) "+$s" else s
+                }
+            )
+        }
+
+        AlertDialog(
+            onDismissRequest = { showEditTaxDialog = false },
+            title = { Text(stringResource(R.string.tax_discount_label)) },
+            text = {
+                Column {
+                    Text(
+                        text = stringResource(R.string.edit_tax_rates_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = textInput,
+                        onValueChange = { textInput = it },
+                        placeholder = { Text("+8, +10, -5, -10") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    val parsed = textInput.split(",")
+                        .mapNotNull { it.trim().replace("%", "").replace("+", "").toDoubleOrNull() }
+                        .filter { it != 0.0 && it > -100.0 && it <= 100.0 }
+                    if (parsed.isNotEmpty()) {
+                        container.prefs.setTaxDiscountRates(parsed)
+                    }
+                    showEditTaxDialog = false
+                }) {
+                    Text(stringResource(R.string.save))
+                }
+            },
+            dismissButton = {
+                Row {
+                    TextButton(onClick = {
+                        container.prefs.resetTaxDiscountRates()
+                        showEditTaxDialog = false
+                    }) {
+                        Text(stringResource(R.string.reset_default))
+                    }
+                    TextButton(onClick = { showEditTaxDialog = false }) {
                         Text(stringResource(R.string.cancel))
                     }
                 }

@@ -14,6 +14,10 @@ class Prefs(context: Context) {
     private val _shopName = MutableStateFlow(sp.getString(K_SHOP, "") ?: "")
     val shopName: StateFlow<String> = _shopName.asStateFlow()
 
+    /** Optional Tax ID / Invoice No. / Address / Receipt Header-Footer Note (e.g. GSTIN, NPWP, T-Number, CNPJ) */
+    private val _shopSubHeader = MutableStateFlow(sp.getString(K_SHOP_SUB, "") ?: "")
+    val shopSubHeader: StateFlow<String> = _shopSubHeader.asStateFlow()
+
     private val _currency = MutableStateFlow(sp.getString(K_CURRENCY, null) ?: Money.defaultCurrencyCode())
     val currency: StateFlow<String> = _currency.asStateFlow()
 
@@ -35,6 +39,12 @@ class Prefs(context: Context) {
 
     private val _customQuickAmounts = MutableStateFlow(sp.getString(K_QUICK_AMOUNTS, null))
     val customQuickAmounts: StateFlow<String?> = _customQuickAmounts.asStateFlow()
+
+    private val _customTaxRates = MutableStateFlow(sp.getString(K_TAX_RATES, null))
+    val customTaxRates: StateFlow<String?> = _customTaxRates.asStateFlow()
+
+    private val _autoBackupEnabled = MutableStateFlow(sp.getBoolean(K_AUTO_BACKUP, true))
+    val autoBackupEnabled: StateFlow<Boolean> = _autoBackupEnabled.asStateFlow()
 
     fun getQuickAmounts(currencyCode: String): List<Long> {
         val customStr = _customQuickAmounts.value
@@ -62,15 +72,45 @@ class Prefs(context: Context) {
         sp.edit().remove(K_QUICK_AMOUNTS).apply()
     }
 
+    fun getTaxDiscountRates(currencyCode: String): List<Double> {
+        val customStr = _customTaxRates.value
+        if (!customStr.isNullOrBlank()) {
+            val parsed = customStr.split(",")
+                .mapNotNull { it.trim().replace("%", "").replace("+", "").toDoubleOrNull() }
+                .filter { it != 0.0 && it > -100.0 && it <= 100.0 }
+            if (parsed.isNotEmpty()) return parsed
+        }
+        return Money.defaultTaxDiscountRates(currencyCode)
+    }
+
+    fun setTaxDiscountRates(rates: List<Double>) {
+        val s = rates.filter { it != 0.0 && it > -100.0 && it <= 100.0 }.joinToString(",") { r ->
+            if (r % 1.0 == 0.0) r.toInt().toString() else r.toString()
+        }
+        _customTaxRates.value = s.ifBlank { null }
+        if (s.isBlank()) {
+            sp.edit().remove(K_TAX_RATES).apply()
+        } else {
+            sp.edit().putString(K_TAX_RATES, s).apply()
+        }
+    }
+
+    fun resetTaxDiscountRates() {
+        _customTaxRates.value = null
+        sp.edit().remove(K_TAX_RATES).apply()
+    }
+
     private val _remindersEnabled = MutableStateFlow(sp.getBoolean(K_REMINDERS, true))
     val remindersEnabled: StateFlow<Boolean> = _remindersEnabled.asStateFlow()
 
     fun setShopName(v: String) { _shopName.value = v; sp.edit().putString(K_SHOP, v).apply() }
+    fun setShopSubHeader(v: String) { _shopSubHeader.value = v; sp.edit().putString(K_SHOP_SUB, v).apply() }
     fun setCurrency(v: String) { _currency.value = v; sp.edit().putString(K_CURRENCY, v).apply() }
     fun setLockEnabled(v: Boolean) { _lockEnabled.value = v; sp.edit().putBoolean(K_LOCK, v).apply() }
     fun setAdFree(v: Boolean) { _adFree.value = v; sp.edit().putBoolean(K_AD_FREE, v).apply() }
     fun setSortMode(v: SortMode) { _sortMode.value = v; sp.edit().putString(K_SORT, v.name).apply() }
     fun setRemindersEnabled(v: Boolean) { _remindersEnabled.value = v; sp.edit().putBoolean(K_REMINDERS, v).apply() }
+    fun setAutoBackupEnabled(v: Boolean) { _autoBackupEnabled.value = v; sp.edit().putBoolean(K_AUTO_BACKUP, v).apply() }
 
     fun incrementAndGetActionCount(): Int {
         val next = sp.getInt(K_ACTION_COUNT, 0) + 1
@@ -97,12 +137,15 @@ class Prefs(context: Context) {
 
     private companion object {
         const val K_SHOP = "shop_name"
+        const val K_SHOP_SUB = "shop_sub_header"
         const val K_CURRENCY = "currency"
         const val K_LOCK = "lock_enabled"
         const val K_AD_FREE = "ad_free"
         const val K_SORT = "sort_mode"
         const val K_QUICK_AMOUNTS = "custom_quick_amounts"
+        const val K_TAX_RATES = "custom_tax_rates"
         const val K_REMINDERS = "reminders_enabled"
+        const val K_AUTO_BACKUP = "auto_backup_enabled"
         const val K_ACTION_COUNT = "user_action_count"
         const val K_LAST_REVIEW_AT = "last_review_prompt_at"
     }

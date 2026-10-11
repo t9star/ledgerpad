@@ -71,6 +71,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import jp.tpp.t9s.ledgerpad.AppContainer
 import jp.tpp.t9s.ledgerpad.R
+import jp.tpp.t9s.ledgerpad.backup.AutoBackupManager
 import jp.tpp.t9s.ledgerpad.backup.BackupCodec
 import jp.tpp.t9s.ledgerpad.share.Sharing
 import jp.tpp.t9s.ledgerpad.util.Money
@@ -78,6 +79,8 @@ import jp.tpp.t9s.ledgerpad.util.ReviewHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.io.File
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Share
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,9 +94,11 @@ fun SettingsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     val shopName by container.prefs.shopName.collectAsState()
+    val shopSubHeader by container.prefs.shopSubHeader.collectAsState()
     val currency by container.prefs.currency.collectAsState()
     val lockEnabled by container.prefs.lockEnabled.collectAsState()
     val remindersEnabled by container.prefs.remindersEnabled.collectAsState()
+    val autoBackupEnabled by container.prefs.autoBackupEnabled.collectAsState()
     val isAdFree by container.prefs.adFree.collectAsState()
     val proPrice by container.billingManager.formattedPrice.collectAsState()
 
@@ -107,6 +112,8 @@ fun SettingsScreen(
     var showCurrencyDropdown by remember { mutableStateOf(false) }
     var showRestoreConfirm by remember { mutableStateOf<String?>(null) }
     var showEditChipsDialog by remember { mutableStateOf(false) }
+    var showEditTaxDialog by remember { mutableStateOf(false) }
+    var showAutoBackupDialog by remember { mutableStateOf(false) }
 
     // Backup JSON Export launcher
     val exportJsonLauncher = rememberLauncherForActivityResult(
@@ -254,10 +261,17 @@ fun SettingsScreen(
             Spacer(Modifier.height(8.dp))
 
             // Shop Name Row
+            val shopSubtitle = buildString {
+                append(shopName.ifBlank { stringResource(R.string.not_set) })
+                if (shopSubHeader.isNotBlank()) {
+                    append(" • ")
+                    append(shopSubHeader)
+                }
+            }
             SettingsRow(
                 icon = Icons.Default.Store,
                 title = stringResource(R.string.shop_business_name),
-                subtitle = shopName.ifBlank { stringResource(R.string.not_set) },
+                subtitle = shopSubtitle,
                 onClick = { showShopDialog = true }
             )
 
@@ -346,6 +360,18 @@ fun SettingsScreen(
                 onClick = { showEditChipsDialog = true }
             )
 
+            // Custom Tax / Discount Rates Row
+            val customTaxRatesStr by container.prefs.customTaxRates.collectAsState()
+            SettingsRow(
+                icon = Icons.Default.Edit,
+                title = stringResource(R.string.tax_discount_label),
+                subtitle = container.prefs.getTaxDiscountRates(currency).joinToString(", ") {
+                    val s = if (it % 1.0 == 0.0) it.toInt().toString() else it.toString()
+                    if (it > 0) "+$s%" else "$s%"
+                },
+                onClick = { showEditTaxDialog = true }
+            )
+
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             // Data & Backup Section
@@ -356,6 +382,51 @@ fun SettingsScreen(
                 fontWeight = FontWeight.Bold
             )
             Spacer(Modifier.height(8.dp))
+
+            // Auto Daily Backup Toggle Row (Offline 0 MB)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(Icons.Default.Backup, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(16.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(stringResource(R.string.auto_backup_toggle), fontWeight = FontWeight.SemiBold)
+                    Text(
+                        stringResource(R.string.auto_backup_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                Switch(
+                    checked = autoBackupEnabled,
+                    onCheckedChange = { enabled ->
+                        container.prefs.setAutoBackupEnabled(enabled)
+                        if (enabled) {
+                            scope.launch {
+                                AutoBackupManager.triggerAutoBackupIfEnabled(
+                                    context,
+                                    container.repository,
+                                    container.prefs
+                                )
+                            }
+                        }
+                    }
+                )
+            }
+
+            // Restore from Auto-Backup Snapshots Row
+            val snapshotsCount = remember(showAutoBackupDialog, autoBackupEnabled) {
+                AutoBackupManager.listSnapshots(context).size
+            }
+            SettingsRow(
+                icon = Icons.Default.History,
+                title = stringResource(R.string.auto_backup_history),
+                subtitle = if (snapshotsCount > 0) "$snapshotsCount snapshots available" else stringResource(R.string.auto_backup_empty),
+                onClick = { showAutoBackupDialog = true }
+            )
 
             SettingsRow(
                 icon = Icons.Default.Backup,
@@ -449,23 +520,38 @@ fun SettingsScreen(
         )
     }
 
-    // Shop Name Dialog
+    // Shop Name & Receipt Header Dialog
     if (showShopDialog) {
         var tempName by remember { mutableStateOf(shopName) }
+        var tempSubHeader by remember { mutableStateOf(shopSubHeader) }
         AlertDialog(
             onDismissRequest = { showShopDialog = false },
             title = { Text(stringResource(R.string.shop_business_name)) },
             text = {
-                OutlinedTextField(
-                    value = tempName,
-                    onValueChange = { tempName = it },
-                    placeholder = { Text(stringResource(R.string.my_general_store)) },
-                    singleLine = true
-                )
+                Column {
+                    OutlinedTextField(
+                        value = tempName,
+                        onValueChange = { tempName = it },
+                        label = { Text(stringResource(R.string.shop_business_name)) },
+                        placeholder = { Text(stringResource(R.string.my_general_store)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(Modifier.height(10.dp))
+                    OutlinedTextField(
+                        value = tempSubHeader,
+                        onValueChange = { tempSubHeader = it },
+                        label = { Text(stringResource(R.string.shop_sub_header_label)) },
+                        placeholder = { Text(stringResource(R.string.shop_sub_header_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             },
             confirmButton = {
                 TextButton(onClick = {
                     container.prefs.setShopName(tempName)
+                    container.prefs.setShopSubHeader(tempSubHeader)
                     showShopDialog = false
                 }) {
                     Text(stringResource(R.string.save))
@@ -624,6 +710,129 @@ fun SettingsScreen(
                     TextButton(onClick = { showEditChipsDialog = false }) {
                         Text(stringResource(R.string.cancel))
                     }
+                }
+            }
+        )
+    }
+
+    // Edit Tax / Discount Rates Dialog
+    if (showEditTaxDialog) {
+        val currentRates = container.prefs.getTaxDiscountRates(currency)
+        var textInput by remember {
+            mutableStateOf(
+                currentRates.joinToString(", ") {
+                    val s = if (it % 1.0 == 0.0) it.toInt().toString() else it.toString()
+                    if (it > 0) "+$s" else s
+                }
+            )
+        }
+
+        AlertDialog(
+            onDismissRequest = { showEditTaxDialog = false },
+            title = { Text(stringResource(R.string.tax_discount_label)) },
+            text = {
+                Column {
+                    Text(
+                        text = stringResource(R.string.edit_tax_rates_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = textInput,
+                        onValueChange = { textInput = it },
+                        placeholder = { Text("+8, +10, -5, -10") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    val parsed = textInput.split(",")
+                        .mapNotNull { it.trim().removeSuffix("%").removePrefix("+").toDoubleOrNull() }
+                        .filter { it != 0.0 && it in -99.0..999.0 }
+                    if (parsed.isNotEmpty()) {
+                        container.prefs.setTaxDiscountRates(parsed)
+                    }
+                    showEditTaxDialog = false
+                }) {
+                    Text(stringResource(R.string.save))
+                }
+            },
+            dismissButton = {
+                Row {
+                    TextButton(onClick = {
+                        container.prefs.resetTaxDiscountRates()
+                        showEditTaxDialog = false
+                    }) {
+                        Text(stringResource(R.string.reset_default))
+                    }
+                    TextButton(onClick = { showEditTaxDialog = false }) {
+                        Text(stringResource(R.string.cancel))
+                    }
+                }
+            }
+        )
+    }
+
+    // Auto-Backup Snapshots History Dialog
+    if (showAutoBackupDialog) {
+        val snapshots = remember { AutoBackupManager.listSnapshots(context) }
+        AlertDialog(
+            onDismissRequest = { showAutoBackupDialog = false },
+            title = { Text(stringResource(R.string.auto_backup_history)) },
+            text = {
+                if (snapshots.isEmpty()) {
+                    Text(stringResource(R.string.auto_backup_empty))
+                } else {
+                    Column {
+                        snapshots.forEach { item ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        jp.tpp.t9s.ledgerpad.util.Dates.formatDateTime(item.timestampMs),
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(
+                                        "%.1f KB".format(item.sizeBytes / 1024.0f),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {
+                                        Sharing.shareFile(
+                                            context = context,
+                                            file = item.file,
+                                            mimeType = "application/json",
+                                            title = item.file.name
+                                        )
+                                    }
+                                ) {
+                                    Icon(Icons.Default.Share, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                                }
+                                TextButton(
+                                    onClick = {
+                                        showAutoBackupDialog = false
+                                        showRestoreConfirm = item.file.readText()
+                                    }
+                                ) {
+                                    Text(stringResource(R.string.restore))
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showAutoBackupDialog = false }) {
+                    Text(stringResource(R.string.close))
                 }
             }
         )

@@ -455,22 +455,60 @@ private fun CashbookTabContent(
                 Spacer(Modifier.height(12.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Column {
-                        Text(stringResource(R.string.cash_in_sales), style = MaterialTheme.typography.labelMedium)
-                        Text(Money.format(totalIn, currency), color = GreenCredit, fontWeight = FontWeight.Bold)
-                    }
-                    Column {
-                        Text(stringResource(R.string.cash_out_expenses), style = MaterialTheme.typography.labelMedium)
-                        Text(Money.format(totalOut, currency), color = RedDebit, fontWeight = FontWeight.Bold)
-                    }
-                    Column {
-                        Text(stringResource(R.string.daily_net_balance), style = MaterialTheme.typography.labelMedium)
+                    Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            Money.format(net, currency),
+                            text = stringResource(R.string.cash_in_sales),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            text = Money.format(totalIn, currency),
+                            color = GreenCredit,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.cash_out_expenses),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            text = Money.format(totalOut, currency),
+                            color = RedDebit,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        Text(
+                            text = stringResource(R.string.daily_net_balance),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            text = Money.format(net, currency),
                             color = if (net >= 0) GreenCredit else RedDebit,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
@@ -486,22 +524,34 @@ private fun CashbookTabContent(
         ) {
             androidx.compose.material3.Button(
                 onClick = { onAddCash(CashType.IN) },
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp),
                 colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = GreenCredit)
             ) {
-                Icon(Icons.Default.ArrowDownward, contentDescription = null)
-                Spacer(Modifier.width(6.dp))
-                Text(stringResource(R.string.btn_cash_in))
+                Icon(Icons.Default.ArrowDownward, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(4.dp))
+                Text(
+                    text = stringResource(R.string.btn_cash_in),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
 
             androidx.compose.material3.Button(
                 onClick = { onAddCash(CashType.OUT) },
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp),
                 colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = RedDebit)
             ) {
-                Icon(Icons.Default.ArrowUpward, contentDescription = null)
-                Spacer(Modifier.width(6.dp))
-                Text(stringResource(R.string.btn_cash_out))
+                Icon(Icons.Default.ArrowUpward, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(4.dp))
+                Text(
+                    text = stringResource(R.string.btn_cash_out),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
 

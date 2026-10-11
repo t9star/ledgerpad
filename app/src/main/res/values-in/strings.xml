@@ -174,5 +174,12 @@
     <string name="due_reminders_desc">Pengingat pukul 09:00 pagi saat ada tagihan jatuh tempo</string>
     <string name="rate_app_title">Beri Rating di Google Play</string>
     <string name="rate_app_desc">Suka aplikasi ini? Berikan ulasan bintang 5 untuk mendukung kami!</string>
-    <string name="tax_discount_label">Pajak / Diskon</string>
+    <string name="tax_discount_label">Pajak / Diskon (%)</string>
+    <string name="edit_tax_rates_desc">Atur persentase pajak (+PPN) dan diskon (-) di atas kalkulator (cth: +11, -5, -10)</string>
+    <string name="shop_sub_header_label">NPWP / Alamat / Catatan Struk (Opsional)</string>
+    <string name="shop_sub_header_hint">Cth: Alamat Warung / No. WA / NPWP</string>
+    <string name="auto_backup_toggle">Cadangan Otomatis Harian (Tanpa Kuota)</string>
+    <string name="auto_backup_desc">Otomatis simpan 7 riwayat cadangan di HP tanpa kuota internet</string>
+    <string name="auto_backup_history">Pulihkan dari Riwayat Cadangan Otomatis</string>
+    <string name="auto_backup_empty">Belum ada cadangan otomatis. Dibuat otomatis saat Anda menyimpan catatan.</string>
 </resources>

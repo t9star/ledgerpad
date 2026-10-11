@@ -6,13 +6,14 @@ import java.util.Date
 import java.util.Locale
 
 object Dates {
-    private val dateOnlyFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-    private val dateTimeFormat = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())
-    private val shortDateFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
+    fun formatDate(timeMillis: Long): String =
+        SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date(timeMillis))
 
-    fun formatDate(timeMillis: Long): String = dateOnlyFormat.format(Date(timeMillis))
-    fun formatDateTime(timeMillis: Long): String = dateTimeFormat.format(Date(timeMillis))
-    fun formatShortDate(timeMillis: Long): String = shortDateFormat.format(Date(timeMillis))
+    fun formatDateTime(timeMillis: Long): String =
+        SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date(timeMillis))
+
+    fun formatShortDate(timeMillis: Long): String =
+        SimpleDateFormat("dd MMM", Locale.getDefault()).format(Date(timeMillis))
 
     fun isToday(timeMillis: Long): Boolean {
         val cal1 = Calendar.getInstance()

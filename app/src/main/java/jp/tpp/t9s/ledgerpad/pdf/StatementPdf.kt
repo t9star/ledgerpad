@@ -27,7 +27,8 @@ object StatementPdf {
         customer: Customer,
         currencyCode: String,
         balanceMinor: Long,
-        rows: List<TxnRow>
+        rows: List<TxnRow>,
+        shopSubHeader: String = ""
     ): File {
         val pdfDocument = PdfDocument()
 
@@ -41,23 +42,32 @@ object StatementPdf {
 
         // Header Background
         paint.color = Color.parseColor("#1B5E20") // Deep Forest Green
-        canvas.drawRect(0f, 0f, pageWidth.toFloat(), 110f, paint)
+        canvas.drawRect(0f, 0f, pageWidth.toFloat(), 115f, paint)
 
         // Shop Title
         paint.color = Color.WHITE
-        paint.textSize = 22f
+        paint.textSize = 20f
         paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         val title = if (shopName.isNotBlank()) shopName else context.getString(R.string.app_name)
-        canvas.drawText(title, 30f, 45f, paint)
+        canvas.drawText(title, 30f, 38f, paint)
+
+        // Optional Shop Sub-Header (Tax ID / Invoice No. / Address / Receipt Note)
+        if (shopSubHeader.isNotBlank()) {
+            paint.textSize = 10f
+            paint.typeface = Typeface.DEFAULT
+            paint.color = Color.parseColor("#E8F5E9")
+            canvas.drawText(shopSubHeader, 30f, 56f, paint)
+        }
 
         // Subtitle
+        paint.color = Color.WHITE
         paint.textSize = 12f
         paint.typeface = Typeface.DEFAULT
-        canvas.drawText(context.getString(R.string.account_statement), 30f, 70f, paint)
+        canvas.drawText(context.getString(R.string.account_statement), 30f, if (shopSubHeader.isNotBlank()) 76f else 66f, paint)
 
         val reportDate = Dates.formatDateTime(System.currentTimeMillis())
         paint.textSize = 10f
-        canvas.drawText("${context.getString(R.string.generated_on)}: $reportDate", 30f, 92f, paint)
+        canvas.drawText("${context.getString(R.string.generated_on)}: $reportDate", 30f, 96f, paint)
 
         // Customer Info Card
         paint.color = Color.parseColor("#F5F5F5")

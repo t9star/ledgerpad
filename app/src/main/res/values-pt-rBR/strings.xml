@@ -175,5 +175,12 @@
     <string name="due_reminders_desc">Alerta às 9:00 da manhã quando houver pagamentos vencendo</string>
     <string name="rate_app_title">Avaliar na Google Play</string>
     <string name="rate_app_desc">Gostando do app? Deixe 5 estrelas para nos apoiar!</string>
-    <string name="tax_discount_label">Taxa / Desconto</string>
+    <string name="tax_discount_label">Taxa / Desconto (%)</string>
+    <string name="edit_tax_rates_desc">Personalize as porcentagens de taxa (+) e desconto (-) na calculadora</string>
+    <string name="shop_sub_header_label">CNPJ / Endereço / Nota no Recibo (Opcional)</string>
+    <string name="shop_sub_header_hint">Ex: CNPJ, Chave Pix ou Telefone da Loja</string>
+    <string name="auto_backup_toggle">Backup Automático Diário (Offline)</string>
+    <string name="auto_backup_desc">Salva automaticamente 7 cópias recentes no aparelho (sem gastar internet)</string>
+    <string name="auto_backup_history">Restaurar do Histórico de Backup Automático</string>
+    <string name="auto_backup_empty">Nenhum backup automático ainda. Criado automaticamente ao salvar registros.</string>
 </resources>

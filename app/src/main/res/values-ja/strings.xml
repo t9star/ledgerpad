@@ -174,5 +174,12 @@
     <string name="due_reminders_desc">期日当日の朝9時に未回収の顧客をお知らせ</string>
     <string name="rate_app_title">Google Play でアプリを評価する</string>
     <string name="rate_app_desc">気に入っていただけたら、ぜひレビューで応援してください！</string>
-    <string name="tax_discount_label">税率・割引</string>
+    <string name="tax_discount_label">税率・割引 (%)</string>
+    <string name="edit_tax_rates_desc">電卓に表示する税率(+)・割引率(-)を自由に変更できます（例: +8, +10, -5, -10）</string>
+    <string name="shop_sub_header_label">インボイス登録番号・住所・明細メモ（任意）</string>
+    <string name="shop_sub_header_hint">例: 登録番号 T1234567890123 / TEL等</string>
+    <string name="auto_backup_toggle">自動バックアップ（通信量ゼロ・端末内）</string>
+    <string name="auto_backup_desc">記帳時に自動で最大7世代のバックアップを端末内に保存します（ギガ消費なし）</string>
+    <string name="auto_backup_history">自動バックアップ履歴から復元・共有</string>
+    <string name="auto_backup_empty">自動バックアップ履歴はまだありません（記帳時に自動作成されます）</string>
 </resources>

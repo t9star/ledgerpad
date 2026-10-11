@@ -27,7 +27,8 @@ object StatementImage {
         customer: Customer,
         currencyCode: String,
         balanceMinor: Long,
-        rows: List<TxnRow>
+        rows: List<TxnRow>,
+        shopSubHeader: String = ""
     ): File {
         val displayRows = rows.take(25).asReversed() // Up to 25 recent transactions in chronological order
         val width = 840
@@ -45,24 +46,32 @@ object StatementImage {
 
         // 2. Top Banner (Forest Green)
         paint.color = Color.parseColor("#1B5E20")
-        canvas.drawRect(0f, 0f, width.toFloat(), 165f, paint)
+        canvas.drawRect(0f, 0f, width.toFloat(), 172f, paint)
 
         // Shop Title
         paint.color = Color.WHITE
-        paint.textSize = 34f
+        paint.textSize = 32f
         paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         val title = if (shopName.isNotBlank()) shopName else context.getString(R.string.app_name)
-        canvas.drawText(title, 40f, 65f, paint)
+        canvas.drawText(title, 40f, 54f, paint)
+
+        if (shopSubHeader.isNotBlank()) {
+            paint.textSize = 16f
+            paint.typeface = Typeface.DEFAULT
+            paint.color = Color.parseColor("#E8F5E9")
+            canvas.drawText(shopSubHeader, 40f, 84f, paint)
+        }
 
         // Subtitle & Timestamp
-        paint.textSize = 20f
+        paint.color = Color.WHITE
+        paint.textSize = 19f
         paint.typeface = Typeface.DEFAULT
-        canvas.drawText(context.getString(R.string.account_statement), 40f, 105f, paint)
+        canvas.drawText(context.getString(R.string.account_statement), 40f, if (shopSubHeader.isNotBlank()) 118f else 102f, paint)
 
         val reportDate = Dates.formatDateTime(System.currentTimeMillis())
-        paint.textSize = 16f
+        paint.textSize = 15f
         paint.color = Color.parseColor("#C8E6C9")
-        canvas.drawText("${context.getString(R.string.generated_on)}: $reportDate", 40f, 138f, paint)
+        canvas.drawText("${context.getString(R.string.generated_on)}: $reportDate", 40f, 148f, paint)
 
         // 3. Customer & Balance Summary Card
         val cardRect = RectF(36f, 195f, (width - 36).toFloat(), 355f)

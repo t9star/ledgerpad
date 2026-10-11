@@ -97,4 +97,26 @@ object Money {
             else -> listOf(5L, 10L, 20L, 50L, 100L)
         }
     }
+
+    /**
+     * Returns default tax (+) and discount (-) percentages tailored to each country/currency:
+     * - JPY: +8% (reduced tax), +10% (standard consumption tax), -5%, -10%
+     * - INR: +5%, +12%, +18% (GST slabs), -5%, -10%
+     * - IDR: +11% (PPN VAT), -5%, -10%
+     * - PHP: +12% (VAT), -5%, -10%
+     * - MXN: +16% (IVA), -5%, -10%
+     * - BDT: +5%, +7.5%, +15% (VAT), -5%, -10%
+     * - Default (USD/EUR/BRL): +5%, +10%, -5%, -10%
+     */
+    fun defaultTaxDiscountRates(code: String): List<Double> {
+        return when (code) {
+            "JPY" -> listOf(8.0, 10.0, -5.0, -10.0)
+            "INR" -> listOf(5.0, 12.0, 18.0, -5.0, -10.0)
+            "IDR" -> listOf(11.0, 5.0, -5.0, -10.0)
+            "PHP" -> listOf(12.0, -5.0, -10.0)
+            "MXN" -> listOf(16.0, 8.0, -5.0, -10.0)
+            "BDT" -> listOf(5.0, 15.0, -5.0, -10.0)
+            else -> listOf(5.0, 8.0, 10.0, -5.0, -10.0)
+        }
+    }
 }

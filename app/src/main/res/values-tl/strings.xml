@@ -175,5 +175,12 @@
     <string name="due_reminders_desc">Abiso tuwing 9:00 AM kapag may nakatakdang singilin</string>
     <string name="rate_app_title">I-rate ang App sa Google Play</string>
     <string name="rate_app_desc">Nagustuhan mo ba ang app? Bigyan kami ng 5-star review!</string>
-    <string name="tax_discount_label">Buwis / Diskwento</string>
+    <string name="tax_discount_label">Buwis / Diskwento (%)</string>
+    <string name="edit_tax_rates_desc">I-customize ang porsyento ng buwis (+) at diskwento (-) sa calculator</string>
+    <string name="shop_sub_header_label">TIN / Address / Note sa Resibo (Opsyonal)</string>
+    <string name="shop_sub_header_hint">Hal. TIN, Address ng Tindahan o GCash No.</string>
+    <string name="auto_backup_toggle">Auto Daily Backup (Walang Data/Load)</string>
+    <string name="auto_backup_desc">Awtomatikong nagse-save ng 7 arawang backup sa cellphone (0 data usage)</string>
+    <string name="auto_backup_history">I-restore mula sa Auto-Backup</string>
+    <string name="auto_backup_empty">Wala pang auto-backup. Awtomatiko itong gagawin kapag nag-save ka ng listahan.</string>
 </resources>

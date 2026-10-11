@@ -175,5 +175,12 @@
     <string name="due_reminders_desc">Notificación a las 9:00 AM cuando vencen pagos de clientes</string>
     <string name="rate_app_title">Calificar en Google Play</string>
     <string name="rate_app_desc">¿Te gusta la app? ¡Déjanos 5 estrellas para apoyarnos!</string>
-    <string name="tax_discount_label">Impuesto / Descuento</string>
+    <string name="tax_discount_label">Impuesto / Descuento (%)</string>
+    <string name="edit_tax_rates_desc">Personalice los porcentajes de impuesto (+IVA) y descuento (-) en la calculadora</string>
+    <string name="shop_sub_header_label">RFC / NIT / Dirección / Nota de Recibo (Opcional)</string>
+    <string name="shop_sub_header_hint">Ej. RFC, NIT, Dirección o Teléfono del negocio</string>
+    <string name="auto_backup_toggle">Copia Automática Diaria (Sin Internet)</string>
+    <string name="auto_backup_desc">Guarda automáticamente 7 copias recientes en el teléfono (0 consumo de datos)</string>
+    <string name="auto_backup_history">Restaurar desde Copias Automáticas</string>
+    <string name="auto_backup_empty">Aún no hay copias automáticas. Se crean automáticamente al guardar registros.</string>
 </resources>

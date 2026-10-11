@@ -111,6 +111,7 @@ fun CustomerDetailScreen(
     val rows by container.repository.observeTxnRows(customerId).collectAsState(initial = emptyList())
     val currency by container.prefs.currency.collectAsState()
     val shopName by container.prefs.shopName.collectAsState()
+    val shopSubHeader by container.prefs.shopSubHeader.collectAsState()
 
     var showMenu by remember { mutableStateOf(false) }
     var showEditDialog by remember { mutableStateOf(false) }
@@ -215,7 +216,8 @@ fun CustomerDetailScreen(
                                     customer = currentCustomer,
                                     currencyCode = currency,
                                     balanceMinor = balance,
-                                    rows = rows
+                                    rows = rows,
+                                    shopSubHeader = shopSubHeader
                                 )
                                 ReviewHelper.recordPositiveAction(context, container.prefs)
                                 Sharing.shareFile(context, imgFile, "image/png", context.getString(R.string.share_image_report))
@@ -232,7 +234,8 @@ fun CustomerDetailScreen(
                                     customer = currentCustomer,
                                     currencyCode = currency,
                                     balanceMinor = balance,
-                                    rows = rows
+                                    rows = rows,
+                                    shopSubHeader = shopSubHeader
                                 )
                                 ReviewHelper.recordPositiveAction(context, container.prefs)
                                 // Show interstitial gracefully after generation
@@ -314,7 +317,9 @@ fun CustomerDetailScreen(
                         Text(
                             text = stringResource(R.string.btn_gave_credit),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
+                            fontSize = 15.sp,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                     }
                     Button(
@@ -328,7 +333,9 @@ fun CustomerDetailScreen(
                         Text(
                             text = stringResource(R.string.btn_got_payment),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
+                            fontSize = 15.sp,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                     }
                 }

@@ -175,5 +175,12 @@
     <string name="due_reminders_desc">भुगतान की तारीख पर सुबह 9:00 बजे अलर्ट प्राप्त करें</string>
     <string name="rate_app_title">Google Play पर ऐप को रेट करें</string>
     <string name="rate_app_desc">क्या आपको ऐप पसंद आया? हमें सपोर्ट करने के लिए 5-स्टार रिव्यू दें!</string>
-    <string name="tax_discount_label">टैक्स / छूट</string>
+    <string name="tax_discount_label">टैक्स / छूट (%)</string>
+    <string name="edit_tax_rates_desc">कैलकुलेटर के लिए टैक्स (+) और छूट (-) प्रतिशत सेट करें (उदा. +5, +12, +18, -5)</string>
+    <string name="shop_sub_header_label">GSTIN / पता / रसीद नोट (वैकल्पिक)</string>
+    <string name="shop_sub_header_hint">उदा. GSTIN, दुकान का पता या फ़ोन नंबर</string>
+    <string name="auto_backup_toggle">ऑटो डेली बैकअप (बिना इंटरनेट)</string>
+    <string name="auto_backup_desc">बिना डेटा खर्च किए फ़ोन में 7 दिनों का ऑटो-बैकअप सुरक्षित रखता है</string>
+    <string name="auto_backup_history">ऑटो-बैकअप हिस्ट्री से रीस्टोर करें</string>
+    <string name="auto_backup_empty">अभी कोई ऑटो-बैकअप नहीं है। एंट्री सेव करने पर यह अपने आप बन जाता है।</string>
 </resources>

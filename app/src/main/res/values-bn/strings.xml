@@ -175,5 +175,12 @@
     <string name="due_reminders_desc">পরিশোধের তারিখে সকাল ৯:০০ টায় অ্যালার্ট পান</string>
     <string name="rate_app_title">Google Play-তে রেটিং দিন</string>
     <string name="rate_app_desc">অ্যাপটি ভালো লেগেছে? আমাদের সাপোর্ট করতে ৫-স্টার রিভিউ দিন!</string>
-    <string name="tax_discount_label">ট্যাক্স / ছাড়</string>
+    <string name="tax_discount_label">ট্যাক্স / ছাড় (%)</string>
+    <string name="edit_tax_rates_desc">ক্যালকুলেটরে ট্যাক্স (+) এবং ছাড় (-) শতাংশ পরিবর্তন করুন</string>
+    <string name="shop_sub_header_label">ভ্যাট নম্বর / ঠিকানা / রসিদ নোট (ঐচ্ছিক)</string>
+    <string name="shop_sub_header_hint">যেমন: দোকানের ঠিকানা বা মোবাইল নম্বর</string>
+    <string name="auto_backup_toggle">অটো ডেইলি ব্যাকআপ (ইন্টারনেট ছাড়াই)</string>
+    <string name="auto_backup_desc">কোনো ডেটা খরচ ছাড়াই ফোনে স্বয়ংক্রিয়ভাবে ৭ দিনের ব্যাকআপ সংরক্ষণ করে</string>
+    <string name="auto_backup_history">অটো-ব্যাকআপ থেকে পুনরুদ্ধার করুন</string>
+    <string name="auto_backup_empty">এখনো কোনো অটো-ব্যাকআপ নেই। হিসাব সেভ করলে স্বয়ংক্রিয়ভাবে তৈরি হবে।</string>
 </resources>

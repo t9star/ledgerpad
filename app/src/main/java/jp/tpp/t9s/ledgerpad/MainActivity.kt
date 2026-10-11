@@ -106,6 +106,13 @@ class MainActivity : FragmentActivity() {
         container.adsManager.initializeConsentAndAds(this)
 
         setContent {
+            LaunchedEffect(Unit) {
+                jp.tpp.t9s.ledgerpad.backup.AutoBackupManager.triggerAutoBackupIfEnabled(
+                    this@MainActivity,
+                    container.repository,
+                    container.prefs
+                )
+            }
             LedgerPadTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     LedgerAppNavigation(

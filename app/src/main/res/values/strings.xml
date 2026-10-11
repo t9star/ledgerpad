@@ -175,5 +175,12 @@
     <string name="due_reminders_desc">Morning alert at 9:00 AM when customer payments are due</string>
     <string name="rate_app_title">Rate LedgerPad on Google Play</string>
     <string name="rate_app_desc">Enjoying the app? Leave a quick 5-star review to support us!</string>
-    <string name="tax_discount_label">Tax / Discount</string>
+    <string name="tax_discount_label">Tax / Discount (%)</string>
+    <string name="edit_tax_rates_desc">Customize tax (+) and discount (-) percentages for your country/shop</string>
+    <string name="shop_sub_header_label">Tax ID / Address / Receipt Note (Optional)</string>
+    <string name="shop_sub_header_hint">e.g. GSTIN / Tax ID / Phone / Thank you!</string>
+    <string name="auto_backup_toggle">Auto Daily Backup (Offline)</string>
+    <string name="auto_backup_desc">Automatically saves 7 daily snapshots on device (0 data usage)</string>
+    <string name="auto_backup_history">Restore from Auto-Backup Snapshots</string>
+    <string name="auto_backup_empty">No auto-backups yet. Snapshots are created automatically when you save entries.</string>
 </resources>
